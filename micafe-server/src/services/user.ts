@@ -1,11 +1,10 @@
 import {User, IUser } from '../models/userModel';
-import catchAsync from '../utils/catchAsync';
 
 export const getOneByEmail = async (email: string): Promise<IUser | null> => {
     return User.findOne({email});
 }
 
-export const createOne = async (userData: IUser) => {
+export const createOne = async (userData: IUser): Promise<IUser> => {
     const user = new User(userData);
     return await user.save();
 }
