@@ -1,8 +1,9 @@
 import { Request, Response, NextFunction } from "express";
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import catchAsync from "../utils/catchAsync";
 import AppError from "../utils/appError";
 import config from '../config';
+import { User } from "../models/userModel";
 
 const authenticateToken = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     let token;
@@ -11,7 +12,8 @@ const authenticateToken = catchAsync(async (req: Request, res: Response, next: N
     }
     if(!token) return next(new AppError('You are not logged in! Please log in to get access.', 401));
 
-    const decoded = jwt.verify(token, config.JWT );
+    const decoded = jwt.verify(token, config.JWT ) as JwtPayload;
+    req.headers.user = decoded.id;
     if (!decoded) return next(new AppError('Invalid token!', 401));
     next();
 });
