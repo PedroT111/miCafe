@@ -1,12 +1,17 @@
 {
-    "compilerOptions": {
-      "target": "es6",
-      "module": "commonjs",
-      "outDir": "dist",
-      "rootDir": "src",
-      "esModuleInterop": true,
-      "strict": true
-    }
+  "compilerOptions": {
+    "target": "es2020",                                    
+    /* Modules */
+    "module": "CommonJS",                                
+    "rootDir": "src",                                 
+    /* Emit */
+     "outDir": "dist",              
+    // "preserveSymlinks": true,                         
+    "forceConsistentCasingInFileNames": true,
+    /* Type Checking */
+    "strict": true,                                      /* Enable all strict type-checking options. */
+    /* Completeness */
+    // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
+    "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
+  }
 }
-  
-  
