@@ -12,3 +12,7 @@ export const createOne = async (userData: IUser): Promise<IUser> => {
 export const getOneByToken = async (validationToken: string): Promise<IUser | null> => {
     return await User.findOne({validationToken});
 }
+
+export const getOneById = async (id: any): Promise<IUser | null> => {
+    return await User.findById(id).select('-password -validationToken');
+}

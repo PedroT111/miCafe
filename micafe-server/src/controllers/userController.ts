@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import catchAsync from "../utils/catchAsync";
-import { getOneByEmail, getOneByToken } from '../services/user';
+import { getOneByEmail, getOneById, getOneByToken } from '../services/user';
 import { generateToken } from "../helpers/generateToken";
 
 export const validateAccount = catchAsync( async (req: Request, res: Response) => {
@@ -29,7 +29,10 @@ export const forgotPassword = catchAsync( async (req: Request, res: Response) =>
     }
     user.validationToken = generateToken();
     await user.save();
-    //send email
+    //Send email
+    return res.json({
+        msg: 'Check yout email'
+    })
 
 });
 
@@ -48,5 +51,14 @@ export const resetPassword = catchAsync( async (req: Request, res: Response) => 
     return res.status(200).json({
         msg: 'The password has been updated'
     })
+});
+
+export const getMe = catchAsync( async (req: Request, res: Response): Promise<void> => {
+    const id = req.headers.user;
+    const user = await getOneById(id);
+    res.status(200).json({
+        status: 'success',
+        user
+    });
 })
 
