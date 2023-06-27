@@ -1,10 +1,12 @@
 import express from "express";
-import { forgotPassword, resetPassword, validateAccount } from "../controllers/userController";
+import { forgotPassword, getMe, resetPassword, validateAccount } from "../controllers/userController";
 import { loginValidation, registerValidation } from "../middlewares/userValidation";
+import authenticateToken from "../middlewares/tokenValidation";
 
 
 const router = express.Router();
 
+router.get('/me', authenticateToken, getMe);
 router.post('/signup', registerValidation);
 router.post('/login', loginValidation)
 router.get('/validate/:validationToken', validateAccount);
