@@ -31,8 +31,11 @@ export const registerValidation = catchAsync(async(req: Request, res: Response, 
         })
     }
     const newUser = await User.create(req.body);
-    createSendToken(newUser, 201, res);
     newUser.password = ' '
+    res.status(200).json({
+        ok: true,
+        newUser
+    });
     await sendValidationAccountMail(email, newUser);
     next();
 });
@@ -59,4 +62,4 @@ export const loginValidation = catchAsync(async(req: Request, res: Response, nex
     createSendToken(user, 200, res);
     next();
 
-})
+});
