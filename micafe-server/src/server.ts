@@ -1,12 +1,12 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import config from "./config";
+import config from './config';
 import app from './app';
 
 process.on('uncaughtException', (err: Error) => {
-    console.log('UNCAUGHT EXCEPTION! Shutting down...');
-    console.log(err.name, err.message);
-    process.exit(1);
+  console.log('UNCAUGHT EXCEPTION! Shutting down...');
+  console.log(err.name, err.message);
+  process.exit(1);
 });
 
 dotenv.config();
@@ -33,4 +33,3 @@ process.on('unhandledRejection', (err: Error) => {
     process.exit(1);
   });
 });
-
