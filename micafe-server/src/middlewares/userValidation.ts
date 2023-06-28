@@ -5,6 +5,7 @@ import AppError from '../utils/appError';
 import bcrypt from 'bcrypt';
 import { NextFunction, Request, Response } from 'express';
 import { IUser, User } from "../models/userModel";
+import { sendValidationAccountMail } from '../helpers/sendEmail';
 
 const signToken = (user: IUser): string => jwt.sign({id: user.id, role: user.role}, config.JWT, {
     expiresIn: `${config.JWT_EXPIRE}`,
@@ -31,6 +32,8 @@ export const registerValidation = catchAsync(async(req: Request, res: Response, 
     }
     const newUser = await User.create(req.body);
     createSendToken(newUser, 201, res);
+    newUser.password = ' '
+    await sendValidationAccountMail(email, newUser);
     next();
 });
 

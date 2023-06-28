@@ -16,3 +16,11 @@ export const getOneByToken = async (validationToken: string): Promise<IUser | nu
 export const getOneById = async (id: any): Promise<IUser | null> => {
     return await User.findById(id).select('-password -validationToken');
 }
+
+export const update = async (id: any, user: IUser): Promise<IUser | null> => {
+    await User.findByIdAndUpdate(id, {
+        ...user,
+        updateAt: new Date(),
+    });
+    return User.findById(id);
+}
