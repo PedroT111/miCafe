@@ -1,5 +1,5 @@
 import express from "express";
-import { forgotPassword, getMe, resetPassword, updateUser, validateAccount } from "../controllers/userController";
+import { deleteUser, forgotPassword, getMe, resetPassword, updateUser, validateAccount } from "../controllers/userController";
 import { loginValidation, registerValidation } from "../middlewares/userValidation";
 import authenticateToken from "../middlewares/tokenValidation";
 
@@ -16,6 +16,6 @@ router.post('/forgot-password/:validationToken', resetPassword);
 
 router.route('/:_id')
     .put(authenticateToken,updateUser)
-    
+    .delete(authenticateToken, deleteUser)
 
 export default router;

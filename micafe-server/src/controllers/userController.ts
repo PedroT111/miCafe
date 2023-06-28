@@ -1,9 +1,10 @@
 import { NextFunction, Request, Response } from "express";
-import { getOneByEmail, getOneById, getOneByToken, update } from '../services/user';
+import { deleteOne, getOneByEmail, getOneById, getOneByToken, update } from '../services/user';
 import { generateToken } from "../helpers/generateToken";
+import { sendResetPasswordEmail} from "../helpers/sendEmail";
 import catchAsync from "../utils/catchAsync";
 import AppError from "../utils/appError";
-import { sendResetPasswordEmail} from "../helpers/sendEmail";
+
 
 export const validateAccount = catchAsync( async (req: Request, res: Response): Promise<void> => {
     const {validationToken} = req.params;
@@ -72,6 +73,7 @@ export const getMe = catchAsync( async (req: Request, res: Response): Promise<vo
 export const updateUser = catchAsync( async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const {_id} = req.params;
     const userToEdit = {...req.body};
+    
     if(_id !== req.headers.user){
         return next(new AppError('Something was wrong!', 400));
     }
@@ -85,5 +87,19 @@ export const updateUser = catchAsync( async (req: Request, res: Response, next: 
         status: 'success',
         query
     })
+});
+
+export const deleteUser = catchAsync( async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const {_id} = req.params;
+    if(_id !== req.headers.user){
+        return next(new AppError('Something was wrong!', 400));
+    }
+    const deletedUser = await deleteOne(_id);
+    if(!deletedUser) return next(new AppError('Something was wrong!', 400));   
+
+    res.status(200).json({
+        status: 'success',
+        deletedUser
+    }) 
 })
 

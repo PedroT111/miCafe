@@ -1,12 +1,10 @@
 import sgMail, { MailDataRequired} from '@sendgrid/mail';
-import catchAsync from '../utils/catchAsync';
 import config from '../config';
 import { IUser } from '../models/userModel';
 
 sgMail.setApiKey(config.SENDGRID_API);
 
 const sendEmail = async (email:string, data:any, templateId:string): Promise<void> => {
-    console.log(data)
     const msg: MailDataRequired = {
         to: email,
         from: config.EMAIL_SENDGRID,
