@@ -25,6 +25,7 @@ export const validateAccount = catchAsync(
     user.isValidated = true;
     await user.save();
     res.status(200).json({
+      ok: true,
       msg: 'The account has been confirmed'
     });
   }
@@ -45,7 +46,8 @@ export const forgotPassword = catchAsync(
     //Send email
     user.password = ' ';
     await sendResetPasswordEmail(email, user);
-    res.json({
+    res.status(200).json({
+      ok: true,
       msg: 'Check you email'
     });
   }
@@ -66,6 +68,7 @@ export const resetPassword = catchAsync(
     user.password = password;
     user.save();
     res.status(200).json({
+      ok: true,
       msg: 'The password has been updated'
     });
   }
@@ -76,7 +79,7 @@ export const getMe = catchAsync(
     const id = req.headers.user;
     const user = await getOneById(id);
     res.status(200).json({
-      status: 'success',
+      ok: true,
       user
     });
   }
@@ -97,7 +100,7 @@ export const updateUser = catchAsync(
     if (!query) return next(new AppError('Something was wrong!', 400));
 
     res.status(200).json({
-      status: 'success',
+      ok: true,
       query
     });
   }
@@ -113,7 +116,7 @@ export const deleteUser = catchAsync(
     if (!deletedUser) return next(new AppError('Something was wrong!', 400));
 
     res.status(200).json({
-      status: 'success',
+      ok: true,
       deletedUser
     });
   }
