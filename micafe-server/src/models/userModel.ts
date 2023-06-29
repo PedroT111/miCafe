@@ -11,23 +11,22 @@ interface IUser extends Document {
   validationToken: string | null;
   isValidated: boolean;
   isDeleted: boolean;
-  
 }
 
 const userSchema: Schema<IUser> = new Schema({
   name: {
     type: String,
-    required: true,
+    required: true
   },
   lastName: {
     type: String,
-    required: true,
+    required: true
   },
   email: {
     type: String,
     required: true,
     unique: true,
-    lowecase: true,
+    lowecase: true
   },
   password: {
     type: String,
@@ -50,15 +49,13 @@ const userSchema: Schema<IUser> = new Schema({
     type: Boolean,
     default: false
   }
-  
 });
-userSchema.pre('save', async function(next){
-  if(!this.isModified('password')) return next();
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) return next();
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
 });
 
-
 const User = mongoose.model<IUser>('User', userSchema);
 
-export {User, IUser};
+export { User, IUser };
