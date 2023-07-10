@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { type Request, type Response, type NextFunction } from 'express';
 import catchAsync from '../utils/catchAsync';
 import AppError from '../utils/appError';
 import {
@@ -13,10 +13,9 @@ export const createCategory = catchAsync(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const { name } = req.body;
     const category = await findOneByName(name);
-    if (category) {
-      return next(
-        new AppError('There is already a category with that name.', 409)
-      );
+    if (category !== null) {
+      next(new AppError('There is already a category with that name.', 409));
+      return;
     }
     const newCategory = req.body;
     await createOne(newCategory);
@@ -30,8 +29,9 @@ export const createCategory = catchAsync(
 export const getCategories = catchAsync(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const categories = await findAll();
-    if (!categories) {
-      return next(new AppError('Something was wrong', 400));
+    if (categories.length === 0) {
+      next(new AppError('Something was wrong', 400));
+      return;
     }
     res.status(200).json({
       ok: true,
@@ -44,8 +44,9 @@ export const getOne = catchAsync(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const { id } = req.params;
     const category = await detail(id);
-    if (!category) {
-      return next(new AppError('Something was wrong!', 400));
+    if (category == null) {
+      next(new AppError('Something was wrong!', 400));
+      return;
     }
     res.status(200).json({
       ok: true,
@@ -54,17 +55,18 @@ export const getOne = catchAsync(
   }
 );
 
-export const updateCategory = catchAsync( async(req:Request, res:Response, next: NextFunction): Promise<void> => {
-    const {id} = req.params;
-    const categoryToEdit = {...req.body};
+export const updateCategory = catchAsync(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const { id } = req.params;
+    const categoryToEdit = { ...req.body };
     const query = await update(id, categoryToEdit);
-    if(!query){
-        return next(new AppError('Something was wrong', 400));
+    if (query == null) {
+      next(new AppError('Something was wrong', 400));
+      return;
     }
     res.status(200).json({
-        ok:true,
-        query
-    })
-
-
-})
+      ok: true,
+      query
+    });
+  }
+);

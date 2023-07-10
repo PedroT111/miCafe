@@ -1,7 +1,7 @@
-import { User, IUser } from '../models/userModel';
+import { User, type IUser } from '../models/userModel';
 
 export const getOneByEmail = async (email: string): Promise<IUser | null> => {
-  return User.findOne({ email });
+  return await User.findOne({ email });
 };
 
 export const getOneByToken = async (

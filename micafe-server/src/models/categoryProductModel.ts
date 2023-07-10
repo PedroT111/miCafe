@@ -7,7 +7,7 @@ interface ICategoryProduct extends Document {
   isDeleted: boolean;
 }
 
-const categoryProductSchema: Schema<ICategoryProduct> = new Schema({
+const categoryProductSchema = new Schema<ICategoryProduct>({
   name: {
     type: String,
     required: true
@@ -18,16 +18,20 @@ const categoryProductSchema: Schema<ICategoryProduct> = new Schema({
   }
 });
 categoryProductSchema.pre('save', async function (next) {
-  if (!this.isModified('isDeleted')) return next();
+  if (!this.isModified('isDeleted')) {
+    next();
+    return;
+  }
   const categoryId = this._id;
   const products = await Product.find({ categoryId });
-  if (products.length != 0 && this.isDeleted) {
-    return next(
+  if (products.length !== 0 && this.isDeleted) {
+    next(
       new AppError(
         'Cannot delete the category because it has associated products.',
         409
       )
     );
+    return;
   }
   next();
 });
@@ -37,4 +41,4 @@ const CategoryProduct = mongoose.model<ICategoryProduct>(
   categoryProductSchema
 );
 
-export { ICategoryProduct, CategoryProduct };
+export { type ICategoryProduct, CategoryProduct };

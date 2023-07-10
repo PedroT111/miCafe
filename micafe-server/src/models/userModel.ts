@@ -1,4 +1,4 @@
-import mongoose, { Document, Schema } from 'mongoose';
+import mongoose, { type Document, Schema } from 'mongoose';
 import bcrypt from 'bcrypt';
 import { generateToken } from '../helpers/generateToken';
 
@@ -13,7 +13,7 @@ interface IUser extends Document {
   isDeleted: boolean;
 }
 
-const userSchema: Schema<IUser> = new Schema({
+const userSchema = new Schema<IUser>({
   name: {
     type: String,
     required: true
@@ -51,11 +51,14 @@ const userSchema: Schema<IUser> = new Schema({
   }
 });
 userSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) return next();
+  if (!this.isModified('password')) {
+    next();
+    return;
+  }
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
 });
 
 const User = mongoose.model<IUser>('User', userSchema);
 
-export { User, IUser };
+export { User, type IUser };

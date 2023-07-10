@@ -1,6 +1,6 @@
 import {
   CategoryProduct,
-  ICategoryProduct
+  type ICategoryProduct
 } from '../models/categoryProductModel';
 
 export const createOne = async (
@@ -25,7 +25,7 @@ export const detail = async (id: any): Promise<ICategoryProduct | null> => {
 };
 
 export const update = async (
-  id: any,
+  id: string,
   data: ICategoryProduct
 ): Promise<ICategoryProduct | null> => {
   return await CategoryProduct.findByIdAndUpdate(
