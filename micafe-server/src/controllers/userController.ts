@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express';
+import { type NextFunction, type Request, type Response } from 'express';
 import {
   deleteOne,
   getOneByEmail,
@@ -15,7 +15,7 @@ export const validateAccount = catchAsync(
   async (req: Request, res: Response): Promise<void> => {
     const { validationToken } = req.params;
     const user = await getOneByToken(validationToken);
-    if (!user) {
+    if (user == null) {
       res.json({
         error: 'The user does not exist'
       });
@@ -35,7 +35,7 @@ export const forgotPassword = catchAsync(
   async (req: Request, res: Response): Promise<void> => {
     const { email } = req.body;
     const user = await getOneByEmail(email);
-    if (!user) {
+    if (user == null) {
       res.json({
         error: 'User not found'
       });
@@ -43,9 +43,9 @@ export const forgotPassword = catchAsync(
     }
     user.validationToken = generateToken();
     await user.save();
-    //Send email
+    // Send email
     user.password = ' ';
-    await sendResetPasswordEmail(email, user);
+    await sendResetPasswordEmail(user);
     res.status(200).json({
       ok: true,
       msg: 'Check you email'
@@ -58,7 +58,7 @@ export const resetPassword = catchAsync(
     const { validationToken } = req.params;
     const { password } = req.body;
     const user = await getOneByToken(validationToken);
-    if (!user) {
+    if (user == null) {
       res.json({
         error: 'Invalid reset token'
       });
@@ -66,7 +66,7 @@ export const resetPassword = catchAsync(
     }
     user.validationToken = null;
     user.password = password;
-    user.save();
+    await user.save();
     res.status(200).json({
       ok: true,
       msg: 'The password has been updated'
@@ -91,13 +91,18 @@ export const updateUser = catchAsync(
     const userToEdit = { ...req.body };
 
     if (_id !== req.headers.user) {
-      return next(new AppError('Something was wrong!', 400));
+      next(new AppError('Something was wrong!', 400));
+      return;
     }
-    if (req.body.email || req.body.password) {
-      return next(new AppError('Cannot modify email or password', 400));
+    if (req.body.email !== null || req.body.password !== null) {
+      next(new AppError('Cannot modify email or password', 400));
+      return;
     }
     const query = await update(_id, userToEdit);
-    if (!query) return next(new AppError('Something was wrong!', 400));
+    if (query == null) {
+      next(new AppError('Something was wrong!', 400));
+      return;
+    }
 
     res.status(200).json({
       ok: true,
@@ -110,10 +115,14 @@ export const deleteUser = catchAsync(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const { _id } = req.params;
     if (_id !== req.headers.user) {
-      return next(new AppError('Something was wrong!', 400));
+      next(new AppError('Something was wrong!', 400));
+      return;
     }
     const deletedUser = await deleteOne(_id);
-    if (!deletedUser) return next(new AppError('Something was wrong!', 400));
+    if (deletedUser == null) {
+      next(new AppError('Something was wrong!', 400));
+      return;
+    }
 
     res.status(200).json({
       ok: true,
