@@ -8,7 +8,7 @@ export const getOneByName = async (name: string): Promise<ICombo | null> => {
   return await Combo.findOne({ name });
 };
 
-export const getById = async (id: any): Promise<ICombo | null> => {
+export const getById = async (id: string): Promise<ICombo | null> => {
   return await Combo.findById(id).populate('products.product');
 };
 
@@ -17,8 +17,8 @@ export const getAll = async (): Promise<ICombo[]> => {
 };
 
 export const update = async (
-  id: any,
-  comboData: ICombo
+  id: string,
+  comboData: Partial<ICombo>
 ): Promise<ICombo | null> => {
   return await Combo.findByIdAndUpdate(
     id,
@@ -30,6 +30,6 @@ export const update = async (
   );
 };
 
-export const deleteOne = async (id: any): Promise<ICombo | null> => {
-  return await Combo.findOneAndDelete(id);
+export const deleteOne = async (id: string): Promise<ICombo | null> => {
+  return await Combo.findOneAndDelete({ _id: id });
 };

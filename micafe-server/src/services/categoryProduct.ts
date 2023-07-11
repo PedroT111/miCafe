@@ -20,7 +20,7 @@ export const findAll = async (): Promise<ICategoryProduct[]> => {
   return await CategoryProduct.find({ isDeleted: false });
 };
 
-export const detail = async (id: any): Promise<ICategoryProduct | null> => {
+export const detail = async (id: string): Promise<ICategoryProduct | null> => {
   return await CategoryProduct.findById(id);
 };
 

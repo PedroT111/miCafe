@@ -8,7 +8,7 @@ export const getAll = async (): Promise<IProduct[]> => {
   return await Product.find();
 };
 
-export const getOne = async (id: any): Promise<IProduct | null> => {
+export const getOne = async (id: string): Promise<IProduct | null> => {
   return await Product.findById(id);
 };
 
@@ -16,13 +16,15 @@ export const getByName = async (name: string): Promise<IProduct | null> => {
   return await Product.findOne({ name });
 };
 
-export const getByCategory = async (categoryId: any): Promise<IProduct[]> => {
+export const getByCategory = async (
+  categoryId: string
+): Promise<IProduct[]> => {
   return await Product.find({ categoryId });
 };
 
 export const update = async (
-  id: any,
-  productData: IProduct
+  id: string,
+  productData: Partial<IProduct>
 ): Promise<IProduct | null> => {
   return await Product.findByIdAndUpdate(
     id,

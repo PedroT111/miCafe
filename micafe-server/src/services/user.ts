@@ -10,7 +10,7 @@ export const getOneByToken = async (
   return await User.findOne({ validationToken });
 };
 
-export const getOneById = async (id: any): Promise<IUser | null> => {
+export const getOneById = async (id: string): Promise<IUser | null> => {
   return await User.findById(id).select('-password -validationToken');
 };
 
@@ -20,7 +20,7 @@ export const createOne = async (userData: IUser): Promise<IUser> => {
 };
 
 export const update = async (
-  id: any,
+  id: string,
   user: Partial<IUser>
 ): Promise<IUser | null> => {
   return await User.findByIdAndUpdate(
@@ -33,7 +33,7 @@ export const update = async (
   );
 };
 
-export const deleteOne = async (id: any): Promise<IUser | null> => {
+export const deleteOne = async (id: string): Promise<IUser | null> => {
   return await User.findByIdAndUpdate(
     id,
     {

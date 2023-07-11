@@ -76,7 +76,7 @@ export const resetPassword = catchAsync(
 
 export const getMe = catchAsync(
   async (req: Request, res: Response): Promise<void> => {
-    const id = req.headers.user;
+    const id = req.headers.user as string;
     const user = await getOneById(id);
     res.status(200).json({
       ok: true,
@@ -94,7 +94,7 @@ export const updateUser = catchAsync(
       next(new AppError('Something was wrong!', 400));
       return;
     }
-    if (req.body.email) {
+    if (req.body.email != null) {
       next(new AppError('Cannot modify email or password', 400));
       return;
     }
