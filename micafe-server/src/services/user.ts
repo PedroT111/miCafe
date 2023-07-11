@@ -19,7 +19,10 @@ export const createOne = async (userData: IUser): Promise<IUser> => {
   return await user.save();
 };
 
-export const update = async (id: any, user: IUser): Promise<IUser | null> => {
+export const update = async (
+  id: any,
+  user: Partial<IUser>
+): Promise<IUser | null> => {
   return await User.findByIdAndUpdate(
     id,
     {

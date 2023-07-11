@@ -94,7 +94,7 @@ export const updateUser = catchAsync(
       next(new AppError('Something was wrong!', 400));
       return;
     }
-    if (req.body.email !== null || req.body.password !== null) {
+    if (req.body.email) {
       next(new AppError('Cannot modify email or password', 400));
       return;
     }
