@@ -1,0 +1,29 @@
+.bg-row{
+    background-image: url('../../../../assets/cafe/cafeFondo.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    overflow: auto;
+}
+.form-label {
+    font-size: 0.9rem;
+}
+.txt-title{
+    font-size: 1.2rem;
+}
+.custom-text {
+    font-size: 0.9rem;
+    text-align: center;
+}
+hr {
+    color: grey
+}
+@media (max-width: 768px) {
+    /* Estilos para dispositivos móviles (hasta 768px) */
+    .bg-row {
+      min-height: auto;
+      background-size: 100% cover;    
+
+    }
+  }
