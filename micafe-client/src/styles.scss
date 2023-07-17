@@ -1,0 +1,9 @@
+// Override Bootstrap variables
+$primary: #fafcfc;
+$secondary: #0cbad1;
+$danger: #fcc800;
+$dark: #0e110f;
+
+
+// Import the rest of Bootstrap styles
+@import 'bootstrap/scss/bootstrap';
