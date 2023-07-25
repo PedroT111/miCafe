@@ -1,16 +1,8 @@
-.bg-row{
-    background-image: url('../../../../../assets/cafe/cafeFondo.jpg');
+.bg-container {
+    background-image: url('../../../../assets/cafe/cafeFondo.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     height: 100vh;
     overflow: auto;
 }
-@media (max-width: 768px) {
-    /* Estilo para dispositivos móviles (hasta 768px) */
-    .bg-row {
-      min-height: auto;
-      background-size: 100% cover;    
-
-    }
-  }
