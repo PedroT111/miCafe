@@ -36,7 +36,7 @@ export const forgotPassword = catchAsync(
     const { email } = req.body;
     const user = await getOneByEmail(email);
     if (user == null) {
-      res.json({
+      res.status(404).json({
         error: 'User not found'
       });
       return;
@@ -59,7 +59,7 @@ export const resetPassword = catchAsync(
     const { password } = req.body;
     const user = await getOneByToken(validationToken);
     if (user == null) {
-      res.json({
+      res.status(404).json({
         error: 'Invalid reset token'
       });
       return;

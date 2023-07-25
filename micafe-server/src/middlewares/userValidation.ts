@@ -1,7 +1,6 @@
 import config from '../config';
 import jwt from 'jsonwebtoken';
 import catchAsync from '../utils/catchAsync';
-import AppError from '../utils/appError';
 import bcrypt from 'bcrypt';
 import { type NextFunction, type Request, type Response } from 'express';
 import { type IUser, User } from '../models/userModel';
@@ -32,8 +31,9 @@ export const registerValidation = catchAsync(
     const { email } = req.body;
     const findUser = await User.find({ email });
     if (findUser.length !== 0) {
-      res.json({
-        error: 'An account is already registered with your email.'
+      res.status(401).json({
+        ok: 'false',
+        message: 'An account is already registered with your email.'
       });
     }
     const newUser = await User.create(req.body);
@@ -52,7 +52,10 @@ export const loginValidation = catchAsync(
     const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (user == null) {
-      next(new AppError('There is no user registered with that email.', 400));
+      res.status(401).json({
+        ok: 'false',
+        message: 'Invalid password or email'
+      });
       return;
     }
     if (!user.isValidated) {
@@ -69,7 +72,7 @@ export const loginValidation = catchAsync(
     if (!validPassword) {
       res.status(401).json({
         ok: 'false',
-        message: 'Invalid password'
+        message: 'Invalid password or email'
       });
     }
 
