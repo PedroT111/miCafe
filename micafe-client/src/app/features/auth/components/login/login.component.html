@@ -1,69 +1,51 @@
-<div class="row m-0 bg-row vh-100 d-flex justify-content-center align-items-center">
-    <div class="col-12 col-sm-8 col-md-6 col-lg-4 p-3">
-      <div class="card p-5">
-        <h2 class="text-center text-dark mb-3">MiCafeApp</h2>
-        <h3 class="txt-title text-center text-dark mb-4">Ingrese a su cuenta</h3>
-        <button class="btn px-2 py-2 mb-2 btn-google">
-            <img src="/assets/logos/google.png" alt="Google Logo" class="google-logo">
-            <span>Google</span>
-        </button>
-        <hr class="mb-3">
-        <form [formGroup]="loginForm">
-          <div class="mb-3">
-            <label class="form-label">Email</label>
-            <input
-              formControlName="email"
-              name="email"
-              type="text"
-              class="form-control"
-              id="txtUsuario"
-              [ngClass]="{ 'is-invalid': loginForm.get('email')?.invalid && loginForm.get('email')?.touched }"
-            />
-            <div *ngIf="hasError('email', 'required')" class="invalid-feedback">
-              Ingrese un email
-            </div>
-            <div *ngIf="hasError('email', 'email')" class="invalid-feedback">
-              Email no válido
-            </div>
+<div class="row m-0  vh-100 d-flex justify-content-center align-items-center">
+  <div class="col-12 col-sm-8 col-md-6 col-lg-4 p-3">
+    <div class="card p-5">
+      <div class="mb-4 p-2 text-center">
+        <img src="/assets/logos/logo4.png" class="card-img-top mb-3 custom-logo" alt="logo">
+        <h3 class="txt-title">Ingrese a su cuenta</h3>
+      </div>
+      <button class="btn px-2 py-2 mb-2 btn-google">
+        <img src="/assets/logos/google.png" alt="Google Logo" class="google-logo">
+        <span>Google</span>
+      </button>
+      <hr class="mb-3">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input formControlName="email" name="email" type="text" class="form-control" id="txtEmail"
+            [ngClass]="{ 'is-invalid': loginForm.get('email')?.invalid && loginForm.get('email')?.touched }" />
+          <div *ngIf="hasError('email', 'required')" class="invalid-feedback">
+            Ingrese un email
           </div>
-          <div class="mb-2">
-            <label class="form-label">Contraseña</label>
-            <input
-              formControlName="password"
-              name="password"
-              type="password"
-              class="form-control"
-              id="txtPassword"
-              [ngClass]="{ 'is-invalid': loginForm.get('password')?.invalid && loginForm.get('password')?.touched }"
-            />
-            <div *ngIf="hasError('password', 'required')" class="invalid-feedback">
-              Ingrese una contraseña
-            </div>
-            <div *ngIf="hasError('password', 'minlength')" class="invalid-feedback">
-              Mínimo 8 caracteres
-            </div>
+          <div *ngIf="hasError('email', 'email')" class="invalid-feedback">
+            Email no válido
           </div>
-          <div class="mb-3">
-            <span class="custom-text d-block">¿Olvidaste tu contraseña?</span>
+        </div>
+        <div class="mb-2">
+          <label class="form-label">Contraseña</label>
+          <input formControlName="password" name="password" type="password" class="form-control" id="txtPassword"
+            [ngClass]="{ 'is-invalid': loginForm.get('password')?.invalid && loginForm.get('password')?.touched }" />
+          <div *ngIf="hasError('password', 'required')" class="invalid-feedback">
+            Ingrese una contraseña
           </div>
-          <div class="mb-4">
-            <button type="button" class="btn btn-danger text-light w-100">Continuar</button>
+          <div *ngIf="hasError('password', 'minlength')" class="invalid-feedback">
+            Mínimo 8 caracteres
           </div>
-          <div class="mb-2">
-            <span class="custom-text d-block">¿No tienes cuenta?</span>
-          </div>
-          <div>
-            <button type="button" class="btn btn-dark w-100" [routerLink]="['/auth/signup']">Registrarse</button>
-          </div>
-        </form>
+        </div>
+        <div class="mb-3">
+          <a class="custom-text btn border-0 w-100" [routerLink]="['/auth/password-reset']">¿Olvidaste tu contraseña?</a>
+        </div>
+        <div class="mb-4">
+          <button type="submit" class="btn btn-info text-light w-100">Continuar</button>
+        </div>
+      </form>
+      <div class="mb-2">
+        <a class="custom-text btn border-0 w-100">¿Ya tienes cuenta?</a>
+      </div>
+      <div>
+        <button type="button" class="btn btn-dark w-100" [routerLink]="['/auth/signup']">Registrarse</button>
       </div>
     </div>
   </div>
-  
-  
-  
-  
-  
-  
-  
-  
+</div>
