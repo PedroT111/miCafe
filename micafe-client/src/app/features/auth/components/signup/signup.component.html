@@ -1,55 +1,86 @@
-<div class="row m-0 bg-row d-flex justify-content-center align-items-center">
+<div class="row m-0 vh-100 d-flex justify-content-center align-items-center">
     <div class="col-12 col-sm-8 col-md-6 col-lg-4 p-3">
       <div class="card p-5">
-        <h2 class="text-center text-dark mb-3">MiCafeApp</h2>
+        <div class="mb-2 p-2 text-center">
+          <img src="/assets/logos/logo4.png" class="card-img-top mb-3 custom-logo" alt="logo">
+        </div>
         <hr class="mb-3">
-        <form>
+        <form [formGroup]="signUpForm" *ngIf="!showMessageSuccess">
             <div class="mb-3">
                 <label class="form-label">Nombre</label>
                 <input
-                  name="usuario"
+                formControlName="name"
+                  name="name"
                   type="text"
                   class="form-control"
-                  id="txtUsuario"
+                  id="txtName"
+                  [ngClass]="{ 'is-invalid': signUpForm.get('name')?.invalid && signUpForm.get('name')?.touched }"
                 />
+                <div *ngIf="hasError('name', 'required')" class="invalid-feedback">
+                  Ingrese un nombre
+                </div>
               </div>
               <div class="mb-3">
                 <label class="form-label">Apellido</label>
                 <input
-                  name="usuario"
+                  formControlName="lastName"
+                  name="lastName"
                   type="text"
                   class="form-control"
-                  id="txtUsuario"
+                  id="txtLastName"
+                  [ngClass]="{ 'is-invalid': signUpForm.get('lastName')?.invalid && signUpForm.get('lastName')?.touched }"
                 />
+                <div *ngIf="hasError('lastName', 'required')" class="invalid-feedback">
+                  Ingrese un apellido
+                </div>
               </div>
           <div class="mb-3">
             <label class="form-label">Email</label>
             <input
-              name="usuario"
-              type="text"
+              formControlName="email"
+              name="email"
+              type="email"
               class="form-control"
-              id="txtUsuario"
+              id="txtEmail"
+              [ngClass]="{ 'is-invalid': signUpForm.get('email')?.invalid && signUpForm.get('email')?.touched }"
             />
+            <div *ngIf="hasError('email', 'required')" class="invalid-feedback">
+              Ingrese un email
+            </div>
+            <div *ngIf="hasError('email', 'email')" class="invalid-feedback">
+              Email no válido
+            </div>
           </div>
           <div class="mb-3">
             <label class="form-label">Contraseña</label>
             <input
+            formControlName="password"
               name="password"
               type="password"
               class="form-control"
               id="txtPassword"
+              [ngClass]="{ 'is-invalid': signUpForm.get('password')?.invalid && signUpForm.get('password')?.touched }"
             />
+            <div *ngIf="hasError('password', 'required')" class="invalid-feedback">
+              Ingrese una contraseña
+            </div>
+            <div *ngIf="hasError('password', 'minlength')" class="invalid-feedback">
+              Mínimo 8 caracteres
+            </div>
           </div>
           <div class="mb-4">
-            <button type="button" class="btn btn-danger text-light w-100">Continuar</button>
-          </div>
-          <div class="mb-2">
-            <span class="custom-text d-block">¿Ya tenés cuenta?</span>
-          </div>
-          <div>
-            <button type="button" class="btn btn-dark w-100" [routerLink]="['/auth/login']">Iniciar Sesión</button>
+            <button type="button" class="btn btn-info text-light w-100" (click)="onSignUp()">Continuar</button>
           </div>
         </form>
+        <div *ngIf="showMessageSuccess" class="alert alert-info mt-3">
+          Por favor, valida tu correo electrónico. Hemos enviado un enlace de confirmación a tu bandeja de entrada.
+        </div>
+        <div class="mb-2">
+          <span class="custom-text d-block">¿Ya tenés cuenta?</span>
+        </div>
+        <div>
+          <button type="button" class="btn btn-dark w-100" [routerLink]="['/auth/login']">Iniciar Sesión</button>
+        </div>
       </div>
     </div>
   </div>
