@@ -1,0 +1,21 @@
+.bg-container {
+    background-image: url('../../../../../assets/cafe/cafeceleste.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 650px;
+}
+
+.title {
+    font-size: 2.2rem;
+    font-weight: bolder;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 1px #BEBEBE;
+}
+.txt-banner{
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+.btn{
+    width: 35%;
+}
