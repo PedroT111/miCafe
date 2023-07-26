@@ -14,10 +14,9 @@
                   type="text"
                   class="form-control"
                   id="txtName"
-                  [ngClass]="{ 'is-invalid': signUpForm.get('name')?.invalid && signUpForm.get('name')?.touched }"
+                  appFormValidation [form]="signUpForm" [fieldName]="'name'" 
                 />
-                <div *ngIf="hasError('name', 'required')" class="invalid-feedback">
-                  Ingrese un nombre
+                <div class="invalid-feedback" appFormError [control]="signUpForm.get('name')">
                 </div>
               </div>
               <div class="mb-3">
@@ -28,10 +27,9 @@
                   type="text"
                   class="form-control"
                   id="txtLastName"
-                  [ngClass]="{ 'is-invalid': signUpForm.get('lastName')?.invalid && signUpForm.get('lastName')?.touched }"
+                  appFormValidation [form]="signUpForm" [fieldName]="'lastName'" 
                 />
-                <div *ngIf="hasError('lastName', 'required')" class="invalid-feedback">
-                  Ingrese un apellido
+                <div class="invalid-feedback" appFormError [control]="signUpForm.get('lastName')" >
                 </div>
               </div>
           <div class="mb-3">
@@ -42,13 +40,9 @@
               type="email"
               class="form-control"
               id="txtEmail"
-              [ngClass]="{ 'is-invalid': signUpForm.get('email')?.invalid && signUpForm.get('email')?.touched }"
+              appFormValidation [form]="signUpForm" [fieldName]="'email'" 
             />
-            <div *ngIf="hasError('email', 'required')" class="invalid-feedback">
-              Ingrese un email
-            </div>
-            <div *ngIf="hasError('email', 'email')" class="invalid-feedback">
-              Email no válido
+            <div class="invalid-feedback" appFormError [control]="signUpForm.get('email')">
             </div>
           </div>
           <div class="mb-3">
@@ -59,13 +53,9 @@
               type="password"
               class="form-control"
               id="txtPassword"
-              [ngClass]="{ 'is-invalid': signUpForm.get('password')?.invalid && signUpForm.get('password')?.touched }"
+              appFormValidation [form]="signUpForm" [fieldName]="'password'" 
             />
-            <div *ngIf="hasError('password', 'required')" class="invalid-feedback">
-              Ingrese una contraseña
-            </div>
-            <div *ngIf="hasError('password', 'minlength')" class="invalid-feedback">
-              Mínimo 8 caracteres
+            <div class="invalid-feedback" appFormError [control]="signUpForm.get('password')">
             </div>
           </div>
           <div class="mb-4">
