@@ -4,13 +4,17 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import {RouterModule} from '@angular/router';
 import {ReactiveFormsModule} from '@angular/forms';
+import { FormValidationDirective } from './directives/form-validation.directive';
+import { FormErrorDirective } from './directives/form-error.directive';
 
 
 
 @NgModule({
   declarations: [
     NavbarComponent,
-    FooterComponent
+    FooterComponent,
+    FormValidationDirective,
+    FormErrorDirective
   ],
   imports: [
     CommonModule,
@@ -19,7 +23,9 @@ import {ReactiveFormsModule} from '@angular/forms';
   exports: [
     NavbarComponent,
     FooterComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormValidationDirective,
+    FormErrorDirective
   ]
 })
 export class SharedModule { }
