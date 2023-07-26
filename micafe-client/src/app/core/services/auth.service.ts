@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {
@@ -49,5 +50,10 @@ export class AuthService {
 
   logOut() {
     localStorage.clear();
+  }
+
+  isEmailRegistered(email: string):Observable<any>{
+    console.log(email, 'email')
+    return this.httpClient.post<any>('/authenticate/check-email',{ email});
   }
 }

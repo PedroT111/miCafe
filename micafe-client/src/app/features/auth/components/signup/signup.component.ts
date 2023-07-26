@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { EmailValidator } from '../../validators/check-email';
 
 @Component({
   selector: 'app-signup',
@@ -11,29 +12,29 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class SignupComponent implements OnInit, OnDestroy {
   sub: Subscription = new Subscription();
-  showMessageSuccess: boolean = true;
+  showMessageSuccess: boolean;
   signUpForm: FormGroup;
   constructor(
     private authService: AuthService,
     private formBuilder: FormBuilder,
-    private toastr: ToastrService
+    private toastr: ToastrService,
   ) {
     this.signUpForm = this.formBuilder.group({
       name: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email], [EmailValidator.checkEmail(this.authService)]],
       password: ['', [Validators.required, Validators.minLength(8)]]
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.showMessageSuccess= false;
+  }
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
-  hasError(controlName: string, error: string): boolean {
-    return !!this.signUpForm.get(controlName)?.hasError(error);
-  }
   onSignUp() {
+    console.log(this.signUpForm.get('email')?.errors, 'erroreees')
     this.signUpForm.markAllAsTouched();
     if (this.signUpForm.valid) {
       this.sub.add(
