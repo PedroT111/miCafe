@@ -13,28 +13,34 @@
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <div class="mb-3">
           <label class="form-label">Email</label>
-          <input formControlName="email" name="email" type="text" class="form-control" id="txtEmail"
-            [ngClass]="{ 'is-invalid': loginForm.get('email')?.invalid && loginForm.get('email')?.touched }" />
-          <div *ngIf="hasError('email', 'required')" class="invalid-feedback">
-            Ingrese un email
-          </div>
-          <div *ngIf="hasError('email', 'email')" class="invalid-feedback">
-            Email no válido
-          </div>
+          <input 
+            formControlName="email" 
+            name="email" 
+            type="text" 
+            class="form-control" 
+            id="txtEmail" 
+            appFormValidation
+            [form]="loginForm" 
+            [fieldName]="'email'" />
+          <div class="invalid-feedback" appFormError [control]="loginForm.get('email')"></div>
         </div>
         <div class="mb-2">
           <label class="form-label">Contraseña</label>
-          <input formControlName="password" name="password" type="password" class="form-control" id="txtPassword"
-            [ngClass]="{ 'is-invalid': loginForm.get('password')?.invalid && loginForm.get('password')?.touched }" />
-          <div *ngIf="hasError('password', 'required')" class="invalid-feedback">
-            Ingrese una contraseña
-          </div>
-          <div *ngIf="hasError('password', 'minlength')" class="invalid-feedback">
-            Mínimo 8 caracteres
+          <input 
+            formControlName="password" 
+            name="password" 
+            type="password" 
+            class="form-control" 
+            id="txtPassword"
+            appFormValidation 
+            [form]="loginForm" 
+            [fieldName]="'password'" />
+          <div class="invalid-feedback" appFormError [control]="loginForm.get('password')">
           </div>
         </div>
         <div class="mb-3">
-          <a class="custom-text btn border-0 w-100" [routerLink]="['/auth/password-reset']">¿Olvidaste tu contraseña?</a>
+          <a class="custom-text btn border-0 w-100" [routerLink]="['/auth/password-reset']">¿Olvidaste tu
+            contraseña?</a>
         </div>
         <div class="mb-4">
           <button type="submit" class="btn btn-info text-light w-100">Continuar</button>

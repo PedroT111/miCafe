@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -12,6 +13,7 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnDestroy, OnInit {
   sub: Subscription = new Subscription();
   loginForm: FormGroup;
+
   constructor(
     private toastr: ToastrService,
     private formBuilder: FormBuilder,
@@ -20,17 +22,14 @@ export class LoginComponent implements OnDestroy, OnInit {
   ) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]]
+      password: ['', [Validators.required]]
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
   ngOnDestroy(): void {
     this.sub.unsubscribe();
-  }
-
-  hasError(controlName: string, error: string): boolean {
-    return !!this.loginForm.get(controlName)?.hasError(error);
   }
 
   onSubmit() {
