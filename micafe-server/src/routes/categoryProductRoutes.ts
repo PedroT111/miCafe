@@ -9,8 +9,8 @@ import { isAdmin } from '../middlewares/roleUser';
 
 const router = express.Router();
 
-router.post('/new', isAdmin, createCategory);
-router.get('/categories', isAdmin, getCategories);
-router.route('/:id').get(isAdmin, getOne).put(isAdmin, updateCategory);
+router.post('/new', createCategory);
+router.get('/categories', getCategories);
+router.route('/:id').get(getOne).put(updateCategory);
 
 export default router;
