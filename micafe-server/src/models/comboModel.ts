@@ -7,6 +7,7 @@ interface ICombo extends Document {
   description: string;
   urlImage: string;
   products: [];
+  isDeleted: boolean;
 }
 
 const comboSchema = new Schema<ICombo>({
@@ -34,7 +35,11 @@ const comboSchema = new Schema<ICombo>({
       },
       quantity: Number
     }
-  ]
+  ],
+  isDeleted: {
+    type: Boolean,
+    default: false
+  }
 });
 comboSchema.pre('save', async function (next) {
   if (!this.isModified('products')) {
