@@ -1,0 +1,28 @@
+<div class="row m-0 px-3 h-100 d-flex justify-content-center">
+    <div class="col-12">
+        <div class="row mt-2">
+            <div class="col-md-8 px-4 py-3">
+                <h2>Productos</h2>
+            </div>
+            <div class="col-md-4 p-3 d-flex justify-content-between">
+                <button class="btn btn-dark" (click)="openFormPriceAjustem()"><span>Ajustar Precios</span></button>
+                <button class="btn btn-dark" (click)="create()"><span>+ Agregar Producto</span></button>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="d-flex justify-content-between">
+                <div class="w-25">
+                    <app-filter [title]="'Filtrar por categoría'" [filterOptions]="filterOptions" [selectedFilter]="selectedCategoryFilter"
+                        (filterSelected)="onCategoryFilterSelected($event)"></app-filter>
+                </div>
+                <div class="w-25">
+                    <app-search (searchTextChanged)="onSearchTextChange($event)"></app-search>
+                </div>
+            </div>
+            <div class="mt-2">
+                <app-table [data]="filteredData" [headers]="tableHeaders" [pageSize]="5"
+                    (seeMore)="edit($event)" (delete)="deleteProduct($event)"></app-table>
+            </div>
+        </div>
+    </div>
+</div>
