@@ -1,0 +1,7 @@
+  <div class="input-group">
+    <span class="input-group-text" id="basic-addon1">{{title}}</span>
+    <select class="form-select" id="filterDropdown" [(ngModel)]="selectedFilter" (ngModelChange)="onFilterSelected($event)">
+        <option selected value="">All</option>
+        <option *ngFor="let option of filterOptions" [value]="option._id">{{ option.name }}</option>
+    </select>
+  </div>
