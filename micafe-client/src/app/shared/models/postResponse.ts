@@ -1,4 +1,5 @@
-export interface PostResponse{
+export interface ApiResponse{
     ok: boolean;
     msg: string;
 }
+
