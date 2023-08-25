@@ -1,5 +1,6 @@
 import express from 'express';
 import {
+  checkEmailExists,
   deleteUser,
   forgotPassword,
   getMe,
@@ -28,4 +29,5 @@ router
   .put(authenticateToken, updateUser)
   .delete(authenticateToken, deleteUser);
 
+router.post('/check-email', checkEmailExists);
 export default router;

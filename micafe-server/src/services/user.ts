@@ -11,7 +11,7 @@ export const getOneByToken = async (
 };
 
 export const getOneById = async (id: string): Promise<IUser | null> => {
-  return await User.findById(id).select('-password -validationToken');
+  return await User.findById(id).select('-password -validationToken').lean();
 };
 
 export const createOne = async (userData: IUser): Promise<IUser> => {
