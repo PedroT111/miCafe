@@ -1,0 +1,17 @@
+.form-check-input[type="checkbox"]:checked {
+  background-color: blue;
+  border-color: blue;
+}
+.current-image{
+  height: 250px;
+  overflow: hidden;
+  border: 1px rgb(227, 226, 226) solid;
+}
+
+.custom-btn{
+  min-width: 200px;
+}
+
+.custom-txtarea{
+  height: 120px;
+}

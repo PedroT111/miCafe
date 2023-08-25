@@ -1,0 +1,58 @@
+<h3 class="text-center gradient-text mb-3">{{editMode ? 'Editar producto' : 'Nuevo producto'}}</h3>
+<form [formGroup]="form" class="p-1">
+  <div class="row d-flex justify-content-center">
+    <div class="col-lg-3 col-md-5 px-4">
+      <div class="mb-3">
+        <label for="" class="form-label">Nombre</label>
+        <input type="text" class="form-control" formControlName="name" appFormValidation [form]="form"
+          [fieldName]="'name'">
+        <div class="invalid-feedback" appFormError [control]="form.get('name')"></div>
+      </div>
+      <div class="current-image mb-1 w-100 d-flex justify-content-center align-items-center">
+        <img class="img-fluid" [src]="getImageSource()" alt="Imagen actual">
+      </div>
+      <div class="mb-3">
+        <input type="file" class="form-control" id="customFile1" accept="image/*"
+          (change)="handleImageChange($event)" />
+      </div>
+      <input type="hidden" formControlName="urlImage" appFormValidation [form]="form" [fieldName]="'urlImage'">
+      <div class="invalid-feedback" appFormError [control]="form.get('urlImage')"></div>
+    </div>
+
+
+
+    <div class="col-lg-3 col-md-5 col-sm-12 px-4">
+      <div class="mb-3">
+        <label for="" class="form-label">Precio</label>
+        <input type="number" class="form-control" formControlName="price" appFormValidation [form]="form"
+          [fieldName]="'price'">
+        <div class="invalid-feedback" appFormError [control]="form.get('price')"></div>
+      </div>
+      <div class="mb-3">
+        <label for="txtDescription" class="form-label">Descripción</label>
+        <textarea class="custom-txtarea form-control" name="description" id="txtDescription" formControlName="description"
+        appFormValidation [form]="form" [fieldName]="'description'"></textarea>
+        <div class="invalid-feedback" appFormError [control]="form.get('description')"></div>
+      </div>
+      <div class="mb-3">
+        <label for="" class="form-label">Categoria</label>
+        <select class="form-select" formControlName="category" appFormValidation [form]="form" [fieldName]="'category'">
+          <option *ngFor="let c of categorias" [value]="c._id">{{c.name}}</option>
+        </select>
+        <div class="invalid-feedback" appFormError [control]="form.get('category')"></div>
+      </div>
+      <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" formControlName="hasMilk" appFormValidation [form]="form"
+          [fieldName]="'hasMilk'">
+          <label class="form-check-label">Tiene Leche</label>
+        <div class="invalid-feedback" appFormError [control]="form.get('hasMilk')"></div>
+      </div>
+    </div>
+  </div>
+  <div class="row d-flex justify-content-center">
+    <div class="custom-btn w-25 py-3 mt-3">
+      <button type="submit" class="btn btn-info text-light w-100" (click)="onSend()">{{editMode ? buttons.edit :
+        buttons.create }}</button>
+    </div>
+  </div>
+</form>
