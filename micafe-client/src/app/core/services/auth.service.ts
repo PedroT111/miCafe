@@ -8,7 +8,7 @@ import {
   UserAuth
 } from 'src/app/shared/models/user';
 import { Observable } from 'rxjs';
-import { PostResponse } from 'src/app/shared/models/postResponse';
+import { ApiResponse } from 'src/app/shared/models/postResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -23,8 +23,8 @@ export class AuthService {
   signUp(user: User): Observable<RegistrationRes> {
     return this.httpClient.post<RegistrationRes>('/authenticate/signup', user);
   }
-  resetPassword(email: string): Observable<PostResponse> {
-    return this.httpClient.post<PostResponse>(
+  resetPassword(email: string): Observable<ApiResponse> {
+    return this.httpClient.post<ApiResponse>(
       '/authenticate/forgot-password',
       email
     );
