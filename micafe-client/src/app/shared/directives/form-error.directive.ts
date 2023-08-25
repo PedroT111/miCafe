@@ -14,12 +14,12 @@ export class FormErrorDirective /*implements DoCheck*/{
     required: 'Campo obligatorio',
     email: 'Ingrese un email válido',
     minlength: 'Mínimo 8 caracteres',
-    emailExisting: 'El email ingresado ya está registrado'
+    emailExisting: 'El email ingresado ya está registrado',
+    min: 'Ingrese un valor mayor'
   }
 
 
   private updateView(errors: ValidationErrors | null | undefined) {
-    console.log(errors)
     if (errors) {
       Object.keys(errors).forEach(errorKey => {
         const errorMessage = this.controlErrors[errorKey];
