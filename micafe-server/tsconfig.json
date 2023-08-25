@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "target": "es2021", // Otra versión de ECMAScript según tu necesidad
+    "target": "es2021", 
     "module": "commonjs",
     "strict": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
   },
   "exclude": [
     "node_modules"
