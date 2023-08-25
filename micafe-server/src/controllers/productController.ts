@@ -12,11 +12,9 @@ import {
   getOne,
   productsNoSale,
   update,
-  updateOffer,
   updatePrices
 } from '../services/product';
 import AppError from '../utils/appError';
-import { type IChangePriceHistory } from '../models/priceChangeHistory';
 
 export const createProduct = catchAsync(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
