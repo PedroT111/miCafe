@@ -1,14 +1,22 @@
+/* eslint-disable @typescript-eslint/no-base-to-string */
 import { type Request, type Response, type NextFunction } from 'express';
 import catchAsync from '../utils/catchAsync';
 import {
   create,
+  createChangePriceHistory,
+  deleteOne,
   getAll,
   getByCategory,
   getByName,
+  getOfferProducts,
   getOne,
-  update
+  productsNoSale,
+  update,
+  updateOffer,
+  updatePrices
 } from '../services/product';
 import AppError from '../utils/appError';
+import { type IChangePriceHistory } from '../models/priceChangeHistory';
 
 export const createProduct = catchAsync(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -22,7 +30,7 @@ export const createProduct = catchAsync(
     await create(newProduct);
     res.status(201).json({
       ok: true,
-      newProduct
+      product: newProduct
     });
   }
 );
@@ -69,6 +77,38 @@ export const getProductsByCategory = catchAsync(
   }
 );
 
+export const getProductsOnSale = catchAsync(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const productsOnSale = await getOfferProducts();
+    if (productsOnSale.length === 0) {
+      res.status(200).json({
+        ok: true,
+        msg: 'There are no products on sale.'
+      });
+    }
+    res.status(200).json({
+      ok: true,
+      products: productsOnSale
+    });
+  }
+);
+
+export const getProductsNoSale = catchAsync(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const noSaleProducts = await productsNoSale();
+    if (noSaleProducts.length === 0) {
+      res.status(200).json({
+        ok: true,
+        msg: 'There are no products no sale.'
+      });
+    }
+    res.status(200).json({
+      ok: true,
+      products: noSaleProducts
+    });
+  }
+);
+
 export const updateProduct = catchAsync(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const { id } = req.params;
@@ -77,14 +117,95 @@ export const updateProduct = catchAsync(
       next(new AppError('Id parameter is missing', 400));
       return;
     }
+    const findProduct = await getOne(id);
+    if (findProduct != null && findProduct._id.toString() !== id) {
+      next(new AppError('There is already a product with that name.', 409));
+      return;
+    }
+
     const query = await update(id, productToEdit);
     if (query == null) {
       next(new AppError('Something was wrong!', 400));
       return;
     }
+
+    if (
+      productToEdit.price !== null &&
+      findProduct !== null &&
+      productToEdit.price !== findProduct.price
+    ) {
+      const changePrice = await createChangePriceHistory(
+        id,
+        findProduct.price,
+        productToEdit.price
+      );
+      if (changePrice == null) {
+        next(new AppError('Something was wrong!', 400));
+        return;
+      }
+    }
     res.status(200).json({
       ok: true,
-      query
+      product: query
+    });
+  }
+);
+
+export const updatePricesByCategory = catchAsync(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const { categoryId, percentage } = req.body;
+    if (categoryId == null || percentage == null) {
+      next(new AppError('missing parameters', 400));
+    }
+    const productsInCategory = await getByCategory(categoryId);
+    if (productsInCategory.length === 0) {
+      throw new AppError('No products found in the category', 404);
+    }
+
+    const pricesBeforeUpdate = productsInCategory.map((p) => p.price);
+
+    const query = await updatePrices(categoryId, percentage);
+    if (query == null) {
+      next(new AppError('Something was wrong!', 400));
+    }
+
+    const pricesAfterUpdate = query?.map((p) => p.price);
+
+    if (pricesAfterUpdate !== undefined && pricesBeforeUpdate !== undefined) {
+      for (let i = 0; i < productsInCategory.length; i++) {
+        const changePrice = await createChangePriceHistory(
+          productsInCategory[i]._id.toString(),
+          pricesBeforeUpdate[i],
+          pricesAfterUpdate[i]
+        );
+      }
+    }
+
+    res.status(200).json({
+      ok: true,
+      msg: 'Precios actualizados correctamente'
+    });
+  }
+);
+
+export const deleteProduct = catchAsync(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const { id } = req.params;
+    if (id === '') {
+      next(new AppError('Id parameter is missing', 400));
+      return;
+    }
+    const product = await getOne(id);
+    if (product == null) {
+      next(new AppError('Something was wrong!', 400));
+    }
+    const deletedProduct = await deleteOne(id);
+    if (deletedProduct == null) {
+      next(new AppError('Something was wrong!', 400));
+    }
+    res.status(200).json({
+      ok: true,
+      product: deletedProduct
     });
   }
 );
