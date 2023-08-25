@@ -1,0 +1,43 @@
+<form class="p-4 mx-auto" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+        <label class="form-label">Producto</label>
+        <select name="" id="_id" class="form-select" formControlName="productId" appFormValidation [form]="form"
+            [fieldName]="'productId'">
+            <option *ngFor="let p of products" [value]="p._id">{{p.name}}</option>
+        </select>
+        <div class="invalid-feedback" appFormError [control]="form.get('productId')"></div>
+    </div>
+    <div class="mb-3 input-group">
+        <span class="input-group-text">Precio Actual</span>
+        <span class="input-group-text">$</span>
+        <span class="form-control custom-styled-input">{{ valorActual }}</span>
+    </div>
+    <div class="mb-3 input-group">
+        <span class="input-group-text">Precio Oferta</span>
+        <span class="input-group-text">$</span>
+        <input type="text" class="form-control" formControlName="value" appFormValidation [form]="form"
+            [fieldName]="'value'">
+        <div class="invalid-feedback" appFormError [control]="form.get('value')"></div>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Fecha de Oferta</label>
+        <app-datepicker [startDateForEdit]="startDate" [endDateForEdit]="endDate" (dateSelection)="handleDateSelection($event)" required></app-datepicker>        
+    </div>
+    <div class="mb-3 d-flex">
+        <div class="w-50">
+            <label  class="form-label">Hora de Inicio</label>
+            <app-timepicker [date]="startDate" (selectedTime)="onTimeSelection($event, 'start')" required></app-timepicker>
+        </div>
+        <div class="w-50">
+            <label for="" class="form-label">Hora de Fin</label>
+            <app-timepicker [date]="endDate" (selectedTime)="onTimeSelection($event, 'end')" required></app-timepicker>
+        </div>
+    </div>
+    <div *ngIf="validateDate" class="alert alert-danger">
+        <span>Ingrese correctamente fecha y hora</span>
+      </div>
+     
+    <div class="mt-3 py-3 d-flex">
+        <button class="btn btn-dark w-50 mx-auto">Registrar</button>
+    </div>
+</form>
