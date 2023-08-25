@@ -12,6 +12,7 @@ import { HomeComponent } from './features/home/index/home.component';
 import { HomeBannerComponent } from './features/home/components/home-banner/home-banner.component';
 import { HomeUsComponent } from './features/home/components/home-us/home-us.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     AppRoutingModule,
     ToastrModule.forRoot(),
     BrowserAnimationsModule,
-    SharedModule
+    SharedModule,
+    NgbModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: BaseURLInterceptorService, multi: true}
