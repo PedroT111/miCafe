@@ -10,10 +10,11 @@ import { isAdmin } from '../middlewares/roleUser';
 
 const router = express.Router();
 
-router.post('/new', isAdmin, createCombo);
-router.put('/:id', isAdmin, updateCombo);
-router.get('/:id', getComboDetails);
-router.delete('/:id', deleteCombo);
 router.get('/', getCombos);
-
+router.post('/new', createCombo);
+router
+  .route('/:id')
+  .put(isAdmin, updateCombo)
+  .get(getComboDetails)
+  .delete(isAdmin, deleteCombo);
 export default router;
