@@ -13,7 +13,7 @@ export const getById = async (id: string): Promise<ICombo | null> => {
 };
 
 export const getAll = async (): Promise<ICombo[]> => {
-  return await Combo.find();
+  return await Combo.find({ isDeleted: false }).populate('products.product');
 };
 
 export const update = async (
