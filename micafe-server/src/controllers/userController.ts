@@ -130,3 +130,11 @@ export const deleteUser = catchAsync(
     });
   }
 );
+export const checkEmailExists = catchAsync(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const { email } = req.body;
+    const user = await getOneByEmail(email);
+    const exists = !(user == null);
+    res.status(200).json({ exists });
+  }
+);
