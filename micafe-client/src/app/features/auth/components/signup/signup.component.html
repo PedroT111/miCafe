@@ -6,70 +6,31 @@
         </div>
         <hr class="mb-3">
         <form [formGroup]="signUpForm" *ngIf="!showMessageSuccess">
-            <div class="mb-3">
-                <label class="form-label">Nombre</label>
+            <div class="mb-3" *ngFor="let field of formFields">
+                <label class="form-label">{{field.label}}</label>
                 <input
-                formControlName="name"
-                  name="name"
-                  type="text"
+                [formControlName]="field.name"
+                  [name]="field.name"
+                  [type]="field.type"
                   class="form-control"
-                  id="txtName"
-                  appFormValidation [form]="signUpForm" [fieldName]="'name'" 
+                  [id]="field.id"
+                  appFormValidation [form]="signUpForm" [fieldName]="field.name" 
                 />
-                <div class="invalid-feedback" appFormError [control]="signUpForm.get('name')">
+                <div class="invalid-feedback" appFormError [control]="signUpForm.get(field.name)">
                 </div>
               </div>
-              <div class="mb-3">
-                <label class="form-label">Apellido</label>
-                <input
-                  formControlName="lastName"
-                  name="lastName"
-                  type="text"
-                  class="form-control"
-                  id="txtLastName"
-                  appFormValidation [form]="signUpForm" [fieldName]="'lastName'" 
-                />
-                <div class="invalid-feedback" appFormError [control]="signUpForm.get('lastName')" >
-                </div>
-              </div>
-          <div class="mb-3">
-            <label class="form-label">Email</label>
-            <input
-              formControlName="email"
-              name="email"
-              type="email"
-              class="form-control"
-              id="txtEmail"
-              appFormValidation [form]="signUpForm" [fieldName]="'email'" 
-            />
-            <div class="invalid-feedback" appFormError [control]="signUpForm.get('email')">
-            </div>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Contraseña</label>
-            <input
-            formControlName="password"
-              name="password"
-              type="password"
-              class="form-control"
-              id="txtPassword"
-              appFormValidation [form]="signUpForm" [fieldName]="'password'" 
-            />
-            <div class="invalid-feedback" appFormError [control]="signUpForm.get('password')">
-            </div>
-          </div>
           <div class="mb-4">
-            <button type="button" class="btn btn-info text-light w-100" (click)="onSignUp()">Continuar</button>
+            <button type="button" class="btn btn-info text-light w-100" (click)="onSignUp()">{{SIGN_UP_PAGE.btn_sign_up}}</button>
           </div>
         </form>
         <div *ngIf="showMessageSuccess" class="alert alert-info mt-3">
-          Por favor, valida tu correo electrónico. Hemos enviado un enlace de confirmación a tu bandeja de entrada.
+          {{SIGN_UP_PAGE.msg_success}}
         </div>
         <div class="mb-2">
-          <span class="custom-text d-block">¿Ya tenés cuenta?</span>
+          <span class="custom-text d-block">{{SIGN_UP_PAGE.text_login}}</span>
         </div>
         <div>
-          <button type="button" class="btn btn-dark w-100" [routerLink]="['/auth/login']">Iniciar Sesión</button>
+          <button type="button" class="btn btn-dark w-100" [routerLink]="['/auth/login']">{{SIGN_UP_PAGE.btn_login}}</button>
         </div>
       </div>
     </div>

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { RESET_PASS_PAGE } from '../../constants/index';
 
 @Component({
   selector: 'app-password-reset',
@@ -13,6 +14,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
   ]
 })
 export class PasswordResetComponent implements OnInit, OnDestroy {
+  readonly RESET_PASS_PAGE = RESET_PASS_PAGE;
   sub: Subscription = new Subscription();
   resetForm: FormGroup;
   showSuccessMessage: boolean = false;
@@ -30,9 +32,6 @@ export class PasswordResetComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  hasError(controlName: string, error: string): boolean {
-    return !!this.resetForm.get(controlName)?.hasError(error);
-  }
   onSubmit() {
     this.resetForm.markAllAsTouched();
     if(this.resetForm.valid){

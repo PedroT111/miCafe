@@ -3,7 +3,7 @@
     <div class="card p-5">
       <div class="mb-4 p-2 text-center">
         <img src="/assets/logos/logo4.png" class="card-img-top mb-3 custom-logo" alt="logo">
-        <h3 class="txt-title">Ingrese a su cuenta</h3>
+        <h3 class="txt-title">{{LOGIN_PAGE.title}}</h3>
       </div>
       <button class="btn px-2 py-2 mb-2 btn-google">
         <img src="/assets/logos/google.png" alt="Google Logo" class="google-logo">
@@ -11,46 +11,31 @@
       </button>
       <hr class="mb-3">
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <div class="mb-3">
-          <label class="form-label">Email</label>
+        <div class="mb-3" *ngFor="let f of LOGIN_FORM_FIELDS">
+          <label class="form-label">{{f.label}}</label>
           <input 
-            formControlName="email" 
-            name="email" 
-            type="text" 
+            [formControlName]="f.name" 
+            [name]="f.name" 
+            [type]="f.type" 
             class="form-control" 
-            id="txtEmail" 
+            [id]="f.id" 
             appFormValidation
             [form]="loginForm" 
-            [fieldName]="'email'" />
-          <div class="invalid-feedback" appFormError [control]="loginForm.get('email')"></div>
-        </div>
-        <div class="mb-2">
-          <label class="form-label">Contraseña</label>
-          <input 
-            formControlName="password" 
-            name="password" 
-            type="password" 
-            class="form-control" 
-            id="txtPassword"
-            appFormValidation 
-            [form]="loginForm" 
-            [fieldName]="'password'" />
-          <div class="invalid-feedback" appFormError [control]="loginForm.get('password')">
-          </div>
+            [fieldName]="f.name" />
+          <div class="invalid-feedback" appFormError [control]="loginForm.get(f.name)"></div>
         </div>
         <div class="mb-3">
-          <a class="custom-text btn border-0 w-100" [routerLink]="['/auth/password-reset']">¿Olvidaste tu
-            contraseña?</a>
+          <a class="custom-text btn border-0 w-100" [routerLink]="['/auth/password-reset']">{{LOGIN_PAGE.txt_forget_pass}}</a>
         </div>
         <div class="mb-4">
-          <button type="submit" class="btn btn-info text-light w-100">Continuar</button>
+          <button type="submit" class="btn btn-info text-light w-100">{{LOGIN_PAGE.btn_login}}</button>
         </div>
       </form>
       <div class="mb-2">
-        <a class="custom-text btn border-0 w-100">¿Ya tienes cuenta?</a>
+        <a class="custom-text btn border-0 w-100">{{LOGIN_PAGE.txt_sign_up}}</a>
       </div>
       <div>
-        <button type="button" class="btn btn-dark w-100" [routerLink]="['/auth/signup']">Registrarse</button>
+        <button type="button" class="btn btn-dark w-100" [routerLink]="['/auth/signup']">{{LOGIN_PAGE.btn_sign_up}}</button>
       </div>
     </div>
   </div>

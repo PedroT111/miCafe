@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
-import { EmailValidator } from '../../validators/check-email';
+import { SIGN_UP_FORM_FIELDS, SIGN_UP_PAGE } from '../../constants/index';
+
 
 @Component({
   selector: 'app-signup',
@@ -11,6 +12,8 @@ import { EmailValidator } from '../../validators/check-email';
   styleUrls: ['../../styles/shared-styles.css']
 })
 export class SignupComponent implements OnInit, OnDestroy {
+  readonly SIGN_UP_PAGE = SIGN_UP_PAGE;
+  readonly formFields = SIGN_UP_FORM_FIELDS;
   sub: Subscription = new Subscription();
   showMessageSuccess: boolean;
   signUpForm: FormGroup;
@@ -19,12 +22,8 @@ export class SignupComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
   ) {
-    this.signUpForm = this.formBuilder.group({
-      name: ['', [Validators.required]],
-      lastName: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email], [EmailValidator.checkEmail(this.authService)]],
-      password: ['', [Validators.required, Validators.minLength(8)]]
-    });
+    this.signUpForm = this.formBuilder.group({});
+    this.setupFormFields();
   }
 
   ngOnInit(): void {
@@ -32,6 +31,13 @@ export class SignupComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.sub.unsubscribe();
+  }
+  setupFormFields() {
+    this.formFields.forEach((field) => {
+      const validators = field.validators || [];
+      const asyncValidators = field.asyncValidators || [];
+      this.signUpForm.addControl(field.name, this.formBuilder.control('', validators, asyncValidators.map(validatorFn => validatorFn(this.authService))));
+    });
   }
   onSignUp() {
     console.log(this.signUpForm.get('email')?.errors, 'erroreees')
