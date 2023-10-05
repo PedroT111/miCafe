@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ProductsService } from '../../services/products.service';
-import { Product } from 'src/app/shared/models/product';
+import { Product, ProductSummary } from 'src/app/shared/models/product';
 import { Subscription } from 'rxjs';
 import { PRODUCT } from '../../constants/product';
 import { CategoryProductService } from '../../services/category-product.service';
@@ -19,11 +19,13 @@ import { PriceAdjustemFormComponent } from '../../components/forms/price-adjuste
 })
 export class ProductsComponent implements OnInit, OnDestroy {
   sub: Subscription = new Subscription();
-  data: Product[];
+  data: ProductSummary[];
   categorias: Options[];
-  filteredData: Product[];
+  filteredData: ProductSummary[];
   filterOptions: CategoryProduct[];
-  selectedCategoryFilter: CategoryProduct;
+  filterStatusOptions = [{_id: 'Activo', name: 'Activo'}, {_id: 'No Activo', name: 'No Activo'}];
+  selectedCategoryFilter: CategoryProduct | null;
+  selectedStatusFilter: string;
   searchTerm: string = '';
   tableHeaders = PRODUCT.PRODUCT_TABLE_HEADERS;
 
@@ -64,7 +66,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   getProducts() {
     this.sub.add(
-      this.productService.getAllProducts().subscribe({
+      this.productService.getProductsSumary().subscribe({
         next: (res) => {
           this.data = res;
           this.filteredData = this.data;
@@ -88,6 +90,11 @@ export class ProductsComponent implements OnInit, OnDestroy {
         (item) => item.category == this.selectedCategoryFilter
       );
     }
+    if (this.selectedStatusFilter) {
+      this.filteredData = this.filteredData.filter(
+        (item) => item.isActive == this.selectedStatusFilter
+      );
+    }
   }
 
   onSearchTextChange(searchTerm: string) {
@@ -95,8 +102,12 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.applyFilters();
   }
   onCategoryFilterSelected(category: CategoryProduct) {
-    console.log(category)
     this.selectedCategoryFilter = category;
+    this.applyFilters();
+  }
+
+  onStatusFilterSelected(status: string){
+    this.selectedStatusFilter = status;
     this.applyFilters();
   }
 
@@ -135,8 +146,9 @@ export class ProductsComponent implements OnInit, OnDestroy {
     });
 
     modalRef.result.then(
-      (result) => {
-        console.log(result)
+      () => {
+        this.selectedCategoryFilter = null;
+        this.selectedStatusFilter= '';
         this.getProducts();
       }
     )
