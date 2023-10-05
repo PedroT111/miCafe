@@ -8,7 +8,7 @@ import { Component,EventEmitter,Input, OnInit, Output,} from '@angular/core';
 
 })
 export class TableComponent implements OnInit{
-  private _data: any[];;
+  private _data: any[];
   @Input() headers: any[];
   @Output() seeMore = new EventEmitter<any>();
   @Output() delete = new EventEmitter<any>();
