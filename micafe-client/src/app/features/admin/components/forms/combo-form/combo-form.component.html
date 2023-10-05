@@ -1,0 +1,165 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col-md-8 mb-3">
+            <div class="row mb-3">
+                <div class="col-12">
+                    <div class="card p-2">
+                        <div class="card-header">
+                            <div class="card-title">Información</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <input type="text" class="form-control" formControlName="name" id="name" appFormValidation
+                                        [form]="form" [fieldName]="'name'" placeholder="Nombre del combo">
+                                    <div class="invalid-feedback" appFormError [control]="form.get('name')"></div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-12">
+                                    <textarea class="form-control custom-txtarea" formControlName="description" id="description"
+                                        appFormValidation [form]="form" [fieldName]="'description'"
+                                        placeholder="Descripción"></textarea>
+                                    <div class="invalid-feedback" appFormError [control]="form.get('description')"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-12">
+                    <div class="card p-2">
+                        <div class="card-header">
+                            <div class="card-title">Valor</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="input-group flex-nowrap">
+                                        <span class="input-group-text" id="addon-wrapping">$</span>
+                                        <span class="input-group-text" id="addon-wrapping">ARS</span>
+                                        <input type="number" class="form-control" formControlName="price" id="price"
+                                        appFormValidation [form]="form" [fieldName]="'price'" placeholder="Precio">
+                                    <div class="invalid-feedback" appFormError [control]="form.get('price')"></div>
+                                      </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-12">
+                    <div class="card p-2">
+                        <div class="card-header">
+                            <div class="card-title">
+                                Imagen
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div (click)="openImageInput()" style="cursor: pointer;"
+                                            class="current-image d-flex justify-content-center align-items-center">
+                                            <div>
+                                                <img class="img-fluid" [src]="getImageSource()" alt="Imagen actual">
+                                            </div>
+                                            <div>
+                                                <input type="file" #fileInput style="display: none;" accept="image/*"
+                                                    (change)="handleImageChange($event)" />
+                                            </div>
+                                            <div class="select-image-overlay">
+                                                Seleccionar Imagen
+                                            </div>
+                                        </div>
+                                        <input type="hidden" formControlName="urlImage" appFormValidation [form]="form"
+                                            [fieldName]="'urlImage'">
+                                        <div class="invalid-feedback" appFormError [control]="form.get('urlImage')"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card p-2">
+                        <div class="card-header">
+                            <div class="card-title">Productos del Combo</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="col-12">
+                                        <ng-container formArrayName="products">
+                                            <div *ngFor="let productForm of products.controls; let index= index">
+                                                <div [formGroupName]="index">
+                                                    <div class="row">
+                                                        <div class="col-md-6 mb-2">
+                                                            <select class="form-select" formControlName="product">
+                                                                <option *ngFor="let p of productList" [value]="p._id">{{ p.name
+                                                                    }}</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-8 col-lg-4">
+                                                            <input type="number" class="form-control" formControlName="quantity"
+                                                                placeholder="Cantidad">
+                                                        </div>
+                                                        <div class="col-4 col-lg-2 text-end">
+                                                            <button class="btn btn-danger btn-remove"
+                                                                (click)="removeItemToCombo(index)">X</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <button type="button" class="btn btn-success mt-2" (click)="addItemToCombo()">+ Agregar
+                                        Producto</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-12">
+                  <div class="card px-2 py-3">
+                    <div class="card-header">
+                      <div class="card-title">Estado</div>
+                    </div>
+                    <div class="card-body">
+                      <select class="form-select" formControlName="isActive" appFormValidation [form]="form"
+                        [fieldName]="'isActive'">
+                        <option selected value=true> Activo </option>
+                        <option value=false> No Activo</option>
+                      </select>
+                      <div class="invalid-feedback" appFormError [control]="form.get('isActive')"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    <div class="row mt-3">
+        <div class="col-12 d-flex justify-content-end">
+            <button class="btn bg-white border border-primary">Cancelar</button>
+            <button type="submit" class="btn btn-dark mx-2">{{editMode ? 'Editar' : 'Registrar'}}</button>
+        </div>
+    </div>
+</form>
