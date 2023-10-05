@@ -8,8 +8,10 @@ export interface Product{
     urlImage: string;
     category: CategoryProduct;
     hasMilk: boolean;
+    points: number;
     isOnSale: boolean;
     salePrice: number;
+    isActive: boolean;
     isDeleted: boolean;
 }
 
@@ -26,7 +28,10 @@ export interface ProductApiResponse{
 export interface ProductSummary{
     _id: string
     name: string;
+    category: CategoryProduct;
     price: number;
     description: string;
-    category: string;
+    urlImage: string;
+    points: number;
+    isActive: string;
 }
