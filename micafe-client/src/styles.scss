@@ -1,8 +1,9 @@
 // Override Bootstrap variables
-$primary: #fafcfc;
+$primary: #c2c1c1;
 $secondary: #0cbad1;
 $info: #fcc800;
 $dark: #0e110f;
+$warning: #1b11d2;
 
 
 
@@ -12,6 +13,9 @@ $dark: #0e110f;
 @import 'aos/dist/aos.css';
 
 
+
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
 
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
