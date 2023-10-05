@@ -6,8 +6,26 @@ export interface User {
   password: string;
   role: string;
   validationToken: string | null;
+  registrationDate: Date;
+  lastOrderDate: Date;
   isValidated: boolean;
   isDeleted: boolean;
+}
+
+export interface UserSummary{
+  _id: string;
+  name: string;
+  lastName: string;
+  email: string;
+  orderCount: number;
+  registrationDate: string;
+  lastOrderDate: string;
+  isValidated: string;
+}
+
+export interface UserOrderList{
+  ok: boolean;
+  users: UserSummary[];
 }
 
 export interface UserAuth{
@@ -25,3 +43,4 @@ export interface LoginRes{
   token: string;
   user: User;
 }
+
