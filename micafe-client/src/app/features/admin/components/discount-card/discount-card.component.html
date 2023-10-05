@@ -1,0 +1,44 @@
+<div class="card py-1">
+    <div class="card-header">
+        <div class="card-title">Resumen</div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12">
+                <span>Codigo</span>
+            </div>
+            <div class="col-12">
+                <p>{{discount.code ? discount.code : 'Código no ingresado'}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <span>Descripción</span>
+            </div>
+            <div class="col-12">
+                <p>{{discount.description ? discount.description : 'Descripción no ingresada'}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <span>Tipo de descuento y valor:</span>
+            </div>
+            <div class="col-12">
+                <ul>
+                    <li><p>{{discount.discountType ? discount.discountType : 'Tipo de descuento'}}</p></li>
+                    <li> <p>{{discount.discountType === 'fixedAmount' ? '$' : ''}} {{discount.value ? discount.value : 'Valor no ingresado'}}{{discount.discountType === 'percentage' ? '%' : ''}}</p></li>
+                </ul>
+               
+                
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <span>Fecha de expiración</span>
+            </div>
+            <div class="col-12">
+                <p>{{discount.expirationDate ? discount.expirationDate : 'Fecha no definida'}}</p>
+            </div>
+        </div>
+    </div>
+</div>
