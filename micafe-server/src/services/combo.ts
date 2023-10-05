@@ -9,7 +9,7 @@ export const getOneByName = async (name: string): Promise<ICombo | null> => {
 };
 
 export const getById = async (id: string): Promise<ICombo | null> => {
-  return await Combo.findById(id).populate('products.product');
+  return await Combo.findById(id);
 };
 
 export const getAll = async (): Promise<ICombo[]> => {
@@ -18,16 +18,22 @@ export const getAll = async (): Promise<ICombo[]> => {
 
 export const update = async (
   id: string,
-  comboData: Partial<ICombo>
+  comboData: ICombo
 ): Promise<ICombo | null> => {
-  return await Combo.findByIdAndUpdate(
-    id,
-    {
-      ...comboData,
-      updateAt: new Date()
-    },
-    { new: true }
-  );
+  const combo = await Combo.findById(id);
+  if (combo !== null) {
+    combo.name = comboData.name;
+    combo.description = comboData.description;
+    combo.price = comboData.price;
+    combo.products = comboData.products;
+    combo.urlImage = comboData.urlImage;
+    combo.points = comboData.points;
+    combo.isActive = comboData.isActive;
+    console.log(comboData, 'comboData');
+    await combo.save();
+  }
+
+  return combo;
 };
 
 export const deleteOne = async (id: string): Promise<ICombo | null> => {
