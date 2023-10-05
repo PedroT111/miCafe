@@ -1,0 +1,14 @@
+
+<div class="row d-flex justify-content-center mt-3 mb-2">
+    <div class="col-lg-10">
+        <h3 class="title">Nuevo Descuento</h3>
+    </div>
+</div>
+<div class="row d-flex justify-content-center">
+    <div class="col-lg-7">
+        <app-discount-form (onSend)="onSubmit($event)"></app-discount-form>
+    </div>
+    <div class="col-lg-3 d-none d-md-block">
+        <app-discount-card></app-discount-card>
+    </div>
+</div>
