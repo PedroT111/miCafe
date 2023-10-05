@@ -1,7 +1,9 @@
-  <div class="input-group">
-    <span class="input-group-text" id="basic-addon1">{{title}}</span>
-    <select class="form-select" id="filterDropdown" [(ngModel)]="selectedFilter" (ngModelChange)="onFilterSelected($event)">
-        <option selected value="">All</option>
-        <option *ngFor="let option of filterOptions" [value]="option._id">{{ option.name }}</option>
-    </select>
-  </div>
+<div class="input-container">
+  <label class="input-label" [class.input-label-focused]="selectedFilter">
+    {{ title }}
+  </label>
+  <select class="input-select form-select" [(ngModel)]="selectedFilter" (change)="onFilterSelected(selectedFilter)">
+    <option [value]="''"></option>
+    <option *ngFor="let option of filterOptions" [value]="option._id">{{ option.name }}</option>
+  </select>
+</div>

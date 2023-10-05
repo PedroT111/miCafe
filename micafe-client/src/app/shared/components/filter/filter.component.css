@@ -1,0 +1,28 @@
+.input-container {
+    position: relative;
+  }
+  
+  .input-label {
+    position: absolute;
+    padding: 5px 10px;
+    white-space: nowrap;
+    transform: translate(0, 0);
+    transform-origin: 0 0;
+    transition: transform 120ms ease-in;
+    color: gray;
+    font-size: 1rem;
+  }
+  
+  .input-select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+  
+  }
+  
+  .input-label-focused {
+    transform: translate(0.25rem, -40%) scale(0.8);
+    color: black;
+    background-color: white;
+  }
+  
