@@ -2,11 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { AdjustemPrice } from 'src/app/shared/models/adjustemPrice';
-import { ApiResponse } from 'src/app/shared/models/postResponse';
+import { ApiResponse } from 'src/app/shared/models/apiResponse';
 import {
   Product,
   ListProductApiResponse,
-  ProductApiResponse
+  ProductApiResponse,
+  ProductSummary
 } from 'src/app/shared/models/product';
 
 @Injectable({
@@ -15,10 +16,19 @@ import {
 export class ProductsService {
   constructor(private http: HttpClient) {}
 
-  getAllProducts(): Observable<Product[]> {
+  getAllProducts(): Observable<ListProductApiResponse> {
+    return this.http.get<ListProductApiResponse>('/product');
+  }
+  getProductsSumary(): Observable<ProductSummary[]> {
     return this.http.get<ListProductApiResponse>('/product').pipe(
-      map((res: ListProductApiResponse) => {
-        return res.products;
+      map((res) => {
+        const products = res.products.map((product) => {
+          return {
+            ...product,
+            isActive: product.isActive ? 'Activo': 'No Activo'
+          }
+        });
+        return products;
       })
     );
   }
