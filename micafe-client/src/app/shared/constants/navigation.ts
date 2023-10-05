@@ -41,7 +41,22 @@ export const adminNavigationNavbar = [
   },
   {
     name: 'Customers',
-    href: PAGES.ADMIN_PRODUCTS,
+    href: '/admin/customers',
+    icon: 'bi bi-house-fill'
+  },
+  {
+    name: 'Combos',
+    href: '/admin/combos',
+    icon: 'bi bi-house-fill'
+  },
+  {
+    name: 'Offers',
+    href: '/admin/offers',
+    icon: 'bi bi-house-fill'
+  },
+  {
+    name: 'Discounts',
+    href: '/admin/discounts',
     icon: 'bi bi-house-fill'
   },
   {
