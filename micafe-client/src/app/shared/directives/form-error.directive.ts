@@ -15,7 +15,9 @@ export class FormErrorDirective /*implements DoCheck*/{
     email: 'Ingrese un email válido',
     minlength: 'Mínimo 8 caracteres',
     emailExisting: 'El email ingresado ya está registrado',
-    min: 'Ingrese un valor mayor'
+    min: 'Ingrese un valor mayor',
+    maxlength: 'El texto ingresado excede la longitud máxima permitida',
+    mismatch: 'Las contraseñas deben coincidir'
   }
 
 
