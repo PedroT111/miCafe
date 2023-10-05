@@ -7,14 +7,16 @@ import {
   updateCombo
 } from '../controllers/comboController';
 import { isAdmin } from '../middlewares/roleUser';
+import { comboValidationRules } from '../validators/comboValidator';
+import { idValidationRule } from '../validators/commonValidator';
 
 const router = express.Router();
 
 router.get('/', getCombos);
-router.post('/new', createCombo);
+router.post('/new', comboValidationRules, createCombo);
 router
   .route('/:id')
-  .put(isAdmin, updateCombo)
+  .put(idValidationRule, updateCombo)
   .get(getComboDetails)
-  .delete(isAdmin, deleteCombo);
+  .delete(idValidationRule, deleteCombo);
 export default router;
