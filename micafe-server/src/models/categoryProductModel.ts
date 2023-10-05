@@ -1,8 +1,9 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose, { type ObjectId, Schema } from 'mongoose';
 import { Product } from './productModel';
 import AppError from '../utils/appError';
 
 interface ICategoryProduct extends Document {
+  _id: ObjectId;
   name: string;
   isDeleted: boolean;
 }
@@ -23,7 +24,9 @@ categoryProductSchema.pre('save', async function (next) {
     return;
   }
   const categoryId = this._id;
-  const products = await Product.find({ categoryId });
+  console.log(categoryId);
+  const products = await Product.find({ category: categoryId });
+  console.log(products);
   if (products.length !== 0 && this.isDeleted) {
     next(
       new AppError(
