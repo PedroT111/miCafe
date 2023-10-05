@@ -16,7 +16,7 @@ import {
 @Component({
   selector: 'app-datepicker',
   templateUrl: './datepicker.component.html',
-  styleUrls: ['./datepicker.component.css']
+  styleUrls: ['./datepicker.component.css', '../../styles/admin-style.css']
 })
 export class DatepickerComponent implements OnInit, OnChanges {
   @Output() dateSelection = new EventEmitter<{
@@ -68,7 +68,7 @@ export class DatepickerComponent implements OnInit, OnChanges {
         const startSale = new Date(
           this.fromDate.year,
           this.fromDate.month - 1,
-          this.fromDate.day
+          this.fromDate.day,
         );
         const endSale = new Date(
           this.toDate.year,
