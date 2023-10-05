@@ -1,3 +1,4 @@
+import { type CategoryDto } from '../Dto/categoryDto';
 import {
   CategoryProduct,
   type ICategoryProduct
@@ -16,8 +17,29 @@ export const findOneByName = async (
   return await CategoryProduct.findOne({ name });
 };
 
-export const findAll = async (): Promise<ICategoryProduct[]> => {
-  return await CategoryProduct.find({ isDeleted: false });
+export const findAll = async (): Promise<CategoryDto[]> => {
+  return await CategoryProduct.aggregate([
+    {
+      $lookup: {
+        from: 'products',
+        localField: '_id',
+        foreignField: 'category',
+        as: 'products'
+      }
+    },
+    {
+      $match: {
+        isDeleted: false
+      }
+    },
+    {
+      $project: {
+        _id: '$_id',
+        name: '$name',
+        totalProducts: { $size: '$products' }
+      }
+    }
+  ]);
 };
 
 export const detail = async (id: string): Promise<ICategoryProduct | null> => {
@@ -36,4 +58,15 @@ export const update = async (
     },
     { new: true }
   );
+};
+
+export const deleteOne = async (
+  category: ICategoryProduct
+): Promise<ICategoryProduct | null> => {
+  const categoryDelete = await CategoryProduct.findById(category._id);
+  if (categoryDelete != null) {
+    categoryDelete.isDeleted = true;
+    await categoryDelete.save();
+  }
+  return categoryDelete;
 };
