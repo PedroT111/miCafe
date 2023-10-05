@@ -1,0 +1,26 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row mb-3">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Categoría</div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <input type="text" class="form-control" formControlName="name" appFormValidation
+                                [form]="form" [fieldName]="'name'">
+                            <div class="invalid-feedback" appFormError [control]="form.get('name')"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 d-flex justify-content-end">
+            <button type="button" class="btn bg-white border border-primary" (click)="reset()">Cancelar</button>
+            <button type="submit" class="btn btn-dark mx-2">{{editMode ? 'Editar': 'Agregar'}}</button>
+        </div>
+    </div>
+</form>
