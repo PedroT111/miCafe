@@ -5,7 +5,9 @@ import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { AuthComponent } from './auth/auth.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { PasswordResetComponent } from './components/password-reset/password-reset.component';
+import { PasswordForgotComponent } from './components/password-forgot/password-forgot.component';
+import { ValidateAccountComponent } from './components/validate-account/validate-account.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 
 @NgModule({
@@ -13,7 +15,9 @@ import { PasswordResetComponent } from './components/password-reset/password-res
     LoginComponent,
     SignupComponent,
     AuthComponent,
-    PasswordResetComponent,
+    PasswordForgotComponent,
+    ValidateAccountComponent,
+    ResetPasswordComponent,
   ],
   imports: [
     CommonModule,
