@@ -1,0 +1,18 @@
+<div class="row mt-2">
+    <div class="col-lg-4">
+        <h3 class="mb-md-0 mb-4">Empleados</h3>
+    </div>
+    <div class="col-lg-8 d-flex justify-content-start justify-content-md-end">
+        <button class="btn btn-dark" routerLink="/admin/employees/new">+ Nuevo Empleado</button>
+    </div>
+</div>
+<div class="row mt-5 d-flex align-items-center">
+    <div class="col-sm-8 col-md-4 mb-3">
+        <app-search (searchTextChanged)="onSearchTextChange($event)"></app-search>
+    </div>
+</div>
+<div class="row mt-3">
+    <div class="col-12">
+        <app-table [data]="filteredEmployees" [headers]="headers" [pageSize]="5" (delete)="onDelete($event)" (seeMore)="updateEmployee($event)" ></app-table>
+    </div>
+</div>
