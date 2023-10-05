@@ -45,12 +45,12 @@ export class SignupComponent implements OnInit, OnDestroy {
     if (this.signUpForm.valid) {
       this.sub.add(
         this.authService.signUp(this.signUpForm.value).subscribe({
-          next: (res) => {
-            console.log(res);
+          next: () => {
             this.showMessageSuccess = true;
           },
           error: (err) => {
             this.toastr.error(err.error.message, 'Error');
+            console.log(err)
           }
         })
       );
