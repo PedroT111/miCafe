@@ -5,6 +5,7 @@ import bcrypt from 'bcrypt';
 import { type NextFunction, type Request, type Response } from 'express';
 import { type IUser, User } from '../models/userModel';
 import { sendValidationAccountMail } from '../helpers/sendEmail';
+import { validationResult } from 'express-validator';
 
 const signToken = (user: IUser): string =>
   jwt.sign({ id: user.id, role: user.role }, config.JWT, {
@@ -28,6 +29,11 @@ const createSendToken = (
 
 export const registerValidation = catchAsync(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json({ errors: errors.array() });
+      return;
+    }
     const { email } = req.body;
     const findUser = await User.find({ email });
     if (findUser.length !== 0) {
@@ -49,6 +55,11 @@ export const registerValidation = catchAsync(
 
 export const loginValidation = catchAsync(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json({ errors: errors.array() });
+      return;
+    }
     const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (user == null) {
