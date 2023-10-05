@@ -13,6 +13,10 @@ export const OFFERS = {
             name: 'salePrice'
         },
         {
+            header: '% Oferta',
+            name: 'percentage'
+        },
+        {
             header: 'Fecha Inicio',
             name: 'startSale'
         },
@@ -22,7 +26,8 @@ export const OFFERS = {
         },
         {
             header: 'Estado',
-            name: 'status'
+            name: 'status',
+            statusClass: true
         }
     ]
 }
