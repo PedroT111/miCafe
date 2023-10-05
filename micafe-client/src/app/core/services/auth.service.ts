@@ -8,7 +8,7 @@ import {
   UserAuth
 } from 'src/app/shared/models/user';
 import { Observable } from 'rxjs';
-import { ApiResponse } from 'src/app/shared/models/postResponse';
+import { ApiResponse } from 'src/app/shared/models/apiResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -53,7 +53,11 @@ export class AuthService {
   }
 
   isEmailRegistered(email: string):Observable<any>{
-    console.log(email, 'email')
     return this.httpClient.post<any>('/authenticate/check-email',{ email});
+  }
+
+  validateAccount(token: string):Observable<ApiResponse>{
+    console.log(token)
+    return this.httpClient.get<ApiResponse>(`/authenticate/validate/${token}`);
   }
 }

@@ -29,7 +29,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ToastrModule.forRoot(),
     BrowserAnimationsModule,
     SharedModule,
-    NgbModule
+    NgbModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: BaseURLInterceptorService, multi: true}
