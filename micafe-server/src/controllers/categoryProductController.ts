@@ -6,8 +6,10 @@ import {
   createOne,
   findAll,
   detail,
-  update
+  update,
+  deleteOne
 } from '../services/categoryProduct';
+import { validationResult } from 'express-validator';
 
 export const createCategory = catchAsync(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -67,6 +69,31 @@ export const updateCategory = catchAsync(
     res.status(200).json({
       ok: true,
       query
+    });
+  }
+);
+
+export const deleteCategory = catchAsync(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json({ errors: errors.array() });
+      return;
+    }
+    const { id } = req.params;
+    const categoryDelete = await detail(id);
+    if (categoryDelete === null) {
+      next(new AppError('There is no category with that id', 404));
+      return;
+    }
+    const query = await deleteOne(categoryDelete);
+    if (query == null) {
+      next(new AppError('Something was wrong', 400));
+      return;
+    }
+    res.status(200).json({
+      ok: true,
+      msg: 'the category was removed'
     });
   }
 );
