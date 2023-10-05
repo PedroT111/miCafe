@@ -1,12 +1,17 @@
 import sgMail, { type MailDataRequired } from '@sendgrid/mail';
 import config from '../config';
 import { type IUser } from '../models/userModel';
+import { type IProduct } from '../models/productModel';
 
 sgMail.setApiKey(config.SENDGRID_API);
 
-const sendEmail = async (data: IUser, templateId: string): Promise<void> => {
+const sendEmail = async (
+  email: string,
+  data: any,
+  templateId: string
+): Promise<void> => {
   const msg: MailDataRequired = {
-    to: data.email,
+    to: email,
     from: config.EMAIL_SENDGRID,
     templateId,
     dynamicTemplateData: {
@@ -16,6 +21,7 @@ const sendEmail = async (data: IUser, templateId: string): Promise<void> => {
   await sgMail.send(msg).then(
     () => {
       console.log('enviado');
+      console.log(msg);
     },
     (error) => {
       console.error(error);
@@ -29,10 +35,23 @@ const sendEmail = async (data: IUser, templateId: string): Promise<void> => {
 
 export const sendValidationAccountMail = async (user: IUser): Promise<void> => {
   const templateId = 'd-e4ef0ac568cc434cb775c679090c761b';
-  await sendEmail(user, templateId);
+  await sendEmail(user.email, user, templateId);
 };
 
 export const sendResetPasswordEmail = async (user: IUser): Promise<void> => {
   const templateId = 'd-4d3d3c4157814684b974b3bc2774b32b';
-  await sendEmail(user, templateId);
+  await sendEmail(user.email, user, templateId);
 };
+
+export const sendDataEmail = async (
+  userList: IUser[],
+  data: any,
+  templateId: string
+): Promise<void> => {
+  const promises = userList.map(async (user) => {
+    await sendEmail(user.email, { user, data }, templateId);
+  });
+  await Promise.all(promises);
+};
+
+
