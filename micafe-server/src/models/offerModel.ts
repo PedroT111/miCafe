@@ -1,6 +1,7 @@
 import mongoose, { Schema, type ObjectId } from 'mongoose';
 
 interface IOffer extends Document {
+  _id: ObjectId;
   productId: ObjectId;
   isPercentage: boolean;
   value: number;
@@ -22,7 +23,8 @@ const offerModel = new Schema<IOffer>({
     required: true
   },
   value: {
-    type: Number
+    type: Number,
+    required: true
   },
   startSale: {
     type: Date,
@@ -42,13 +44,21 @@ const offerModel = new Schema<IOffer>({
     default: false
   }
 });
-offerModel.pre('save', function (next) {
-  const now = new Date();
-  if (this.endSale <= now && now >= this.startSale) {
-    this.status = 'active';
-  } else if (this.endSale < now) {
-    this.status = 'expired';
+offerModel.pre('save', async function (next) {
+  if (this.isNew) {
+    const existingOffer = await Offer.findOne({
+      productId: this.productId,
+      isDeleted: false
+    });
+
+    if (existingOffer !== null) {
+      existingOffer.isDeleted = true;
+      existingOffer.status = 'expired';
+
+      await existingOffer.save();
+    }
   }
+
   next();
 });
 
