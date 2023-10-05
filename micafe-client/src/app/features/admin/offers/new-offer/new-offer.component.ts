@@ -8,7 +8,7 @@ import { OffersService } from '../../services/offers.service';
 @Component({
   selector: 'app-new-offer',
   templateUrl: './new-offer.component.html',
-  styleUrls: ['./new-offer.component.css']
+  styleUrls: ['./new-offer.component.css', '../../styles/admin-style.css']
 })
 export class NewOfferComponent implements OnInit, OnDestroy {
   sub: Subscription = new Subscription();

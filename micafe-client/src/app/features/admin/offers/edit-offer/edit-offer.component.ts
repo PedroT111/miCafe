@@ -1,21 +1,23 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Offer } from 'src/app/shared/models/offer';
-import { ProductsService } from '../../services/products.service';
 import { SwalService } from 'src/app/shared/utils/swal.service';
 import { ToastrService } from 'ngx-toastr';
+import { OffersService } from '../../services/offers.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-offer',
   templateUrl: './edit-offer.component.html',
-  styleUrls: ['./edit-offer.component.css']
+  styleUrls: ['./edit-offer.component.css', '../../styles/admin-style.css']
 })
 export class EditOfferComponent implements OnInit, OnDestroy {
   sub: Subscription = new Subscription();
   constructor(
-    private productService: ProductsService,
+    private offerService: OffersService,
     private swal: SwalService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) {}
 
   ngOnDestroy(): void {
@@ -29,7 +31,16 @@ export class EditOfferComponent implements OnInit, OnDestroy {
     .then((res) => {
       if(res.isConfirmed){
         this.sub.add(
-          
+          this.offerService.updateOffer(offer).subscribe({
+            next: () => {
+              this.toastr.success('Oferta editada correctemente');
+              this.router.navigate(['/admin/offers']);
+              
+            },
+            error: (err) => {
+              this.toastr.error(err.error.error);
+            }
+          })
         )
       }
     })

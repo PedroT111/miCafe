@@ -7,6 +7,8 @@ import { SwalService } from 'src/app/shared/utils/swal.service';
 import { Router } from '@angular/router';
 import { Offer, OfferProduct } from 'src/app/shared/models/offer';
 import { OffersService } from '../../services/offers.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { OfferCategoryFormComponent } from '../../components/forms/offer-category-form/offer-category-form.component';
 
 @Component({
   selector: 'app-offers-list',
@@ -17,7 +19,9 @@ export class OffersListComponent implements OnInit, OnDestroy {
   sub: Subscription = new Subscription();
   offerProducts: OfferProduct[];
   filteredOffers: OfferProduct[];
-  selectedFilter: any;
+  selectedStatusFilter: any;
+  filterStartDate: Date;
+  filterEndDate:Date;
   options = [{_id: 'active', name: 'Activo'}, {_id: 'scheduled', name: 'Programado'}];
   searchTerm: string;
   tableHeader = OFFERS.OFFERS_TABLE_HEADERS;
@@ -26,7 +30,8 @@ export class OffersListComponent implements OnInit, OnDestroy {
     private offerService: OffersService,
     private toastr: ToastrService,
     private swal: SwalService,
-    private router: Router
+    private router: Router,
+    private modalService: NgbModal
   ) {}
 
   ngOnDestroy(): void {
@@ -58,11 +63,15 @@ export class OffersListComponent implements OnInit, OnDestroy {
         item.productName.toLowerCase().includes(this.searchTerm.toLowerCase())
       );
     }
-    if (this.selectedFilter) {
-      console.log(this.selectedFilter, 's')
+    if (this.selectedStatusFilter) {
       this.filteredOffers= this.filteredOffers.filter(
-        (item) => item.status === this.selectedFilter
+        (item) => item.status === this.selectedStatusFilter
       );
+    }
+    if(this.filterStartDate && this.filterEndDate){
+      this.filteredOffers = this.filteredOffers.filter(
+        (item) => new Date(item.endSale) >= this.filterStartDate && new Date(item.startSale) <= this.filterEndDate
+      )
     }
   }
 
@@ -72,9 +81,15 @@ export class OffersListComponent implements OnInit, OnDestroy {
   }
 
   onFilterSelected(status: any){
-    console.log(status)
-    this.selectedFilter = status;
-    console.log(this.selectedFilter, 'selected filter')
+    this.selectedStatusFilter = status;
+    this.applyFilters();
+  }
+
+  onDateFilterSelected(dates: { startSale: Date; endSale: Date }){
+    console.log(this.filteredOffers)
+    this.filterStartDate = dates.startSale;
+    this.filterEndDate = dates.endSale;
+    console.log(this.filterEndDate, this.filterStartDate)
     this.applyFilters();
   }
 
@@ -87,7 +102,7 @@ export class OffersListComponent implements OnInit, OnDestroy {
         if (result.isConfirmed) {
           this.sub.add(
             this.offerService.deleteOffer(o).subscribe({
-              next: (res) => {
+              next: () => {
                 this.toastr.success('Oferta eliminada correctamente');
                 this.getOfferProducts();
               },
@@ -104,7 +119,22 @@ export class OffersListComponent implements OnInit, OnDestroy {
     this.router.navigate(['/admin/offers/new']);
   }
 
+  addOfferByCategory(){
+    const modalRef = this.modalService.open(OfferCategoryFormComponent, {
+      centered: true
+    });
+
+    modalRef.result.then(
+      (result) => {
+        this.toastr.info(result);
+        this.getOfferProducts();
+      }
+    ) 
+
+
+  }
+
   editOffer(o: Offer){
-    
+    this.router.navigate([`/admin/offers/edit/${o._id}`])
   }
 }

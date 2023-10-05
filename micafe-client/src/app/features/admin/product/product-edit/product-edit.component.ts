@@ -10,7 +10,7 @@ import { PAGES } from 'src/app/shared/constants';
 @Component({
   selector: 'app-product-edit',
   templateUrl: './product-edit.component.html',
-  styleUrls: ['./product-edit.component.css']
+  styleUrls: ['./product-edit.component.css', '../../styles/admin-style.css']
 })
 export class ProductEditComponent implements OnInit, OnDestroy {
   sub: Subscription = new Subscription();
