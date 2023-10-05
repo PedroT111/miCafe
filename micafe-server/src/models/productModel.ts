@@ -8,8 +8,10 @@ interface IProduct extends Document {
   urlImage: string;
   category: Schema.Types.ObjectId;
   hasMilk: boolean;
+  points: number;
   isOnSale: boolean;
   salePrice: number | null;
+  isActive: boolean;
   isDeleted: boolean;
 }
 
@@ -39,6 +41,10 @@ const productSchema = new Schema<IProduct>({
     type: Boolean,
     default: false
   },
+  points: {
+    type: Number,
+    required: true
+  },
   isOnSale: {
     type: Boolean,
     default: false
@@ -46,6 +52,10 @@ const productSchema = new Schema<IProduct>({
   salePrice: {
     type: Number,
     default: null
+  },
+  isActive: {
+    type: Boolean,
+    required: true
   },
   isDeleted: {
     type: Boolean,
