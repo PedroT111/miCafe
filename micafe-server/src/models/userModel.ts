@@ -8,8 +8,11 @@ interface IUser extends Document {
   email: string;
   password: string;
   role: string;
-  validationToken: string | null;
-  isValidated: boolean;
+  points?: number;
+  validationToken?: string | null;
+  isValidated?: boolean;
+  registrationDate: Date;
+  lastOrderDate?: Date;
   isDeleted: boolean;
 }
 
@@ -26,7 +29,7 @@ const userSchema = new Schema<IUser>({
     type: String,
     required: true,
     unique: true,
-    lowecase: true,
+    lowercase: true,
     immutable: true
   },
   password: {
@@ -38,6 +41,9 @@ const userSchema = new Schema<IUser>({
     type: String,
     default: 'user'
   },
+  points: {
+    type: Number
+  },
   validationToken: {
     type: String,
     default: generateToken()
@@ -45,6 +51,14 @@ const userSchema = new Schema<IUser>({
   isValidated: {
     type: Boolean,
     default: false
+  },
+  registrationDate: {
+    type: Date,
+    default: Date.now
+  },
+  lastOrderDate: {
+    type: Date,
+    default: null
   },
   isDeleted: {
     type: Boolean,
@@ -58,6 +72,18 @@ userSchema.pre('save', async function (next) {
   }
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
+
+  next();
+});
+userSchema.pre('save', async function (next) {
+  if (this.role !== 'user') {
+    this.isValidated = true;
+    this.validationToken = undefined;
+    this.points = undefined;
+    this.lastOrderDate = undefined;
+  }
+
+  next();
 });
 
 const User = mongoose.model<IUser>('User', userSchema);
