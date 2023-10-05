@@ -10,6 +10,8 @@ import { FilterComponent } from './components/filter/filter.component';
 import { SearchComponent } from './components/search/search.component';
 import { TruncateTextPipe } from './pipes/truncate-text.pipe';
 import { SpinnerComponent } from './components/spinner/spinner.component';
+import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { SplitWordsPipe } from './pipes/split-words.pipe';
 
 @NgModule({
   declarations: [
@@ -21,11 +23,13 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
     SearchComponent,
     TruncateTextPipe,
     SpinnerComponent,
+    SplitWordsPipe,
   ],
   imports: [
     CommonModule,
     RouterModule,
     FormsModule,
+    NgbDropdownModule,
   ],
   exports: [
     NavbarComponent,
@@ -36,7 +40,7 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
     FilterComponent,
     SearchComponent,
     TruncateTextPipe,
-    
+    SplitWordsPipe, 
   ]
 })
 export class SharedModule { }
