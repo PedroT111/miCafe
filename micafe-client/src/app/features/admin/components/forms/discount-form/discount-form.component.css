@@ -1,0 +1,41 @@
+.btn-group .btn input[type="radio"] {
+  display: none;
+}
+
+.btn-group .btn input[type="radio"]+label.btn {
+  cursor: pointer;
+}
+
+.btn-group .btn input[type="radio"]:checked+label.btn {
+  background-color: #007bff;
+  color: #fff;
+  border-color: #007bff;
+}
+
+.btn{
+  font-size: 0.9rem;
+}
+
+.custom-txtarea{
+  height: 80px;
+}
+
+
+.btn-generar,
+.form-check-label {
+  font-size: 0.9rem;
+}
+
+.custom-dark-radio .custom-control-input:checked~.custom-control-label::before {
+  background-color: #010101;
+  border-color: #d7d9dc;
+}
+
+.custom-dark-radio .custom-control-label::before {
+  border-color: #040404;
+}
+
+.custom-dark-radio .custom-control-label::after {
+  color: #030303;
+}
+
