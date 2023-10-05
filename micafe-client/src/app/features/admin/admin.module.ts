@@ -13,8 +13,7 @@ import { OrderByComponent } from './components/order-by/order-by.component';
 import { ProductFormComponent } from './components/forms/product-form/product-form.component';
 import { ProductEditComponent } from './product/product-edit/product-edit.component'; 
 import { ProductCreateComponent } from './product/product-create/product-create.component';
-import { NgbPaginationModule, NgbDatepickerModule, NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
-import { CategoryProductsComponent } from './product/category-products/category-products.component';
+import { NgbPaginationModule, NgbDatepickerModule, NgbTimepickerModule, NgbDropdownModule, NgbDateNativeAdapter, NgbDateAdapter, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { OffersListComponent } from './offers/offers-list/offers-list.component';
 import { OfferFormComponent } from './components/forms/offer-form/offer-form.component';
 import { NewOfferComponent } from './offers/new-offer/new-offer.component';
@@ -22,7 +21,23 @@ import { DatepickerComponent } from './components/datepicker/datepicker.componen
 import { TimepickerComponent } from './components/timepicker/timepicker.component';
 import { EditOfferComponent } from './offers/edit-offer/edit-offer.component';
 import { PriceAdjustemFormComponent } from './components/forms/price-adjustem-form/price-adjustem-form.component';
-
+import { CategoryListComponent } from './categoryProducts/category-list/category-list.component';
+import { OfferCategoryFormComponent } from './components/forms/offer-category-form/offer-category-form.component';
+import { CategoryFormComponent } from './components/forms/category-form/category-form.component';
+import { CustomersListComponent } from './customers/customers-list/customers-list.component';
+import { CombosListComponent } from './combos/combos-list/combos-list.component';
+import { CreateComboComponent } from './combos/create-combo/create-combo.component';
+import { ComboFormComponent } from './components/forms/combo-form/combo-form.component';
+import { EditComboComponent } from './combos/edit-combo/edit-combo.component';
+import { DiscountListComponent } from './discounts/discount-list/discount-list.component';
+import { CreateDiscountComponent } from './discounts/create-discount/create-discount.component';
+import { DiscountFormComponent } from './components/forms/discount-form/discount-form.component';
+import { DiscountCardComponent } from './components/discount-card/discount-card.component';
+import { DiscountFiltersFormComponent } from './components/forms/discount-filters-form/discount-filters-form.component';
+import { EmployeeListComponent } from './employees/employee-list/employee-list.component';
+import { CreateEmployeeComponent } from './employees/create-employee/create-employee.component';
+import { EditEmployeeComponent } from './employees/edit-employee/edit-employee.component';
+import { EmployeeFormComponent } from './components/forms/employee-form/employee-form.component';
 
 
 @NgModule({
@@ -35,7 +50,6 @@ import { PriceAdjustemFormComponent } from './components/forms/price-adjustem-fo
     ProductFormComponent,
     ProductEditComponent,
     ProductCreateComponent,
-    CategoryProductsComponent,
     OffersListComponent,
     OfferFormComponent,
     NewOfferComponent,
@@ -43,6 +57,23 @@ import { PriceAdjustemFormComponent } from './components/forms/price-adjustem-fo
     TimepickerComponent,
     EditOfferComponent,
     PriceAdjustemFormComponent,
+    CategoryListComponent,
+    OfferCategoryFormComponent,
+    CategoryFormComponent,
+    CustomersListComponent,
+    CombosListComponent,
+    CreateComboComponent,
+    ComboFormComponent,
+    EditComboComponent,
+    DiscountListComponent,
+    CreateDiscountComponent,
+    DiscountFormComponent,
+    DiscountCardComponent,
+    DiscountFiltersFormComponent,
+    EmployeeListComponent,
+    CreateEmployeeComponent,
+    EditEmployeeComponent,
+    EmployeeFormComponent,
   ],
   imports: [
     CommonModule,
@@ -53,7 +84,16 @@ import { PriceAdjustemFormComponent } from './components/forms/price-adjustem-fo
     ReactiveFormsModule,
     NgbPaginationModule,
     NgbDatepickerModule,
-    NgbTimepickerModule
+    NgbTimepickerModule,
+    NgbDropdownModule,
+    NgbTooltipModule
+  ],
+  providers: [
+    {
+      provide: NgbDateAdapter,
+      useClass: NgbDateNativeAdapter,
+    }
+    
   ]
 })
 export class AdminModule { }
