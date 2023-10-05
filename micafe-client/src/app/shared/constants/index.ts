@@ -4,7 +4,7 @@ export const PAGES = {
   AUTH_LOGIN: 'login',
   AUTH_SIGNUP:'signup',
   AUTH_FORGET_PASSWORD: 'forget-password',
-  AUTH_RESET_PASSWORD: 'password-reset',
+  AUTH_FORGOT_PASSWORD: 'password-forgot',
   TIENDA: 'tienda',
   US: 'nosotros',
   PROFILE: 'perfil',
