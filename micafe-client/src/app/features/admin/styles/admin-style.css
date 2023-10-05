@@ -1,0 +1,34 @@
+.form-text {
+    font-size: 0.8rem;
+    color: #929292;
+}
+.title{
+    font-size: 1.2rem;
+}
+.card-header {
+    background-color: white;
+    border-bottom: 0;
+}
+
+.card-title {
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+::placeholder {
+    font-size: 0.9rem;
+    color: #929292;
+}
+
+.btn {
+    font-size: 0.9rem;
+}
+
+label {
+    font-size: 0.95rem;
+    color: rgb(86, 86, 87);
+  }
+  input[type="number"] {
+    text-align: right;
+  }
