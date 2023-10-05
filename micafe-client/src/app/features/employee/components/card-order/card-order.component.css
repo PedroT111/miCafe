@@ -1,0 +1,21 @@
+.small-text{
+    font-size: 0.8rem;
+}
+
+.med-text{
+    font-size: 0.9rem;
+}
+
+.lg-text{
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.time-left{
+    color: red;
+    font-weight: bold;
+}
+
+.order-number{
+    font-weight: bolder;
+}
