@@ -1,9 +1,9 @@
-import { Date } from 'mongoose';
 import { type IProduct, Product } from '../models/productModel';
 import {
   type IChangePriceHistory,
   ChangePriceHistory
 } from '../models/priceChangeHistory';
+import { Combo } from '../models/comboModel';
 
 export const create = async (productData: IProduct): Promise<IProduct> => {
   return await Product.create(productData);
@@ -37,15 +37,20 @@ export const updatePrices = async (
   idCategory: any,
   percentage: number
 ): Promise<IProduct[] | null> => {
-  const products = await Product.find({ category: idCategory });
-  for (const p of products) {
-    const newPrice: number = p.price * (1 + percentage / 100);
-    p.price = parseFloat(newPrice.toFixed(2));
+  const products = await Product.find({
+    category: idCategory,
+    isDeleted: false
+  });
 
-    await p.save();
-  }
-
-  return products;
+  const updatedProducts = await Promise.all(
+    products.map(async (p) => {
+      const newPrice: number = p.price * (1 + percentage / 100);
+      p.price = parseFloat(newPrice.toFixed(0));
+      await p.save();
+      return p;
+    })
+  );
+  return updatedProducts;
 };
 
 export const createChangePriceHistory = async (
@@ -75,11 +80,19 @@ export const update = async (
 };
 
 export const deleteOne = async (id: any): Promise<IProduct | null> => {
-  return await Product.findByIdAndUpdate(
+  const product = Product.findById(id);
+  await Combo.deleteMany({ products: product });
+
+  if (product === null) {
+    return null;
+  }
+  const deletedProduct = await Product.findByIdAndUpdate(
     id,
     {
       isDeleted: true
     },
     { new: true }
   );
+
+  return deletedProduct;
 };
