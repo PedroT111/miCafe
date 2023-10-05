@@ -1,0 +1,16 @@
+.notification-container {
+    position: relative; /* Crea un contexto de posición relativa para los elementos hijos absolutos */
+  }
+  
+  .notification-circle {
+    position: absolute; /* Posiciona el círculo de notificación de manera absoluta */
+    top: -18px; /* Ajusta la posición hacia arriba para que sobresalga un poco */
+    right: -12px; /* Ajusta la posición hacia la derecha para que sobresalga un poco */
+    background-color: #ff4d4f; /* Color de fondo del círculo */
+    color: #fff; /* Color del texto en el círculo */
+    font-weight: bolder;
+    border-radius: 50%; /* Asegura que el elemento es un círculo */
+    padding: 1px 5px; /* Espaciado interno para el número dentro del círculo */
+    font-size: 8px; /* Tamaño del texto en el círculo */
+    transform: scale(1.2); /* Escala el círculo para que sobresalga */
+  }
