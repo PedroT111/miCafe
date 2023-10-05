@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { LABEL_BUTTONS } from 'src/app/shared/constants';
@@ -11,9 +11,10 @@ import { ProductsService } from '../../../services/products.service';
 @Component({
   selector: 'app-product-form',
   templateUrl: './product-form.component.html',
-  styleUrls: ['./product-form.component.css']
+  styleUrls: ['./product-form.component.css', '../../../styles/admin-style.css']
 })
 export class ProductFormComponent implements OnInit, OnDestroy {
+  @ViewChild('fileInput') fileInput: ElementRef;
   @Output() send = new EventEmitter<any>();
   sub: Subscription = new Subscription();
   categorias: CategoryProduct[];
@@ -33,8 +34,10 @@ export class ProductFormComponent implements OnInit, OnDestroy {
       price: ['', Validators.required],
       description: ['', Validators.required],
       category: ['', Validators.required],
-      hasMilk: [false],
-      urlImage: ['', Validators.required]
+      hasMilk: [false, Validators.required],
+      isActive: [true, Validators.required],
+      urlImage: ['', Validators.required],
+      points: ['', Validators.required]
     });
   }
 
@@ -96,11 +99,15 @@ export class ProductFormComponent implements OnInit, OnDestroy {
     return urlImage ? 'assets/products/' + urlImage : 'assets/no-select-img.png';
   }
   
-
+  openImageInput(){
+    this.fileInput.nativeElement.click();
+  }
   onSend() {
+    console.log(this.form.value);
     this.form.markAllAsTouched();
     if (this.form.valid) {
       this.send.emit(this.form.value);
     }
   }
+
 }

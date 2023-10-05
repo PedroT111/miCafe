@@ -3,7 +3,6 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CategoryProductService } from '../../../services/category-product.service';
 import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import { SwalService } from 'src/app/shared/utils/swal.service';
 import { CategoryProduct } from 'src/app/shared/models/categoryProduct';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductsService } from '../../../services/products.service';
@@ -11,7 +10,7 @@ import { ProductsService } from '../../../services/products.service';
 @Component({
   selector: 'app-price-adjustem-form',
   templateUrl: './price-adjustem-form.component.html',
-  styleUrls: ['./price-adjustem-form.component.css']
+  styleUrls: ['./price-adjustem-form.component.css', '../../../styles/admin-style.css']
 })
 export class PriceAdjustemFormComponent implements OnInit, OnDestroy {
   sub: Subscription = new Subscription();
@@ -22,7 +21,6 @@ export class PriceAdjustemFormComponent implements OnInit, OnDestroy {
     private categoryService: CategoryProductService,
     private productService: ProductsService,
     private toastr: ToastrService,
-    private swal: SwalService,
     private fb: FormBuilder
   ) {
     this.form = this.fb.group({
