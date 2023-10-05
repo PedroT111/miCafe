@@ -9,9 +9,15 @@ import {
 } from '../services/combo';
 import catchAsync from '../utils/catchAsync';
 import AppError from '../utils/appError';
+import { validationResult } from 'express-validator';
 
 export const createCombo = catchAsync(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json({ errors: errors.array() });
+      return;
+    }
     const { name } = req.body;
     const combo = await getOneByName(name);
     if (combo != null) {
@@ -22,7 +28,7 @@ export const createCombo = catchAsync(
     await create(newCombo);
     res.status(201).json({
       ok: true,
-      newCombo
+      combo: newCombo
     });
   }
 );
@@ -54,6 +60,11 @@ export const getCombos = catchAsync(
 
 export const updateCombo = catchAsync(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json({ errors: errors.array() });
+      return;
+    }
     const { id } = req.params;
     const combo = await getById(id);
     if (combo == null) {
@@ -75,6 +86,11 @@ export const updateCombo = catchAsync(
 
 export const deleteCombo = catchAsync(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json({ errors: errors.array() });
+      return;
+    }
     const { id } = req.params;
     const comboToDelete = await deleteOne(id);
     if (comboToDelete == null) {
