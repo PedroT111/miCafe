@@ -15,9 +15,17 @@ import {
   updatePrices
 } from '../services/product';
 import AppError from '../utils/appError';
+import { sendDataEmail } from '../helpers/sendEmail';
+import { getAllCustomers } from '../services/user';
+import { validationResult } from 'express-validator';
 
 export const createProduct = catchAsync(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json({ errors: errors.array() });
+      return;
+    }
     const { name } = req.body;
     const findProduct = await getByName(name);
     if (findProduct != null) {
@@ -26,6 +34,12 @@ export const createProduct = catchAsync(
     }
     const newProduct = { ...req.body };
     await create(newProduct);
+    const userList = await getAllCustomers();
+    await sendDataEmail(
+      userList,
+      newProduct,
+      'd-e3428e38ce284f9aadde7cea5ea3560e'
+    );
     res.status(201).json({
       ok: true,
       product: newProduct
@@ -109,12 +123,13 @@ export const getProductsNoSale = catchAsync(
 
 export const updateProduct = catchAsync(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const { id } = req.params;
-    const productToEdit = { ...req.body };
-    if (id === '') {
-      next(new AppError('Id parameter is missing', 400));
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json({ errors: errors.array() });
       return;
     }
+    const { id } = req.params;
+    const productToEdit = { ...req.body };
     const findProduct = await getOne(id);
     if (findProduct != null && findProduct._id.toString() !== id) {
       next(new AppError('There is already a product with that name.', 409));
@@ -164,12 +179,10 @@ export const updatePricesByCategory = catchAsync(
 
     const query = await updatePrices(categoryId, percentage);
     if (query == null) {
-      next(new AppError('Something was wrong!', 400));
+      next(new AppError('Something was wrongggg!', 400));
     }
-
     const pricesAfterUpdate = query?.map((p) => p.price);
-
-    if (pricesAfterUpdate !== undefined && pricesBeforeUpdate !== undefined) {
+    /* if (pricesAfterUpdate !== undefined && pricesBeforeUpdate !== undefined) {
       for (let i = 0; i < productsInCategory.length; i++) {
         const changePrice = await createChangePriceHistory(
           productsInCategory[i]._id.toString(),
@@ -177,8 +190,7 @@ export const updatePricesByCategory = catchAsync(
           pricesAfterUpdate[i]
         );
       }
-    }
-
+    } */
     res.status(200).json({
       ok: true,
       msg: 'Precios actualizados correctamente'
@@ -188,11 +200,12 @@ export const updatePricesByCategory = catchAsync(
 
 export const deleteProduct = catchAsync(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const { id } = req.params;
-    if (id === '') {
-      next(new AppError('Id parameter is missing', 400));
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json({ errors: errors.array() });
       return;
     }
+    const { id } = req.params;
     const product = await getOne(id);
     if (product == null) {
       next(new AppError('Something was wrong!', 400));
