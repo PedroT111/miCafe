@@ -1,7 +1,17 @@
 .custom-styled-input{
-    background-color: rgb(227, 227, 227);
+    background-color: rgb(236, 236, 236);
 }
 
-.custom-input{
-    width: 70%;
+.center-dp{
+    text-align: center;
+    margin: 0 auto;
 }
+
+.input-group-text{
+    font-size: 0.9rem;
+}
+
+.form-select{
+    font-size: 0.90rem;
+    color: rgb(86, 86, 87);
+  }

@@ -14,11 +14,12 @@ import { ToastrService } from 'ngx-toastr';
 import { Offer } from 'src/app/shared/models/offer';
 import { ActivatedRoute } from '@angular/router';
 import { NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
+import { OffersService } from '../../../services/offers.service';
 
 @Component({
   selector: 'app-offer-form',
   templateUrl: './offer-form.component.html',
-  styleUrls: ['./offer-form.component.css']
+  styleUrls: ['./offer-form.component.css', '../../../styles/admin-style.css']
 })
 export class OfferFormComponent implements OnInit, OnDestroy {
   sub: Subscription = new Subscription();
@@ -36,10 +37,12 @@ export class OfferFormComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private productService: ProductsService,
+    private offerService: OffersService,
     private toastr: ToastrService,
     private actRoute: ActivatedRoute
   ) {
     this.form = this.fb.group({
+      _id: [],
       productId: ['', Validators.required],
       isPercentage: [false],
       value: ['', Validators.required],
@@ -57,10 +60,19 @@ export class OfferFormComponent implements OnInit, OnDestroy {
     this.getProducts();
     if (this._id) {
       this.editMode = true;
-      this.productService.getOneProduct(this._id).subscribe({
+      this.offerService.getOffer(this._id).subscribe({
         next: (res) => {
-          this.form.patchValue(res.product);
-          this.valorActual = res.product.price;
+          const offer= res.offer;
+          const productId = offer.productId._id;
+          this.form.patchValue({
+            _id: this._id,
+            productId,
+            isPercentage: offer.isPercentage,
+            value: offer.value,
+            startSale: offer.startSale,
+            endSale: offer.endSale
+          });
+          this.valorActual = offer.productId.price;
           this.startDate = new Date(this.form.get('startSale')?.value);
           this.endDate = new Date(this.form.get('endSale')?.value);
           this.startTime = {hour: this.startDate.getHours(), minute: this.startDate.getMinutes(), second: 0};
@@ -74,13 +86,11 @@ export class OfferFormComponent implements OnInit, OnDestroy {
 
     this.form.get('productId')?.valueChanges.subscribe((x) => {
       const product = this.products.find((p) => p._id === x);
-      console.log('desde llamada al form')
       if (product) {
         this.valorActual = product.price;
       }
     });
 
-  
   }
 
   onSubmit() {
@@ -104,9 +114,7 @@ export class OfferFormComponent implements OnInit, OnDestroy {
     this.sub.add(
       productsObservable.subscribe({
         next: (res) => {
-          this.products = this._id ? res : res.products;
-          console.log('service products')
-          
+          this.products = res.products;          
         },
         error: (err) => {
           this.toastr.error(err.error.error);
