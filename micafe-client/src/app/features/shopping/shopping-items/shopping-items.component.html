@@ -1,0 +1,31 @@
+<div class="img"></div>
+<app-navbar class="d-none d-md-block"></app-navbar>
+<app-top-navbar-mobile class="d-md-none"></app-top-navbar-mobile>
+<app-navbar-mobile class="d-md-none"></app-navbar-mobile>
+<div class="container-fluid h-100">
+    <div class="row d-lg-none m-0 bg-light sticky-top ">
+        <div class="col-12 p-0">
+            <app-menu-categories-mobile [categories]="categories"></app-menu-categories-mobile>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 d-none d-lg-block">
+            <app-menu-categories [categories]="categories"></app-menu-categories>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 p-lg-5">
+            <app-category-products-section [products]="offers"></app-category-products-section>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 p-lg-5">
+            <app-combos-section [combos]="combos"></app-combos-section>
+        </div>
+    </div>
+    <div class="row last-row" *ngFor="let section of productSections">
+        <div class="col-12 p-lg-5" [spyTarget]="section.name">
+            <app-category-products-section [section]="section"></app-category-products-section>
+        </div>
+    </div>
+</div>
