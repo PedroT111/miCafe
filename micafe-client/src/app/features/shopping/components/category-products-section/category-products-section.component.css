@@ -1,0 +1,21 @@
+.card{
+    border-bottom: 0;
+    border-top: 0;
+}
+
+.card-title{
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+@media (max-width: 767px) {
+    .product-scroll-container {
+        overflow-x: auto;
+        white-space: nowrap; 
+    }
+    
+    .product-scroll-row {
+        display: flex;
+        flex-wrap: nowrap;
+    }
+}
