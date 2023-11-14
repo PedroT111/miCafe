@@ -1,0 +1,13 @@
+<nav class="navbar pt-1 border-bottom">
+  <div class="container-fluid">
+    <div class="navbar-nav-scroll">
+      <div class="d-flex flex-nowrap overflow-auto p-3">
+        <a class="nav-link"><i class="bi bi-grid"></i><span class="mx-2">Menu</span></a>
+        <a  *ngFor="let category of categories" class="nav-link px-2" (click)="scroll(category.name)" [spyOn]="category.name"
+           activeClass="nav-link-active">{{
+          category.name
+          }}</a>
+      </div>
+    </div>
+  </div>
+</nav>

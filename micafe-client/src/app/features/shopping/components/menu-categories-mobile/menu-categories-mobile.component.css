@@ -1,0 +1,14 @@
+
+.navbar-nav-scroll {
+    overflow-x: hidden;
+    white-space: nowrap;
+}
+
+.navbar-nav-scroll .nav-link {
+    margin-right: 15px;
+}
+
+.nav-link-active {
+    border-bottom: 2px rgb(6, 214, 69) solid;
+}
+
