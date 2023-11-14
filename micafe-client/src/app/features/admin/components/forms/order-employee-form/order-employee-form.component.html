@@ -1,0 +1,24 @@
+<div class="modal-header">
+    <p class="modal-title mx-auto">Empleado</p>
+    <i class="btn p-o border-0 bi bi-x-square-fill" (click)="onCancel()"></i>
+</div>
+<div class="modal-body">
+    <form>
+        <div class="row mb-3">
+            <div class="col">
+                <div class="card">
+                    <form [formGroup]="form">
+                    <select name="" id="" class="form-select" formControlName="employee">
+                        <option selected disabled value=" ">Seleccionar un empleado</option>
+                        <option *ngFor="let e of employees" [value]="e._id">{{e.name}} {{e.lastName}}</option>
+                    </select></form>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <button class="btn btn-info w-100" (click)="changeEmployee()">Asignar</button>
+            </div>
+        </div>
+    </form>
+</div>
