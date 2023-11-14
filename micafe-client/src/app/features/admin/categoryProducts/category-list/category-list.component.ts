@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { CategoryProductService } from '../../services/category-product.service';
+import { CategoryProductService } from '../../../../shared/services/category-product.service';
 import { ToastrService } from 'ngx-toastr';
 import { CategoryProduct } from 'src/app/shared/models/categoryProduct';
 import { CATEGORY } from '../../constants/categoryProduct';
@@ -10,7 +10,7 @@ import { SwalService } from 'src/app/shared/utils/swal.service';
 @Component({
   selector: 'app-category-list',
   templateUrl: './category-list.component.html',
-  styleUrls: ['./category-list.component.css',]
+  styleUrls: ['./category-list.component.css','../../styles/admin-style.css']
 })
 export class CategoryListComponent implements OnInit, OnDestroy {
   sub: Subscription = new Subscription();

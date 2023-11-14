@@ -1,16 +1,16 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { CombosService } from '../../services/combos.service';
 import { ToastrService } from 'ngx-toastr';
 import { SwalService } from 'src/app/shared/utils/swal.service';
 import { Combo, ComboSummary } from 'src/app/shared/models/combo';
 import { COMBO } from '../../constants/combos';
 import { Router } from '@angular/router';
+import { CombosService } from 'src/app/shared/services/combos.service';
 
 @Component({
   selector: 'app-combos-list',
   templateUrl: './combos-list.component.html',
-  styleUrls: ['./combos-list.component.css']
+  styleUrls: ['./combos-list.component.css', '../../styles/admin-style.css']
 })
 export class CombosListComponent implements OnInit, OnDestroy {
   sub: Subscription = new Subscription();
