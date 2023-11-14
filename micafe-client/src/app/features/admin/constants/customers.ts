@@ -13,10 +13,6 @@ export const CUSTOMERS = {
       name: 'email'
     },
     {
-      header: 'Cantidad Pedidos',
-      name: 'orderCount'
-    },
-    {
       header: 'Fecha de Registro',
       name: 'registrationDate'
     },
@@ -32,7 +28,5 @@ export const CUSTOMERS = {
   SORTING: [
     { sort: 'name', asc: true, name: 'Apellido asc' },
     { sort: 'name', asc: false, name: 'Apellido desc' },
-    { sort: 'orders', asc: true, name: 'Compras asc' },
-    { sort: 'orders', asc: false, name: 'Compras desc' }
   ]
 };
