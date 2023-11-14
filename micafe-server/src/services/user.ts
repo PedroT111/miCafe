@@ -21,35 +21,8 @@ export const getOneById = async (id: string): Promise<IUser | null> => {
 
 export const getUsersWithOrderCount = async (
   role: string
-): Promise<IUserWithOrderCountDTO[]> => {
-  return await User.aggregate([
-    {
-      $lookup: {
-        from: 'Orders',
-        localField: '_id',
-        foreignField: 'customer',
-        as: 'orders'
-      }
-    },
-    {
-      $match: {
-        isDeleted: false,
-        role
-      }
-    },
-    {
-      $project: {
-        _id: '$_id',
-        name: '$name',
-        lastName: '$lastName',
-        email: '$email',
-        orderCount: { $size: '$orders' },
-        registrationDate: '$registrationDate',
-        lastOrderDate: '$lastOrderDate',
-        isValidated: '$isValidated'
-      }
-    }
-  ]).exec();
+): Promise<IUser[]> => {
+    return await User.find({role, isDeleted: false})
 };
 
 export const getTopClients = async (
