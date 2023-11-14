@@ -5,6 +5,7 @@ import { validationResult } from 'express-validator';
 import {
   createDiscountsForUsers,
   deleteDiscount,
+  getActiveDiscountByUser,
   getAll,
   getOneByCode
 } from '../services/discount';
@@ -47,7 +48,7 @@ export const createDiscountForTopUsers = catchAsync(
 
     const newDiscount = await createDiscountsForUsers(topClients, discount);
     if (newDiscount.length === 0) {
-      next(new AppError('Error!', 400));
+      next(new AppError('No hay usuarios que cumplan con esos parametros!', 400));
       return;
     }
     res.status(200).json({
@@ -76,7 +77,7 @@ export const createDiscountForInactiveUsers = catchAsync(
     const inactiveUsers = await getInactiveUsers(inactiveDays);
     const newDiscount = await createDiscountsForUsers(inactiveUsers, discount);
     if (newDiscount.length === 0) {
-      next(new AppError('Error!', 400));
+      next(new AppError('No hay usuarios que cumplan con esos parametros!', 400));
       return;
     }
     res.status(200).json({
@@ -105,6 +106,35 @@ export const deleteDiscounts = catchAsync(
     res.status(200).json({
       ok: true,
       msg: 'Discounts removed successfully'
+    });
+  }
+);
+
+export const validateDiscount = catchAsync(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json({ errors: errors.array() });
+      return;
+    }
+    const code: string = (req.query.code as string) || ''; 
+    const user: string = (req.query.user as string) || '';
+
+    if (!code || !user) {
+      next(new AppError('Invalid discount code!', 400));
+      return;
+    }
+
+    const discount = await getActiveDiscountByUser(code, user);
+
+    if (!discount) {
+      next(new AppError('Invalid discount code!', 400));
+      return;
+    }
+
+    res.status(200).json({
+      ok: true,
+      discount
     });
   }
 );
