@@ -1,8 +1,9 @@
-import { type CategoryDto } from '../Dto/categoryDto';
+import { CategoryProductsDTO, type CategoryDto } from '../Dto/categoryDto';
 import {
   CategoryProduct,
   type ICategoryProduct
 } from '../models/categoryProductModel';
+import { Product } from '../models/productModel';
 
 export const createOne = async (
   categoryData: ICategoryProduct
@@ -45,6 +46,29 @@ export const findAll = async (): Promise<CategoryDto[]> => {
 export const detail = async (id: string): Promise<ICategoryProduct | null> => {
   return await CategoryProduct.findById(id);
 };
+
+export const getProductsCategories = async (): Promise<CategoryProductsDTO[]> => {
+  return await Product.aggregate([
+    {
+      $lookup: {
+        from: 'categoryproducts', 
+        localField: 'category',
+        foreignField: '_id',
+        as: 'category'
+      }
+    },
+    {
+      $unwind: '$category'
+    },
+    {
+      $group: {
+        _id: '$category._id',
+        name: { $first: '$category.name' },
+        products: { $push: '$$ROOT' } 
+      }
+    }
+  ]);
+}
 
 export const update = async (
   id: string,
