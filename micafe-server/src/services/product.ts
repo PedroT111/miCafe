@@ -4,6 +4,7 @@ import {
   ChangePriceHistory
 } from '../models/priceChangeHistory';
 import { Combo } from '../models/comboModel';
+import { CategoryProductsDTO } from '../Dto/categoryDto';
 
 export const create = async (productData: IProduct): Promise<IProduct> => {
   return await Product.create(productData);
@@ -18,7 +19,7 @@ export const getOne = async (id: any): Promise<IProduct | null> => {
 };
 
 export const getByName = async (name: string): Promise<IProduct | null> => {
-  return await Product.findOne({ name });
+  return await Product.findOne({ name, isDeleted: false });
 };
 
 export const getByCategory = async (category: any): Promise<IProduct[]> => {
@@ -30,7 +31,7 @@ export const getOfferProducts = async (): Promise<IProduct[]> => {
 };
 
 export const productsNoSale = async (): Promise<IProduct[]> => {
-  return await Product.find({ isOnSale: false });
+  return await Product.find({ isOnSale: false, isDeleted: false });
 };
 
 export const updatePrices = async (
@@ -80,19 +81,13 @@ export const update = async (
 };
 
 export const deleteOne = async (id: any): Promise<IProduct | null> => {
-  const product = Product.findById(id);
-  await Combo.deleteMany({ products: product });
+  const product = await  Product.findById(id);
 
   if (product === null) {
     return null;
   }
-  const deletedProduct = await Product.findByIdAndUpdate(
-    id,
-    {
-      isDeleted: true
-    },
-    { new: true }
-  );
+  product.isDeleted = true;
+  await product.save();
 
-  return deletedProduct;
+  return product;
 };
