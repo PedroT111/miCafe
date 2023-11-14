@@ -4,9 +4,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { LABEL_BUTTONS } from 'src/app/shared/constants';
 import { CategoryProduct } from 'src/app/shared/models/categoryProduct';
-import { CategoryProductService } from '../../../services/category-product.service';
+import { CategoryProductService } from '../../../../../shared/services/category-product.service';
 import { ActivatedRoute } from '@angular/router';
-import { ProductsService } from '../../../services/products.service';
+import { ProductsService } from 'src/app/shared/services/products.service';
+
 
 @Component({
   selector: 'app-product-form',

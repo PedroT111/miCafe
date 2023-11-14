@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { DiscountService } from '../../services/discount.service';
+import { DiscountService } from '../../../../shared/services/discount.service';
 import { Discount, DiscountSummary } from 'src/app/shared/models/discount';
 import { DISCOUNTS } from '../../constants/discounts';
 import { SortBy } from 'src/app/shared/models/filter';
@@ -10,7 +10,7 @@ import { SwalService } from 'src/app/shared/utils/swal.service';
 @Component({
   selector: 'app-discount-list',
   templateUrl: './discount-list.component.html',
-  styleUrls: ['./discount-list.component.css']
+  styleUrls: ['./discount-list.component.css','../../styles/admin-style.css']
 })
 export class DiscountListComponent implements OnInit, OnDestroy {
   sub: Subscription = new Subscription();

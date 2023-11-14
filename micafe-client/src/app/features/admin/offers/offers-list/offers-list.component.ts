@@ -13,7 +13,7 @@ import { OfferCategoryFormComponent } from '../../components/forms/offer-categor
 @Component({
   selector: 'app-offers-list',
   templateUrl: './offers-list.component.html',
-  styleUrls: ['./offers-list.component.css']
+  styleUrls: ['./offers-list.component.css', '../../styles/admin-style.css']
 })
 export class OffersListComponent implements OnInit, OnDestroy {
   sub: Subscription = new Subscription();

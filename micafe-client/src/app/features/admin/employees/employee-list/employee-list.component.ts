@@ -10,7 +10,7 @@ import { SwalService } from 'src/app/shared/utils/swal.service';
 @Component({
   selector: 'app-employee-list',
   templateUrl: './employee-list.component.html',
-  styleUrls: ['./employee-list.component.css']
+  styleUrls: ['./employee-list.component.css', '../../styles/admin-style.css']
 })
 export class EmployeeListComponent implements OnInit, OnDestroy {
   sub: Subscription = new Subscription();

@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ProductsService } from '../../services/products.service';
 import { Product } from 'src/app/shared/models/product';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { SwalService } from 'src/app/shared/utils/swal.service';
 import { PAGES } from 'src/app/shared/constants';
+import { ProductsService } from 'src/app/shared/services/products.service';
 
 @Component({
   selector: 'app-product-edit',

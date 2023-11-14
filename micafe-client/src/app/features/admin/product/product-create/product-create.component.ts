@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Product } from 'src/app/shared/models/product';
-import { ProductsService } from '../../services/products.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { PAGES } from 'src/app/shared/constants';
+import { ProductsService } from 'src/app/shared/services/products.service';
 
 @Component({
   selector: 'app-product-create',

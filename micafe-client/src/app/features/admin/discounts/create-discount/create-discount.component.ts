@@ -2,7 +2,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { DiscountForm } from 'src/app/shared/models/discount';
-import { DiscountService } from '../../services/discount.service';
+import { DiscountService } from '../../../../shared/services/discount.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
@@ -35,6 +35,7 @@ export class CreateDiscountComponent implements OnInit, OnDestroy {
             this.router.navigate(['/admin/discounts']);
           },
           error: (err) => {
+            console.log(err)
             this.toastr.error(err.error.error);
           }
         })

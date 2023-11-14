@@ -1,9 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ProductsService } from '../../services/products.service';
 import { Product, ProductSummary } from 'src/app/shared/models/product';
 import { Subscription } from 'rxjs';
 import { PRODUCT } from '../../constants/product';
-import { CategoryProductService } from '../../services/category-product.service';
+import { CategoryProductService } from '../../../../shared/services/category-product.service';
 import { Options } from 'src/app/shared/models/form';
 import { CategoryProduct } from 'src/app/shared/models/categoryProduct';
 import { Router } from '@angular/router';
@@ -11,11 +10,12 @@ import { SwalService } from 'src/app/shared/utils/swal.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PriceAdjustemFormComponent } from '../../components/forms/price-adjustem-form/price-adjustem-form.component';
+import { ProductsService } from 'src/app/shared/services/products.service';
 
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
-  styleUrls: ['./products.component.css']
+  styleUrls: ['./products.component.css', '../../styles/admin-style.css']
 })
 export class ProductsComponent implements OnInit, OnDestroy {
   sub: Subscription = new Subscription();
