@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Order } from 'src/app/shared/models/order';
-import { format } from 'date-fns';
+
 
 @Component({
   selector: 'app-card-order',
@@ -21,18 +21,12 @@ export class CardOrderComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.formatearFecha(this.order.pickUpDateTime);
-    //this.updateCounter();
+    
   }
 
-  formatearFecha(fecha: Date) {
-    const fechaObj = new Date(fecha);
-    const hora = format(fechaObj, 'HH:mm');
-    this.fecha = format(fechaObj, 'dd/MM');
-    this.hora = hora.toString();
-  }
+  
 
-  pickUpOrder(order: Order) {
+  changeStatus(order: Order) {
     this.onConfirm.emit(order);
   }
 
