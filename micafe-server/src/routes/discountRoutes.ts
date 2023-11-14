@@ -3,7 +3,8 @@ import {
   createDiscountForInactiveUsers,
   createDiscountForTopUsers,
   deleteDiscounts,
-  getAllDiscounts
+  getAllDiscounts,
+  validateDiscount
 } from '../controllers/discountController';
 import {
   discountValidationCode,
@@ -13,6 +14,7 @@ import {
 const router = express.Router();
 
 router.get('/', getAllDiscounts);
+router.get('/validate', validateDiscount);
 router.post(
   '/new/top-users',
   discountValidationRules,
