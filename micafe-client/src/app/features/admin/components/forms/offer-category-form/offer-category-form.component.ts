@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { CategoryProductService } from '../../../services/category-product.service';
+import { CategoryProductService } from '../../../../../shared/services/category-product.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import { CategoryProduct } from 'src/app/shared/models/categoryProduct';
