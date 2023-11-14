@@ -2,7 +2,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbCalendar, NgbDate } from '@ng-bootstrap/ng-bootstrap';
-import { DiscountService } from '../../../services/discount.service';
+import { DiscountService } from '../../../../../shared/services/discount.service';
 import { DiscountForm } from 'src/app/shared/models/discount';
 import { Subscription } from 'rxjs';
 import { SwalService } from 'src/app/shared/utils/swal.service';

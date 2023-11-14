@@ -3,8 +3,8 @@ import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnIni
 import { Subscription } from 'rxjs';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Product } from 'src/app/shared/models/product';
-import { ProductsService } from '../../../services/products.service';
 import { Combo } from 'src/app/shared/models/combo';
+import { ProductsService } from 'src/app/shared/services/products.service';
 
 @Component({
   selector: 'app-combo-form',

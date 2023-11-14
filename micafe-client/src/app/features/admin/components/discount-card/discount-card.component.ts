@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Discount } from 'src/app/shared/models/discount';
-import { DiscountService } from '../../services/discount.service';
+import { DiscountService } from '../../../../shared/services/discount.service';
 
 @Component({
   selector: 'app-discount-card',

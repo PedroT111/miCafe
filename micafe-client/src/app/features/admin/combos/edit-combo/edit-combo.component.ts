@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { CombosService } from '../../services/combos.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Combo } from 'src/app/shared/models/combo';
 import { SwalService } from 'src/app/shared/utils/swal.service';
 import { ToastrService } from 'ngx-toastr';
+import { CombosService } from 'src/app/shared/services/combos.service';
 
 @Component({
   selector: 'app-edit-combo',
