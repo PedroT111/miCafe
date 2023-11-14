@@ -1,0 +1,45 @@
+<div class="product-detail-container">
+    <div class="modal-header p-0">
+        <div class="row">
+            <div class="col-12">
+                <button type="button" class="btn-icon border border-light rounded-5"(click)="closeModal()">
+                    <i class="bi bi-arrow-left"></i>
+                </button>
+                <div class="img-container">
+                    <img [src]="['/assets/products/' + combo.urlImage]" alt="" class="img-fluid fixed-size-image rounded">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-body d-flex flex-column justify-content-between">
+        <div class="row px-4 py-2">
+            <div class="col-12">
+                <div class="row mb-2">
+                    <div class="col-12">
+                        <div class="title">
+                            {{combo.name}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <p class="description">{{combo.description}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <span class="price">{{combo.price | currency}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row py-2">
+            <div class="col-6">
+                <app-quantity-selector [quantity]="quantity" (quantityChange)="selectQuantity($event)"></app-quantity-selector>
+            </div>
+            <div class="col-6">
+                <button class="btn btn-add p-3 border rounded-5 w-100" (click)="addCombo()">Agregar </button>
+            </div>
+        </div>
+    </div>
+</div>
