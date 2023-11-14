@@ -10,8 +10,12 @@ import { FilterComponent } from './components/filter/filter.component';
 import { SearchComponent } from './components/search/search.component';
 import { TruncateTextPipe } from './pipes/truncate-text.pipe';
 import { SpinnerComponent } from './components/spinner/spinner.component';
-import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdownModule, NgbOffcanvasModule } from '@ng-bootstrap/ng-bootstrap';
 import { SplitWordsPipe } from './pipes/split-words.pipe';
+import { NavbarMobileComponent } from './components/navbar-mobile/navbar-mobile.component';
+import { TopNavbarMobileComponent } from './components/top-navbar-mobile/top-navbar-mobile.component';
+import { TitlePageComponent } from './components/title-page/title-page.component';
+import { DateFormatPipe } from './pipes/date-format.pipe';
 
 @NgModule({
   declarations: [
@@ -24,15 +28,22 @@ import { SplitWordsPipe } from './pipes/split-words.pipe';
     TruncateTextPipe,
     SpinnerComponent,
     SplitWordsPipe,
+    NavbarMobileComponent,
+    TopNavbarMobileComponent,
+    TitlePageComponent,
+    DateFormatPipe
   ],
   imports: [
     CommonModule,
     RouterModule,
     FormsModule,
     NgbDropdownModule,
+    NgbOffcanvasModule
   ],
   exports: [
     NavbarComponent,
+    NavbarMobileComponent,
+    TopNavbarMobileComponent,
     FooterComponent,
     ReactiveFormsModule,
     FormValidationDirective,
@@ -41,6 +52,8 @@ import { SplitWordsPipe } from './pipes/split-words.pipe';
     SearchComponent,
     TruncateTextPipe,
     SplitWordsPipe, 
+    TitlePageComponent,
+    DateFormatPipe
   ]
 })
 export class SharedModule { }
