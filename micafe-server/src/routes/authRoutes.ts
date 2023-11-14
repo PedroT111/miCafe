@@ -18,7 +18,7 @@ import {
 
 const router = express.Router();
 
-router.get('/me', authenticateToken, getMe);
+router.get('/me/:id', getMe);
 router.post('/signup', signUpValidationRules, registerValidation);
 router.post('/login', logInValidationRules, loginValidation);
 router.get('/validate/:validationToken', validateAccount);
