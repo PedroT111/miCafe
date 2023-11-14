@@ -42,7 +42,7 @@ const userSchema = new Schema<IUser>({
     default: 'user'
   },
   points: {
-    type: Number
+    type: Number,
   },
   validationToken: {
     type: String,
@@ -79,7 +79,6 @@ userSchema.pre('save', async function (next) {
   if (this.role !== 'user') {
     this.isValidated = true;
     this.validationToken = undefined;
-    this.points = undefined;
     this.lastOrderDate = undefined;
   }
 
