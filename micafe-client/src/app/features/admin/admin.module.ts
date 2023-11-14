@@ -38,6 +38,27 @@ import { EmployeeListComponent } from './employees/employee-list/employee-list.c
 import { CreateEmployeeComponent } from './employees/create-employee/create-employee.component';
 import { EditEmployeeComponent } from './employees/edit-employee/edit-employee.component';
 import { EmployeeFormComponent } from './components/forms/employee-form/employee-form.component';
+import { OrderListComponent } from './orders/order-list/order-list.component';
+import { OrderTableComponent } from './components/order-table/order-table.component';
+import { OrderInfoComponent } from './orders/order-info/order-info.component';
+import { OrderCardComponent } from './components/order-card/order-card.component';
+import { OrderFormComponent } from './components/forms/order-form/order-form.component';
+import { OrderEmployeeFormComponent } from './components/forms/order-employee-form/order-employee-form.component';
+import {NgChartsModule} from 'ng2-charts';
+import { SaleReportsComponent } from './sale-reports/sale-reports.component';
+import { MostSoldProductsComponent } from './components/graphics/most-sold-products/most-sold-products.component';
+import { TotalSellPeriodComponent } from './components/graphics/total-sell-period/total-sell-period.component';
+import { SaleByWeekdayComponent } from './components/graphics/sale-by-weekday/sale-by-weekday.component';
+import { RatingDistributionComponent } from './components/graphics/rating-distribution/rating-distribution.component';
+import { SalesByHourdayComponent } from './components/graphics/sales-by-hourday/sales-by-hourday.component';
+import { RatingDistributionEmployeeComponent } from './components/graphics/rating-distribution-employee/rating-distribution-employee.component';
+import { AverageRatingVariationComponent } from './components/graphics/average-rating-variation/average-rating-variation.component';
+import { TotalSelledCategoryComponent } from './components/graphics/total-selled-category/total-selled-category.component';
+import { NewcustomersBymonthComponent } from './components/graphics/newcustomers-bymonth/newcustomers-bymonth.component';
+import { SupplierListComponent } from './suppliers/supplier-list/supplier-list.component';
+import { CreateSupplierComponent } from './suppliers/create-supplier/create-supplier.component';
+import { EditSupplierComponent } from './suppliers/edit-supplier/edit-supplier.component';
+import { SupplierFormComponent } from './components/forms/supplier-form/supplier-form.component';
 
 
 @NgModule({
@@ -74,6 +95,26 @@ import { EmployeeFormComponent } from './components/forms/employee-form/employee
     CreateEmployeeComponent,
     EditEmployeeComponent,
     EmployeeFormComponent,
+    OrderListComponent,
+    OrderTableComponent,
+    OrderInfoComponent,
+    OrderCardComponent,
+    OrderFormComponent,
+    OrderEmployeeFormComponent,
+    SaleReportsComponent,
+    MostSoldProductsComponent,
+    TotalSellPeriodComponent,
+    SaleByWeekdayComponent,
+    RatingDistributionComponent,
+    SalesByHourdayComponent,
+    RatingDistributionEmployeeComponent,
+    AverageRatingVariationComponent,
+    TotalSelledCategoryComponent,
+    NewcustomersBymonthComponent,
+    SupplierListComponent,
+    CreateSupplierComponent,
+    EditSupplierComponent,
+    SupplierFormComponent,
   ],
   imports: [
     CommonModule,
@@ -86,7 +127,8 @@ import { EmployeeFormComponent } from './components/forms/employee-form/employee
     NgbDatepickerModule,
     NgbTimepickerModule,
     NgbDropdownModule,
-    NgbTooltipModule
+    NgbTooltipModule,
+    NgChartsModule
   ],
   providers: [
     {
