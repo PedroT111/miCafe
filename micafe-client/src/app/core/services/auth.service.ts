@@ -5,9 +5,10 @@ import {
   LoginRes,
   RegistrationRes,
   User,
+  UserApi,
   UserAuth
 } from 'src/app/shared/models/user';
-import { Observable } from 'rxjs';
+import { Observable} from 'rxjs';
 import { ApiResponse } from 'src/app/shared/models/apiResponse';
 
 @Injectable({
@@ -15,6 +16,11 @@ import { ApiResponse } from 'src/app/shared/models/apiResponse';
 })
 export class AuthService {
   constructor(private httpClient: HttpClient) {}
+
+  getUserDateAndUpdateLocalStorage():Observable<UserApi>{
+    const id = this.getUserData()?._id;
+    return this.httpClient.get<UserApi>(`/authenticate/me/${id}`);
+  }
 
   login(user: UserAuth): Observable<LoginRes> {
     return this.httpClient.post<LoginRes>('/authenticate/login', user);
@@ -42,6 +48,8 @@ export class AuthService {
     const user = localStorage.getItem('user');
     return user ? JSON.parse(user) : null;
   }
+
+
 
   isLoggedIn(): boolean {
     const token = localStorage.getItem('token');
