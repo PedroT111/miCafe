@@ -2,6 +2,7 @@ import mongoose, { ObjectId } from 'mongoose';
 import { RatingDistribution, productTotalQuantitySold } from '../Dto/reportDto';
 import { Order } from '../models/orderModel';
 import { Product } from '../models/productModel';
+import { User } from '../models/userModel';
 
 export const getMostSelledProducts = async (
   startDate: Date,
@@ -53,9 +54,10 @@ export const getMostSelledProducts = async (
   return result;
 };
 
-export const getOrderRatingDistribution = async (startDate: Date, endDate: Date): Promise<
-  RatingDistribution[]
-> => {
+export const getOrderRatingDistribution = async (
+  startDate: Date,
+  endDate: Date
+): Promise<RatingDistribution[]> => {
   const ratingDistribution = await Order.aggregate([
     {
       $match: {
@@ -93,19 +95,38 @@ export const getOrderRatingDistributionByEmployee = async (
       }
     },
     {
-      $group: {
-        _id: '$qualification',
-        count: { $sum: 1 }
-      }
-    },
-    {
-      $sort: {
-        _id: 1
+      $facet: {
+        ratingDistribution: [
+          {
+            $group: {
+              _id: '$qualification',
+              count: { $sum: 1 }
+            }
+          },
+          {
+            $sort: {
+              _id: 1
+            }
+          }
+        ],
+        averageRating: [
+          {
+            $group: {
+              _id: null,
+              average: { $avg: '$qualification' }
+            }
+          }
+        ]
       }
     }
   ]);
 
-  return ratingDistribution;
+  const result = {
+    ratingDistribution: ratingDistribution[0].ratingDistribution,
+    averageRating: ratingDistribution[0].averageRating[0]?.average || null
+  };
+
+  return result;
 };
 
 export const getMonthlySales = async (year: string): Promise<any> => {
@@ -237,40 +258,170 @@ export const getSaleByWeekDayReport = async (
   return salesReport;
 };
 
-
 export const getSalesByHourOfDay = async (
-   startDate: Date,
-   endDate: Date
-  ): Promise<any> => {
-    const salesReport = await Order.aggregate([
-      {
-        $match: {
-          date: {
-            $gte: startDate,
-            $lte: endDate
-          }
+  startDate: Date,
+  endDate: Date
+): Promise<any> => {
+  const salesReport = await Order.aggregate([
+    {
+      $match: {
+        date: {
+          $gte: startDate,
+          $lte: endDate
         }
-      },
-      {
-        $addFields: {
-          adjustedDate: {
-            $subtract: ['$date', 3 * 60 * 60 * 1000]
-          }
+      }
+    },
+    {
+      $addFields: {
+        adjustedDate: {
+          $subtract: ['$date', 3 * 60 * 60 * 1000]
         }
-      },
-      {
-        $group: {
-          _id: { $hour: '$adjustedDate' },
-          totalAmount: { $sum: '$totalAmount' },
-        }
-      },
-      {
-        $sort: {
-          _id: 1
-        }
-      },
-      
-    ]);
-  
-    return salesReport;
-  };
+      }
+    },
+    {
+      $group: {
+        _id: { $hour: '$adjustedDate' },
+        totalAmount: { $sum: '$totalAmount' }
+      }
+    },
+    {
+      $sort: {
+        _id: 1
+      }
+    }
+  ]);
+
+  return salesReport;
+};
+
+export const getAvgCalificationsEmployeeByYear = async (
+  year: string
+): Promise<any> => {
+  const report = await Order.aggregate([
+    {
+      $match: {
+        date: {
+          $gte: new Date(`${year}-01-01T00:00:00.000Z`),
+          $lte: new Date(`${year}-12-31T23:59:59.999Z`)
+        },
+        qualification: { $exists: true, $ne: null }
+      }
+    },
+    {
+      $lookup: {
+        from: 'users', // Nombre de la colección de empleados
+        localField: 'employee',
+        foreignField: '_id',
+        as: 'employeeDetails'
+      }
+    },
+    {
+      $unwind: '$employeeDetails'
+    },
+    {
+      $group: {
+        _id: {
+          employee: '$employeeDetails',
+          month: { $month: '$date' }
+        },
+        avgRating: { $avg: '$qualification' }
+      }
+    }
+  ]);
+
+  const organizedData: { [key: string]: any } = {};
+
+  report.forEach((rating) => {
+    const employee = rating._id.employee;
+    const month = rating._id.month;
+    const avg = rating.avgRating;
+
+    if (!organizedData[employee._id]) {
+      organizedData[employee._id] = {
+        employee: employee,
+        promediosMensuales: []
+      };
+    }
+
+    organizedData[employee._id].promediosMensuales.push({ month, avg });
+  });
+
+  return Object.values(organizedData);
+};
+
+export const totalSelledByCategory = async (
+  startDate: Date,
+  endDate: Date
+): Promise<any> => {
+  const report = await Order.aggregate([
+    {
+      $match: {
+        date: { $gte: startDate, $lte: endDate },
+        status: 'pickedUp'
+      }
+    },
+    {
+      $unwind: '$products'
+    },
+    {
+      $lookup: {
+        from: 'products',
+        localField: 'products.product',
+        foreignField: '_id',
+        as: 'productInfo'
+      }
+    },
+    {
+      $unwind: '$productInfo'
+    },
+    {
+      $lookup: {
+        from: 'categoryproducts',
+        localField: 'productInfo.category',
+        foreignField: '_id',
+        as: 'categoryInfo'
+      }
+    },
+    {
+      $unwind: '$categoryInfo'
+    },
+    {
+      $group: {
+        _id: '$categoryInfo._id',
+        categoryName: { $first: '$categoryInfo.name' },
+        totalAmount: { $sum: '$totalAmount' }
+      }
+    }
+  ]);
+
+  return report;
+};
+
+export const newCustomersByMonth = async (year: string): Promise<any> => {
+  const report = User.aggregate([
+    {
+      $match: {
+        registrationDate: {
+          $gte: new Date(`${year}-01-01`),
+          $lte: new Date(`${year}-12-31`)
+        },
+        role: 'user'
+      }
+    },
+    {
+      $group: {
+        _id: {
+          $month: '$registrationDate'
+        },
+        newUsers: { $sum: 1 }
+      }
+    },
+    {
+      $sort: {
+        '_id': 1
+      }
+    }
+  ]);
+
+  return report;
+};

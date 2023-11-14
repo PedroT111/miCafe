@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import catchAsync from '../utils/catchAsync';
 import { validationResult } from 'express-validator';
 import {
+  getAvgCalificationsEmployeeByYear,
   getDailySalesByMonthReport,
   getMonthlySales,
   getMostSelledProducts,
@@ -9,6 +10,8 @@ import {
   getOrderRatingDistributionByEmployee,
   getSaleByWeekDayReport,
   getSalesByHourOfDay,
+  newCustomersByMonth,
+  totalSelledByCategory
 } from '../services/reports';
 import AppError from '../utils/appError';
 
@@ -133,7 +136,7 @@ export const salesByDayOfWeek = catchAsync(
     }
     const year = req.query.year as string;
     const month = req.query.month as string;
-    
+
     const dailySales = await getSaleByWeekDayReport(year, month);
     if (dailySales === null) {
       next(new AppError('Something was wrong!', 400));
@@ -147,27 +150,89 @@ export const salesByDayOfWeek = catchAsync(
 );
 
 export const salesByHourOfDay = catchAsync(
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        res.status(400).json({ errors: errors.array() });
-        return;
-      }
-      const startDate = new Date(req.query.startDate as string);
-      startDate.setUTCHours(0,0,0,0);
-      const endDate = new Date(req.query.endDate as string);
-      endDate.setUTCHours(23, 59, 59, 999);
-      console.log(startDate, endDate)
-      const hourSales = await getSalesByHourOfDay(startDate, endDate);
-      if (hourSales === null) {
-        next(new AppError('Something was wrong!', 400));
-      }
-  
-      res.status(200).json({
-        ok: true,
-        sales: hourSales
-      });
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json({ errors: errors.array() });
+      return;
     }
-  );
+    const startDate = new Date(req.query.startDate as string);
+    startDate.setUTCHours(0, 0, 0, 0);
+    const endDate = new Date(req.query.endDate as string);
+    endDate.setUTCHours(23, 59, 59, 999);
 
+    const hourSales = await getSalesByHourOfDay(startDate, endDate);
+    if (hourSales === null) {
+      next(new AppError('Something was wrong!', 400));
+    }
 
+    res.status(200).json({
+      ok: true,
+      sales: hourSales
+    });
+  }
+);
+
+export const reportAverageCalificationsByYear = catchAsync(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json({ errors: errors.array() });
+      return;
+    }
+    const { year } = req.params;
+
+    const avg = await getAvgCalificationsEmployeeByYear(year);
+    if (avg === null) {
+      next(new AppError('Something was wrong!', 400));
+    }
+
+    res.status(200).json({
+      ok: true,
+      avg
+    });
+  }
+);
+
+export const reportSelledByCategory = catchAsync(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json({ errors: errors.array() });
+      return;
+    }
+    const startDate = new Date(req.query.startDate as string);
+    const endDate = new Date(req.query.endDate as string);
+
+    const categories = await totalSelledByCategory(startDate, endDate);
+    if (categories === null) {
+      next(new AppError('Something was wrong!', 400));
+    }
+
+    res.status(200).json({
+      ok: true,
+      categories
+    });
+  }
+);
+
+export const reportNewCustomersByMonth = catchAsync(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json({ errors: errors.array() });
+      return;
+    }
+    const { year } = req.params;
+
+    const newCustomers = await newCustomersByMonth(year);
+    if (newCustomers === null) {
+      next(new AppError('Something was wrong!', 400));
+    }
+
+    res.status(200).json({
+      ok: true,
+      newCustomers
+    });
+  }
+);
