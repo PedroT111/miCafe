@@ -23,7 +23,7 @@ export class SuppliersService {
   }
 
   update(supplier: Supplier):Observable<SupplierResponse>{
-    return this.http.put<SupplierResponse>(`/supplier/update(${supplier._id}`, supplier);
+    return this.http.put<SupplierResponse>(`/supplier/update/${supplier._id}`, supplier);
   }
 
   delete(id: string):Observable<SupplierResponse>{
