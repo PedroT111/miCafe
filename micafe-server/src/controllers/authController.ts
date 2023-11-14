@@ -70,11 +70,16 @@ export const resetPassword = catchAsync(
 
 export const getMe = catchAsync(
   async (req: Request, res: Response): Promise<void> => {
-    const id = req.headers.user as string;
+    const {id} = req.params;
     const user = await getOneById(id);
+
+    const userToSend = {
+      ...user,
+      password: ''
+    }
     res.status(200).json({
       ok: true,
-      user
+      user: userToSend
     });
   }
 );
