@@ -29,13 +29,13 @@ export class DatepickerComponent implements OnInit, OnChanges {
 
   fromDate: NgbDate | null;
   toDate: NgbDate | null;
-  minDate: NgbDate;
+  @Input() minDate: NgbDate;
 
   constructor(
     private calendar: NgbCalendar,
     public formatter: NgbDateParserFormatter
   ) {
-    this.minDate = calendar.getToday();
+   
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['startDateForEdit']) {
