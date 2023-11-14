@@ -6,6 +6,15 @@ export const getOneByCode = async (code: string): Promise<IDiscount | null> => {
   return await Discount.findOne({ code });
 };
 
+export const getActiveDiscountByUser = async (code: string, userId: string): Promise<IDiscount| null> => {
+  return await Discount.findOne({
+    code,
+    user: userId,
+    status: 'active',
+    used: false
+  })
+}
+
 export const getAll = async (): Promise<IDiscount[]> => {
   const discounts = await Discount.aggregate([
     {
