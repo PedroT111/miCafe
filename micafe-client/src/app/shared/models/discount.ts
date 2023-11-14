@@ -38,4 +38,9 @@ export interface DiscountForm {
       periodTime: number | null;
       limit: number | null;
     };
-  }
+}
+
+export interface DiscountResponse{
+    ok:boolean,
+    discount: Discount
+}

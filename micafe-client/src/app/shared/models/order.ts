@@ -3,6 +3,7 @@ import { Combo } from './combo';
 import { Product } from './product';
 import { Employee } from './employee';
 import { User } from './user';
+import { Discount } from './discount';
 
 export interface Order {
   _id: string;
@@ -10,26 +11,27 @@ export interface Order {
   products?: OrderProduct[];
   combos?: OrderCombo[];
   customer: User;
-  pickUpDateTime: Date;
+  pickUpDateTime: string;
   isPickUpTimeConfirmed: boolean;
+  actualPickUpDateTime: string;
   notes?: string;
   status: string;
-  date: Date;
+  date: string;
   totalAmount: number;
   totalPoints: number;
   discountedAmount?: number;
-  discountCode?:string;
+  discountCode?:Discount;
   employee?: Employee;
   qualification?: number;
 }
 
-interface OrderProduct {
+export interface OrderProduct {
   id: string;
   product: Product;
   quantity: number;
 }
 
-interface OrderCombo {
+export interface OrderCombo {
   id: string;
   combo: Combo;
   quantity: number;
@@ -38,4 +40,11 @@ interface OrderCombo {
 export interface OrderList{
     ok: boolean;
     orders: Order[];
+}
+
+export interface OrderResponse{
+  ok: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  reference: any;
+  order: Order;
 }

@@ -1,10 +1,11 @@
 export interface User {
-  id: string;
+  _id: string;
   name: string;
   lastName: string;
   email: string;
   password: string;
   role: string;
+  points: number;
   validationToken: string | null;
   registrationDate: Date;
   lastOrderDate: Date;
@@ -17,7 +18,6 @@ export interface UserSummary{
   name: string;
   lastName: string;
   email: string;
-  orderCount: number;
   registrationDate: string;
   lastOrderDate: string;
   isValidated: string;
@@ -31,6 +31,11 @@ export interface UserOrderList{
 export interface UserAuth{
     email: string;
     password: string;
+}
+
+export interface UserApi{
+  ok: boolean;
+  user: User
 }
 
 export interface RegistrationRes{

@@ -28,3 +28,34 @@ export interface Distribution{
     _id: number;
     count: number;
 }
+
+export interface ListDistributionAvgCalifications{
+    ok:boolean;
+    distribution: DistributionAndAvg;
+}
+
+export interface DistributionAndAvg{
+    ratingDistribution: Distribution[];
+    averageRating: number;
+}
+
+export interface CategorySale{
+    _id: string;
+    categoryName: string;
+    totalAmount: number;
+}
+
+export interface ListCategorySales{
+    ok: boolean;
+    categories: CategorySale[];
+}
+
+export interface ListNewCustomersByMonth{
+    ok: boolean;
+    newCustomers: UsersByMonth[]
+}
+
+export interface UsersByMonth{
+    _id: number;
+    newUsers: number;
+}
