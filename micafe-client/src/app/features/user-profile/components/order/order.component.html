@@ -1,0 +1,93 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row mt-2">
+            <div class="col-6 d-flex justify-content-start align-items-center">
+                <span class="med-text order-number">{{ order.orderNumber }}</span>
+            </div>
+            <div class="col-4">
+                <span
+                    [ngClass]="{'bg-info': order.status === 'pending', 'bg-warning': order.status === 'inProcess', 'bg-success': order.status === 'pickedUp'}"
+                    class="badge text-white  p-2">
+                    {{ order.status | splitWords | titlecase }}
+                </span>
+            </div>
+            <div class="col-2 d-flex flex-column justify-content-start align-items-center ">
+                <button (click)="isCollapsed = !isCollapsed" type="button" class="btn btn-icon border-0">
+                    <i [class.bi-caret-down-fill]="isCollapsed" [class.bi-caret-up-fill]="!isCollapsed"></i>
+                </button>
+            </div>
+
+        </div>
+        <div [ngbCollapse]="isCollapsed">
+            <div class="row mt-4 mb-3">
+                <div class="col-12 d-flex justify-content-between">
+                    <span>Fecha</span>
+                    <span>{{order.date}}</span>
+                </div>
+            </div>
+            <div class="row mt-3 mb-3">
+                <div class="col-12 d-flex justify-content-between" >
+                    <span>Retiro:</span>
+                    <span>{{order.pickUpDateTime}}</span>
+                </div>
+            </div>
+            <div class="row mt-3 mb-3" *ngFor="let order of order.products">
+                <div class="col-4 d-flex justify-content-center align-items-center">
+                    <img [src]="['/assets/products/' + order.product.urlImage]" alt="" class="img img-fluid">
+                </div>
+                <div class="col-5 p-3 d-flex flex-column justify-content-start">
+                    <div class="row">
+                        <div class="col-12">
+                            <span>{{order.product.name}}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12" *ngIf="order.product.salePrice != null; else noSale">
+                            <span>{{order.quantity}} x {{order.product.salePrice| currency}}</span>
+                            <del class="mx-2 text-danger">{{order.product.price | currency}}</del>
+                        </div>
+                        <ng-template #noSale class="col-12">
+                            <span>{{order.quantity}} x {{order.product.price | currency}}</span>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3 mb-3" *ngFor="let order of order.combos">
+                <div class="col-4 d-flex justify-content-center align-items-center">
+                    <img [src]="['/assets/products/' + order.combo.urlImage]" alt="" class="img img-fluid">
+                </div>
+                <div class="col-5 p-3 d-flex flex-column justify-content-start">
+                    <div class="row">
+                        <div class="col-12">
+                            <span>{{order.combo.name}}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <span>{{order.quantity}} x {{order.combo.price | currency}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-12">
+                    <button class="btn btn-info" *ngIf="order.status === 'pending'" (click)="updateDateTime()">Modificar Horario de Retiro</button>
+                    <button class="btn btn-success" *ngIf="order.status === 'pickedUp' && !order.qualification" (click)="qualificationOrder()">Calificar Pedido</button>
+                </div>
+            </div>
+            <div class="card-footer text-muted d-flex justify-content-end">
+                <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between align-items-center med-text">
+                        <span>Total: </span>
+                        <span class="mx-2" *ngIf="!order.discountCode">{{order.totalAmount |
+                            currency}}</span>
+                        <div *ngIf="order.discountedAmount">
+                            <del class="mx-2 text-danger small-text">{{ order.totalAmount | currency }}</del>
+                            <span class="ml-2">{{ order.discountedAmount | currency }}</span>
+                        </div>
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
