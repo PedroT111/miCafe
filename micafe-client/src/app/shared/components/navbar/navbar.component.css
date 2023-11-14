@@ -1,46 +1,7 @@
-.navbar{
-    height: 90px;
-}
-.offcanvas{
-    width: 350px;
-}
-
-.hidden-item{
-    display: none;
-}
-
 .bi{
-    font-size: 1.1rem;
-    padding-right: 10px;
+    font-size: 1.2rem;
 }
 
-span{
+.txt-med{
     font-size: 1rem;
 }
-
-.dropdown{
-    margin-right: 80px;
-}
-.custom-logo{
-    margin-left: 50px;
- }
-
-@media (max-width: 768px) {
-    .hidden-item{
-        display: block;
-    }
-    .auth-item{
-        position: absolute;
-        bottom: 20px;
-    }
-    .bi{
-        font-size: 1.2rem;
-        padding-left: 20px;
-    }
-    span{
-        font-size: 1.2rem;
-    }
-    .custom-logo{
-       margin: auto;
-    }
-  }
