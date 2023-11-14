@@ -8,11 +8,11 @@
     </div>
 </div>
 <div class="row mt-4">
-    <div class="col-md-3">
+    <div class="col-md-3 mt-5">
         <app-filter [filterOptions]="options" [title]="'Estado'"
             (filterSelected)="onFilterSelected($event)"></app-filter>
     </div>
-    <div class="col-md-4 mt-2 mt-md-0">
+    <div class="col-md-4   mt-md-3">
         <label class="form-label">Buscar por rango de fechas</label>
         <app-datepicker (dateSelection)="onDateFilterSelected($event)"></app-datepicker>
     </div>
