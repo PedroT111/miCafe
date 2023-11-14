@@ -1,9 +1,42 @@
 /* eslint-disable @typescript-eslint/no-base-to-string */
-import { type IProduct } from '../models/productModel';
-import { type IOrderCombo, type IOrderProduct } from '../models/orderModel';
-import { type ICombo } from '../models/comboModel';
+import { Product, type IProduct } from '../models/productModel';
+import {
+  IOrder,
+  type IOrderCombo,
+  type IOrderProduct
+} from '../models/orderModel';
+import { Combo, type ICombo } from '../models/comboModel';
 
-export const calculateTotalAmountProducts = (
+export const calculateTotalOrder = async (order: IOrder): Promise<any> => {
+  try {
+    let totalAmount = 0;
+    let totalPoints = 0;
+
+    if (order.products && order.products.length > 0) {
+      const productsId = order.products.map((product) => product.product);
+      const products = await Product.find({ _id: { $in: productsId } });
+      const totalAmountProducts = calculateTotalAmountProducts(order.products, products);
+      const totalPointsProducts = calculateTotalPointsProducts(order.products, products);
+      totalAmount += totalAmountProducts;
+      totalPoints += totalPointsProducts;
+    }
+
+    if (order.combos && order.combos.length > 0) {
+      const combosId = order.combos.map((combo) => combo.combo);
+      const combos = await Combo.find({ _id: { $in: combosId } });
+      const totalAmountCombos = calculateTotalAmountCombos(order.combos, combos);
+      const totalPointsCombos = calculateTotalPointsCombos(order.combos, combos);
+      totalAmount += totalAmountCombos;
+      totalPoints += totalPointsCombos;
+    }
+
+    return { totalAmount, totalPoints };
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const calculateTotalAmountProducts = (
   orderProducts: IOrderProduct[],
   products: IProduct[]
 ): number => {
@@ -22,7 +55,7 @@ export const calculateTotalAmountProducts = (
     return total;
   }, 0);
 };
-export const calculateTotalAmountCombos = (
+const calculateTotalAmountCombos = (
   orderCombos: IOrderCombo[],
   combos: ICombo[]
 ): number => {
@@ -38,7 +71,7 @@ export const calculateTotalAmountCombos = (
   }, 0);
 };
 
-export const calculateTotalPointsProducts = (
+const calculateTotalPointsProducts = (
   orderProducts: IOrderProduct[],
   products: IProduct[]
 ): number => {
@@ -57,7 +90,7 @@ export const calculateTotalPointsProducts = (
   }, 0);
 };
 
-export const calculateTotalPointsCombos = (
+const calculateTotalPointsCombos = (
   orderCombos: IOrderCombo[],
   combos: ICombo[]
 ): number => {
