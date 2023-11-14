@@ -1,0 +1,14 @@
+<div class="img d-none d-md-block"></div>
+<app-navbar class="d-none d-md-block"></app-navbar>
+<div class="row">
+    <div class="col-12">
+        <div class="row">
+            <app-title-page [title]="'Mi información personal'" [href]="'/profile'"></app-title-page>
+        </div>
+        <div class="row">
+            <div class="col-12 p-4">
+                <app-profile-form [user]="user" (onSend)="updateProfile($event)"></app-profile-form>
+            </div>
+        </div>
+    </div>
+</div>
