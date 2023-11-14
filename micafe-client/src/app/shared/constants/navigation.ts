@@ -17,6 +17,37 @@ export const navigationNavbar = [
   }
 ];
 
+export const mobileNavigation = [
+  {
+    name: 'Home',
+    href: PAGES.INDEX,
+    icon: 'bi bi-house-fill'
+  },
+  {
+    name: 'Tienda',
+    href: PAGES.TIENDA,
+    icon: 'bi bi-cup-hot'
+  },
+  {
+    name: 'Mi Perfil',
+    href: PAGES.PROFILE,
+    icon: 'bi bi-person-fill'
+  },
+]
+
+export const profileNavigation = [
+  {
+    name: 'Información de mi Cuenta',
+    href: PAGES.PROFILE,
+    icon: 'bi bi-person-circle'
+  },
+  {
+    name: 'Historial Pedidos',
+    href: PAGES.HISTORIAL,
+    icon: 'bi bi-calendar3'
+  }
+]
+
 export const loggedNavigationNavbar = [
   {
     name: 'Mi Perfil',
@@ -40,8 +71,18 @@ export const adminNavigationNavbar = [
     icon: 'bi bi-cup-hot-fill'
   },
   {
+    name: 'Categorias de Productos',
+    href: '/admin/categories',
+    icon: 'bi bi-house-fill'
+  },
+  {
     name: 'Customers',
     href: '/admin/customers',
+    icon: 'bi bi-house-fill'
+  },
+  {
+    name: 'Employees',
+    href: '/admin/employees',
     icon: 'bi bi-house-fill'
   },
   {
