@@ -1,0 +1,25 @@
+<div class="modal-header">
+    <p class="modal-title mx-auto">Estado de la Orden</p>
+    <i class="bi bi-x-square-fill" (click)="onCancel()"></i>
+</div>
+<div class="modal-body">
+    <form>
+        <div class="row mb-3">
+            <div class="col">
+                <div class="card">
+                    <form [formGroup]="form">
+                    <select name="" id="" class="form-select" formControlName="status">
+                        <option value="pickedUp">Picked Up</option>
+                        <option value="pending">Pending</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select></form>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <button class="btn btn-info w-100" (click)="updateOrderStatus()">Actualizar</button>
+            </div>
+        </div>
+    </form>
+</div>
