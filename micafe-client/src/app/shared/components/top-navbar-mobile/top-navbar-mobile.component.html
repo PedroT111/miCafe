@@ -1,0 +1,20 @@
+<nav class="py-3">
+    <div class="container-fluid">
+        <div class="row">
+            <div [ngClass]="{'text-center': isLoggedIn, 'd-flex justify-content-between': !isLoggedIn}" class="col-12">
+                <a [ngClass]="{'ps-4' : !isLoggedIn}">
+                    <img src="../../../../assets/logos/micafe.png" alt="" width="180" height="50">
+                </a>
+
+                <ul class="navbar-nav pe-4" *ngIf="!isLoggedIn">
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="'/auth/login'">
+                            <i class="bi bi-person-circle"></i>
+                            <span class="mx-1 txt-med">Ingreso</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
