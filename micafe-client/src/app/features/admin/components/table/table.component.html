@@ -7,7 +7,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of data | slice: (page-1) * pageSize : page * pageSize" class="fixed-height-row"
+      <tr *ngFor="let item of data | slice: (page-1) * pageSize : page * pageSize"
         [ngClass]="{'table-success' : item.status === 'active'}">
         <ng-container *ngFor="let h of headers; let i = index">
           <td *ngIf="h.name !== 'urlImage'; else imageTemplate">{{ getProperty(item, h.name) | truncateText: 35 }}</td>
@@ -18,7 +18,7 @@
             </td>
           </ng-template>
         </ng-container>
-        <td class="action-cell text-end">
+        <td class="text-end">
           <div ngbDropdown #myDrop="ngbDropdown" class="d-inline-block">
             <button type="button" class="btn no-arrow" id="dropdownBasic1" ngbDropdownToggle>
               <i class="bi bi-three-dots-vertical"></i>
