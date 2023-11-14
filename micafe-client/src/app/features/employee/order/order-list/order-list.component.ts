@@ -81,20 +81,32 @@ export class OrderListComponent implements OnInit, OnChanges {
   }
 
   changeStatus(order: Order) {
-    const status: string =
-      order.status === 'pending' ? 'inProcess' : 'pickedUp';
-    this.sub.add(
-      this.orderService.changeOrderStatus(order, status).subscribe({
-        next: (res) => {
-          if (res.ok) {
-            this.onChangeStatus.emit();
-            this.toastr.success(`La orden ${order.orderNumber} ha cambiado su estado a: ${status}`)
+    let status: string;
+    let serviceObservable;
+  
+    if (order.status === 'pending') {
+      status = 'inProcess';
+      serviceObservable = this.orderService.assingOrderToEmployee(order);
+    } else if (order.status === 'inProcess') {
+      status = 'pickedUp';
+      serviceObservable = this.orderService.changeOrderStatus(order, status);
+    }
+  
+    if (serviceObservable) {
+      this.sub.add(
+        serviceObservable.subscribe({
+          next: (res) => {
+            if (res.ok) {
+              this.onChangeStatus.emit();
+              this.toastr.success(`La orden ${order.orderNumber} ha cambiado su estado a: ${status}`);
+            }
+          },
+          error: (err) => {
+            console.log(err);
           }
-        },
-        error: (err) => {
-          console.log(err);
-        }
-      })
-    );
+        })
+      );
+    }
   }
+  
 }
