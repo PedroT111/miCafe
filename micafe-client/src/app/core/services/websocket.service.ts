@@ -17,6 +17,10 @@ export class WebsocketService {
   connect(){
     this.socket = io(environment.baseUrl);
   }
+
+  joinRoom(roomName: string){
+    this.socket.emit('joinRoom', { roomId: roomName });
+  }
   emit(event: string, data: any): void {
     this.socket.emit(event, data);
   }
