@@ -7,7 +7,8 @@ import {
   findAll,
   detail,
   update,
-  deleteOne
+  deleteOne,
+  getProductsCategories
 } from '../services/categoryProduct';
 import { validationResult } from 'express-validator';
 
@@ -31,6 +32,20 @@ export const createCategory = catchAsync(
 export const getCategories = catchAsync(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const categories = await findAll();
+    if (categories.length === 0) {
+      next(new AppError('Something was wrong', 400));
+      return;
+    }
+    res.status(200).json({
+      ok: true,
+      categories
+    });
+  }
+);
+
+export const getCategoriesProducts = catchAsync(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const categories = await getProductsCategories();
     if (categories.length === 0) {
       next(new AppError('Something was wrong', 400));
       return;
