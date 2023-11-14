@@ -17,6 +17,12 @@ import { CreateDiscountComponent } from './discounts/create-discount/create-disc
 import { EmployeeListComponent } from './employees/employee-list/employee-list.component';
 import { CreateEmployeeComponent } from './employees/create-employee/create-employee.component';
 import { EditEmployeeComponent } from './employees/edit-employee/edit-employee.component';
+import { OrderListComponent } from './orders/order-list/order-list.component';
+import { OrderInfoComponent } from './orders/order-info/order-info.component';
+import { SaleReportsComponent } from './sale-reports/sale-reports.component';
+import { SupplierListComponent } from './suppliers/supplier-list/supplier-list.component';
+import { CreateSupplierComponent } from './suppliers/create-supplier/create-supplier.component';
+import { EditSupplierComponent } from './suppliers/edit-supplier/edit-supplier.component';
 
 const routes: Routes = [
   {
@@ -36,9 +42,15 @@ const routes: Routes = [
       { path: 'combos/edit/:id', component: EditComboComponent },
       { path: 'discounts', component: DiscountListComponent },
       { path: 'discounts/new', component: CreateDiscountComponent },
-      {path: 'employees', component: EmployeeListComponent},
-      {path: 'employees/new', component: CreateEmployeeComponent},
-      {path: 'employees/:id', component: EditEmployeeComponent}
+      { path: 'employees', component: EmployeeListComponent },
+      { path: 'employees/new', component: CreateEmployeeComponent },
+      { path: 'employees/:id', component: EditEmployeeComponent },
+      { path: 'orders', component: OrderListComponent },
+      { path: 'orders/:id', component: OrderInfoComponent },
+      { path: 'report/sales', component: SaleReportsComponent },
+      {path: 'suppliers', component: SupplierListComponent},
+      {path: 'suppliers/new', component: CreateSupplierComponent},
+      {path: 'suppliers/edit/:id', component: EditSupplierComponent}
     ]
   }
 ];
