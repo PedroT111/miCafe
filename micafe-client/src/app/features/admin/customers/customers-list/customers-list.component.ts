@@ -10,7 +10,7 @@ import { SortBy } from 'src/app/shared/models/filter';
 @Component({
   selector: 'app-customers-list',
   templateUrl: './customers-list.component.html',
-  styleUrls: ['./customers-list.component.css']
+  styleUrls: ['./customers-list.component.css', '../../styles/admin-style.css']
 })
 export class CustomersListComponent implements OnInit, OnDestroy {
   sub: Subscription = new Subscription();
@@ -40,6 +40,7 @@ export class CustomersListComponent implements OnInit, OnDestroy {
         next: (res) => {
           this.customers = res;
           this.filteredData = this.customers;
+          console.log(res)
         },
         error: (err) => {
           this.toastr.error(err.error.error);
@@ -95,8 +96,6 @@ export class CustomersListComponent implements OnInit, OnDestroy {
       let comparison = 0;
       if (sort.sort === 'name') {
         comparison = a.lastName.localeCompare(b.lastName);
-      } else if (sort.sort === 'orders') {
-        comparison = a.orderCount - b.orderCount;
       }
       return sort.asc ? comparison : -comparison;
     });
