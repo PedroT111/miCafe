@@ -5,7 +5,10 @@ import { Observable } from 'rxjs';
 import {
   ListSales,
   ListMostSoldProducts,
-  ListCalifications
+  ListCalifications,
+  ListDistributionAvgCalifications,
+  ListCategorySales,
+  ListNewCustomersByMonth
 } from 'src/app/shared/models/report';
 
 @Injectable({
@@ -50,9 +53,36 @@ export class ReportService {
     );
   }
 
+  getRatingDistributionByEmployee(
+    employeeId: string
+  ): Observable<ListDistributionAvgCalifications> {
+    return this.http.get<ListDistributionAvgCalifications>(
+      `/report/qualification-distribution-by-employee/${employeeId}`
+    );
+  }
+
+  getMonthAvgCalificationsEmployeeByYear(year: string): Observable<any> {
+    return this.http.get<any>(`/report/qualification-avg-employee/${year}`);
+  }
+
   getSalesByHourOfDay(startDate: Date, endDate: Date): Observable<ListSales> {
     return this.http.get<ListSales>(
       `/report/sales-by-hour-of-day?startDate=${startDate}&endDate=${endDate}`
-    )
+    );
+  }
+
+  getCategorySales(
+    startDate: Date,
+    endDate: Date
+  ): Observable<ListCategorySales> {
+    return this.http.get<ListCategorySales>(
+      `/report/total-selled-by-category?startDate=${startDate}&endDate=${endDate}`
+    );
+  }
+
+  getNewCustomersByMonth(year: string): Observable<ListNewCustomersByMonth> {
+    return this.http.get<ListNewCustomersByMonth>(
+      `/report/new-users-by-month/${year}`
+    );
   }
 }
