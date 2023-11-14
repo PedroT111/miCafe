@@ -2,9 +2,11 @@
     font-size: 0.8rem;
     color: #929292;
 }
-.title{
-    font-size: 1.2rem;
+
+.title {
+    font-size: 1.4rem;
 }
+
 .card-header {
     background-color: white;
     border-bottom: 0;
@@ -28,7 +30,8 @@
 label {
     font-size: 0.95rem;
     color: rgb(86, 86, 87);
-  }
-  input[type="number"] {
+}
+
+input[type="number"] {
     text-align: right;
-  }
+}
