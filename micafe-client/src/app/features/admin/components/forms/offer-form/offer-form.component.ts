@@ -9,12 +9,12 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { Product } from 'src/app/shared/models/product';
-import { ProductsService } from '../../../services/products.service';
 import { ToastrService } from 'ngx-toastr';
 import { Offer } from 'src/app/shared/models/offer';
 import { ActivatedRoute } from '@angular/router';
-import { NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCalendar, NgbDate, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import { OffersService } from '../../../services/offers.service';
+import { ProductsService } from 'src/app/shared/services/products.service';
 
 @Component({
   selector: 'app-offer-form',
@@ -34,12 +34,14 @@ export class OfferFormComponent implements OnInit, OnDestroy {
   validateDate: boolean = false;
   _id: string;
   editMode: boolean = false;
+  today: NgbDate;
   constructor(
     private fb: FormBuilder,
     private productService: ProductsService,
     private offerService: OffersService,
     private toastr: ToastrService,
-    private actRoute: ActivatedRoute
+    private actRoute: ActivatedRoute,
+    private calendar: NgbCalendar
   ) {
     this.form = this.fb.group({
       _id: [],
@@ -49,6 +51,7 @@ export class OfferFormComponent implements OnInit, OnDestroy {
       startSale: ['', Validators.required],
       endSale: ['', Validators.required]
     });
+    this.today = calendar.getToday();
   }
 
   ngOnDestroy(): void {

@@ -60,7 +60,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12">
-                            <app-datepicker [startDateForEdit]="startDate" [endDateForEdit]="endDate"
+                            <app-datepicker [minDate]="today" [startDateForEdit]="startDate" [endDateForEdit]="endDate"
                                 (dateSelection)="handleDateSelection($event)" required></app-datepicker>
                         </div>
                     </div>
