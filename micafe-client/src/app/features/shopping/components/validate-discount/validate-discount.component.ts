@@ -11,6 +11,7 @@ import {
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { Discount } from 'src/app/shared/models/discount';
 import { DiscountService } from 'src/app/shared/services/discount.service';
 
 @Component({
@@ -22,7 +23,7 @@ export class ValidateDiscountComponent implements OnInit, OnDestroy, OnChanges {
   sub: Subscription = new Subscription();
   customerId: string | undefined;
   @Input() enabled: boolean;
-  @Output() onValidate = new EventEmitter<string>();
+  @Output() onValidate = new EventEmitter<Discount>();
   code: string;
   invalidCode: boolean = false;
   constructor(
@@ -47,17 +48,14 @@ export class ValidateDiscountComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   validate() {
-    console.log('hola');
-    console.log(this.customerId, this.code);
     if (this.customerId && this.code) {
       this.sub.add(
         this.discountService
           .validateDiscount(this.code, this.customerId)
           .subscribe({
             next: (res) => {
-              console.log(res);
               if (res.ok) {
-                this.onValidate.emit(res.discount.code);
+                this.onValidate.emit(res.discount);
               }
             },
             error: (err) => {
