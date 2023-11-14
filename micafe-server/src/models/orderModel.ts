@@ -1,12 +1,4 @@
 import mongoose, { Schema, type ObjectId } from 'mongoose';
-import { Product } from './productModel';
-import { Combo } from './comboModel';
-import {
-  calculateTotalAmountCombos,
-  calculateTotalAmountProducts,
-  calculateTotalPointsCombos,
-  calculateTotalPointsProducts
-} from '../utils/orderCalculations';
 import { User } from './userModel';
 
 interface IOrder extends Document {
@@ -16,16 +8,20 @@ interface IOrder extends Document {
   combos: IOrderCombo[];
   totalPoints: number;
   totalAmount: number;
+  discountAmount?: number;
   discountedAmount?: number;
-  discountCode?: ObjectId;
+  discountCode?: string;
   customer: ObjectId;
-  employee?: ObjectId;
+  employee?: ObjectId | null;
   date: Date;
   pickUpDateTime: Date;
   isPickUpTimeConfirmed: boolean;
+  actualPickUpDateTime?: Date | null;
   notes: string;
-  qualification?: number;
-  status: 'picked up' | 'in process' | 'pending' | 'cancelled';
+  qualification: number;
+  paidWithPoints: boolean;
+  status: 'pickedUp' | 'inProcess' | 'pending' | 'cancelled';
+  paymentStatus: 'success' | 'failed' | 'pending';
 }
 interface IOrderProduct {
   product: ObjectId;
@@ -62,8 +58,11 @@ const orderSchema = new Schema<IOrder>({
   totalAmount: {
     type: Number
   },
+  discountAmount: {
+    type: Number
+  },
   discountCode: {
-    type: Schema.Types.ObjectId
+    type: String
   },
   discountedAmount: {
     type: Number
@@ -92,6 +91,9 @@ const orderSchema = new Schema<IOrder>({
     type: Boolean,
     default: false
   },
+  actualPickUpDateTime: {
+    type: Date
+  },
   notes: {
     type: String
   },
@@ -102,36 +104,35 @@ const orderSchema = new Schema<IOrder>({
     type: String,
     enum: ['pickedUp', 'inProcess', 'pending', 'cancelled'],
     default: 'pending'
+  },
+  paidWithPoints: {
+    type: Boolean,
+    default: false
+  },
+  paymentStatus: {
+    type: String,
+    enum: ['success', 'failed', 'pending'],
+    default: 'pending'
   }
 });
 
 orderSchema.pre('save', async function (next) {
-  const productsId = this.products.map((product) => product.product);
-  const combosId = this.combos.map((combo) => combo.combo);
-  const [products, combos] = await Promise.all([
-    Product.find({ _id: { $in: productsId } }),
-    Combo.find({ _id: { $in: combosId } })
-  ]);
-
-  const totalAmountProducts = calculateTotalAmountProducts(
-    this.products,
-    products
-  );
-
-  const totalAmountCombos = calculateTotalAmountCombos(this.combos, combos);
-
-  const totalAmount = totalAmountProducts + totalAmountCombos;
-  this.totalAmount = totalAmount;
-
-  const totalProductPoints = calculateTotalPointsProducts(
-    this.products,
-    products
-  );
-
-  const totalCombosPoints = calculateTotalPointsCombos(this.combos, combos);
-
-  const totalPoints = totalProductPoints + totalCombosPoints;
-  this.totalPoints = totalPoints;
+  if (this.isModified('status') || this.isModified('employee')) {
+    next();
+    return;
+  }
+  if (this.totalPoints) {
+    const pointsEarned = Math.floor(this.totalPoints * 0.1); //El usuario acumula el 10% de los puntos de la orden
+    if (this.customer) {
+      const user = await User.findById(this.customer);
+      if (user !== null) {
+        if (user.points !== undefined) {
+          user.points += pointsEarned;
+          await user.save();
+        }
+      }
+    }
+  }
 
   next();
 });
@@ -150,8 +151,22 @@ orderSchema.pre('save', function (next) {
   }
   next();
 });
-
-
+orderSchema.pre('save', async function (next) {
+  if (this.isModified('status') || this.isModified('employee')) {
+    next();
+    return;
+  }
+  if (this.paidWithPoints) {
+    const user = await User.findById(this.customer);
+    if (user !== null) {
+      if (user.points) {
+        user.points -= this.totalPoints;
+        await user.save();
+      }
+    }
+  }
+  next();
+});
 const Order = mongoose.model<IOrder>('Order', orderSchema);
 
 export { Order, type IOrder, type IOrderProduct, type IOrderCombo };
