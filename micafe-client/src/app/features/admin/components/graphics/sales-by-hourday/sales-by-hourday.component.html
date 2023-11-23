@@ -1,23 +1,8 @@
-<div class="card p-3">
+<div class="card p-3 h-100">
     <div class="card-body">
         <div class="row py-1 mb-4">
             <div class="col-12 d-flex justify-content-center">
-                <span class="title">Total de Ventas por Hora del Día</span>
-            </div>
-        </div>
-        <div class="row mb-4 p-2">
-            <div class="col-3 d-flex align-items-center">
-                <span>Rango de Fechas</span>
-            </div>
-            <div class="col-5 px-0">
-                <app-datepicker [startDateForEdit]="startDate" [endDateForEdit]="endDate"
-                    (dateSelection)="onDateSelection($event)"></app-datepicker>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <button class="btn btn-success">Select Today</button>
-                <button class="btn btn-success ms-3" (click)="selectMonth()">Select current month</button>
+                <span class="title">Total sales per hour of the day</span>
             </div>
         </div>
         <div class="row py-3">

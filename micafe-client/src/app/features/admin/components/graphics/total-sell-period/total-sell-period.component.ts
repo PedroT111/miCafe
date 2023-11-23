@@ -1,59 +1,48 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges
+} from '@angular/core';
 import { ChartConfiguration, ChartDataset, ChartType, Color } from 'chart.js';
 import { Subscription } from 'rxjs';
 import { Sales } from 'src/app/shared/models/report';
 import { ReportService } from '../../../services/report.service';
-import { MONTH_LIST } from '../../../constants/report';
 
 @Component({
   selector: 'app-total-sell-period',
   templateUrl: './total-sell-period.component.html',
   styleUrls: ['./total-sell-period.component.css']
 })
-export class TotalSellPeriodComponent implements OnInit, OnDestroy {
+export class TotalSellPeriodComponent implements OnInit, OnDestroy, OnChanges {
   sub: Subscription = new Subscription();
-  year: number;
-  view: string = 'monthly';
-  month: string | null;
+  @Input() startDate: Date;
+  @Input() endDate: Date;
   sales: Sales[] = [];
-  monthList = MONTH_LIST;
+  groupBy: string;
   public barChartOptions: ChartConfiguration['options'] = {
     responsive: true,
     elements: {
       line: {
-        tension: 1,
-      },
+        tension: 1
+      }
     },
     scales: {
       x: {
-        title: {
-          display: true,
-          text: 'Tiempo',
-          color: 'black',
-          font: {
-            size: 14
-          }
-        },
         ticks: {
           stepSize: 1
         }
       },
       y: {
-        title: {
-          display: true,
-          text: 'ARS ($)',
-          color: 'black',
-          font: {
-            size: 14
-          }
-        },
         min: 0
       }
     },
     plugins: {
-      legend: { display: true },
-    },
+      legend: { display: true }
+    }
   };
   barChartLabels: any[] = [];
   barChartType: ChartType = 'bar';
@@ -61,36 +50,36 @@ export class TotalSellPeriodComponent implements OnInit, OnDestroy {
   barChartData: ChartDataset[] = [
     {
       data: [],
-      label: 'Monto Total Vendido ARS',
+      label: 'Total sales amount ARS',
       fill: false,
       hoverBackgroundColor: 'rgba(4, 4, 124, 1)'
     }
   ];
   barChartColors: Color[] = ['rgba(54, 162, 235, 0.7)'];
   constructor(private reportService: ReportService) {
-    this.year = new Date().getFullYear();
+    this.groupBy = 'day';
   }
   ngOnDestroy(): void {
     this.sub.unsubscribe();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['startDate'].currentValue || changes['endDate'].currentValue) {
+      console.log(this.startDate, this.endDate);
+      this.getSales();
+    }
   }
 
   ngOnInit(): void {
     this.getSales();
   }
 
-  onYearSelection(year: number){
-    this.year = year;
-    this.getSales();
-  }
-
-  getSales() {
+  getSales(){
     this.sub.add(
-      this.reportService
-        .getMonthlySaleByYearOrByMonth(this.view, this.year, this.month)
-        .subscribe({
+      this.sub.add(
+        this.reportService.getTotalSales(this.startDate, this.endDate, this.groupBy).subscribe({
           next: (res) => {
             this.sales = res.sales;
-            console.log(res)
             this.barChartLabels = this.sales.map(
               (sale) => sale._id
             );
@@ -103,19 +92,18 @@ export class TotalSellPeriodComponent implements OnInit, OnDestroy {
             console.log(err);
           }
         })
-    );
+      )
+    )
+  }
+
+  
+
+  onGroupBySelect() {
+    this.getSales();
   }
 
   public randomize(): void {
     this.barChartType = this.barChartType === 'bar' ? 'line' : 'bar';
     this.getSales();
   }
-
-  changeView(){
-    console.log(this.view)
-    if(this.view === 'daily'){
-      this.month = (new Date().getMonth() + 1 ).toString();
-    }
-  }
-
 }

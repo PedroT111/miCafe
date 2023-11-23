@@ -1,8 +1,14 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges
+} from '@angular/core';
 import { ChartDataset, ChartOptions, Color } from 'chart.js';
 import { Subscription } from 'rxjs';
 import { ReportService } from '../../../services/report.service';
-import { endOfDay, startOfMonth } from 'date-fns';
 import { CategorySale } from 'src/app/shared/models/report';
 
 @Component({
@@ -10,23 +16,17 @@ import { CategorySale } from 'src/app/shared/models/report';
   templateUrl: './total-selled-category.component.html',
   styleUrls: ['./total-selled-category.component.css']
 })
-export class TotalSelledCategoryComponent implements OnInit, OnDestroy {
+export class TotalSelledCategoryComponent
+  implements OnInit, OnDestroy, OnChanges
+{
   sub: Subscription = new Subscription();
-  startDate: Date;
-  endDate: Date;
+  @Input() startDate: Date;
+  @Input() endDate: Date;
   categorySales: CategorySale[] = [];
   barChartOptions: ChartOptions = {
     responsive: true,
     scales: {
       y: {
-        title: {
-          display: true,
-          text: 'Ventas (ARS)',
-          color: 'black',
-          font: {
-            size: 14
-          }
-        }
       }
     }
   };
@@ -36,7 +36,7 @@ export class TotalSelledCategoryComponent implements OnInit, OnDestroy {
   barChartData: ChartDataset[] = [
     {
       data: [],
-      label: 'Cantidad Total Vendida',
+      label: 'Total sales amount ARS',
       fill: false,
       hoverBackgroundColor: 'rgba(4, 4, 124, 1)'
     }
@@ -47,14 +47,15 @@ export class TotalSelledCategoryComponent implements OnInit, OnDestroy {
     'rgba(255, 206, 86)',
     'rgba(75, 192, 192)',
     'rgba(153, 102, 255)',
-    'rgba(50, 205, 50)',
+    'rgba(50, 205, 50)'
   ];
-  constructor(private reportService: ReportService) {
-    const currentDate = new Date();
-    const firstDayOfMonth = startOfMonth(currentDate);
-    this.startDate = new Date(firstDayOfMonth);
-    const today = endOfDay(currentDate);
-    this.endDate = new Date(today);
+  constructor(private reportService: ReportService) {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['startDate'].currentValue || changes['endDate'].currentValue) {
+      console.log(this.startDate, this.endDate);
+      this.getCategorySales();
+    }
   }
   ngOnDestroy(): void {
     this.sub.unsubscribe();
@@ -64,24 +65,16 @@ export class TotalSelledCategoryComponent implements OnInit, OnDestroy {
     this.getCategorySales();
   }
 
-  onDateSelection(dates: { startSale: Date; endSale: Date }) {
-    this.startDate = dates.startSale;
-    this.endDate = dates.endSale;
-    this.getCategorySales();
-  }
-
   getCategorySales() {
     this.sub.add(
       this.reportService
         .getCategorySales(this.startDate, this.endDate)
         .subscribe({
           next: (res) => {
-            console.log(res);
+            console.log(res, 'res cat')
             this.categorySales = res.categories;
 
-            this.barChartLabels = this.categorySales.map(
-              (c) => c.categoryName
-            );
+            this.barChartLabels = this.categorySales.map((c) => c.categoryName);
             this.barChartData[0].data = this.categorySales.map(
               (c) => c.totalAmount
             );
@@ -93,5 +86,4 @@ export class TotalSelledCategoryComponent implements OnInit, OnDestroy {
         })
     );
   }
-
 }

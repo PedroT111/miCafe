@@ -1,19 +1,26 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges
+} from '@angular/core';
 import { ChartDataset, ChartOptions, Color } from 'chart.js';
 import { Subscription } from 'rxjs';
 import { Sales } from 'src/app/shared/models/report';
 import { ReportService } from '../../../services/report.service';
-import { startOfMonth } from 'date-fns';
 
 @Component({
   selector: 'app-sales-by-hourday',
   templateUrl: './sales-by-hourday.component.html',
   styleUrls: ['./sales-by-hourday.component.css']
 })
-export class SalesByHourdayComponent implements OnInit, OnDestroy {
+export class SalesByHourdayComponent implements OnInit, OnDestroy, OnChanges {
   sub: Subscription = new Subscription();
-  startDate: Date;
-  endDate: Date;
+  @Input() startDate: Date;
+  @Input() endDate: Date;
   salesByHour: Sales[] = [];
 
   lineChartOptions: ChartOptions = {
@@ -22,7 +29,7 @@ export class SalesByHourdayComponent implements OnInit, OnDestroy {
       x: {
         title: {
           display: true,
-          text: 'Hora del Día',
+          text: 'Time of day',
           color: 'black',
           font: {
             size: 14
@@ -33,14 +40,6 @@ export class SalesByHourdayComponent implements OnInit, OnDestroy {
         }
       },
       y: {
-        title: {
-          display: true,
-          text: 'Total de Ventas $(ARS)',
-          color: 'black',
-          font: {
-            size: 14
-          }
-        }
       }
     }
   };
@@ -50,18 +49,18 @@ export class SalesByHourdayComponent implements OnInit, OnDestroy {
   lineChartData: ChartDataset[] = [
     {
       data: [],
-      label: 'Cantidad Total Vendida Por Hora del Día',
+      label: 'Total sales amount ARS',
       fill: false,
       hoverBackgroundColor: 'rgba(4, 4, 124, 1)'
     }
   ];
-  lineChartColors: Color[] = [
-    'rgba(255, 99, 132)',
-  ];
-  constructor(private reportService: ReportService) {
-    const currentDate = new Date();
-    this.startDate = currentDate;
-    this.endDate = currentDate;
+  lineChartColors: Color[] = ['rgba(255, 99, 132)'];
+  constructor(private reportService: ReportService) {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['startDate'].currentValue || changes['endDate'].currentValue) {
+      this.getInformation();
+    }
   }
   ngOnDestroy(): void {
     this.sub.unsubscribe();
@@ -71,26 +70,15 @@ export class SalesByHourdayComponent implements OnInit, OnDestroy {
     this.getInformation();
   }
 
-  onDateSelection(dates: { startSale: Date; endSale: Date }) {
-    this.startDate = dates.startSale;
-    this.endDate = dates.endSale;
-    console.log(this.startDate, this.endDate);
-    this.getInformation();
-  }
-
   getInformation() {
-    console.log(this.startDate, this.endDate)
     this.sub.add(
       this.reportService
         .getSalesByHourOfDay(this.startDate, this.endDate)
         .subscribe({
           next: (res) => {
-            console.log(res, 'aaa');
             this.salesByHour = res.sales;
 
-            this.lineChartLabels = this.salesByHour.map(
-              (sale) => sale._id
-            );
+            this.lineChartLabels = this.salesByHour.map((sale) => sale._id);
             this.lineChartData[0].data = this.salesByHour.map(
               (sale) => sale.totalAmount
             );
@@ -101,13 +89,5 @@ export class SalesByHourdayComponent implements OnInit, OnDestroy {
           }
         })
     );
-  }
-
-  selectMonth(){
-    const currentTime = new Date();
-    this.startDate = startOfMonth(currentTime);
-    this.endDate = currentTime;
-
-    this.getInformation();
   }
 }

@@ -1,20 +1,26 @@
-<div class="card p-3">
-    <div class="row mb-4 px-5 py-2">
-        <div class="col-4">
-            <label class="form-label">Seleccione un año</label>
-            <select name="year" id="" class="form-select" [(ngModel)]="year" (change)="getInformation()">
-                <option value=2023>2023</option>
-                <option value="2022">2022</option>
-                <option value="2021">2021</option>
-                <option value="2020">2020</option>
-            </select>
+<div class="card p-3 h-100">
+    <div class="row py-1 mb-4">
+        <div class="col-12 d-flex justify-content-center">
+            <span class="title">New Customers</span>
         </div>
     </div>
-    <div class="row p-5">
+    <div class="row mb-4 px-3 d-flex justify-content-between align-items-center">
+        <div class="col-md-6">
+            <label class="form-label">Group By</label>
+            <select name="year" id="" class="form-select" [(ngModel)]="groupBy" (change)="getInformation()">
+                <option value="day">Day</option>
+                <option value="month">Month</option>
+            </select>
+        </div>
+        <div class="col-md-4 d-flex justify-content-end">
+            <button class="btn btn-success mt-4" (click)="randomize()">Update</button>
+        </div>
+    </div>
+    <div class="row p-3">
         <div class="col-12">
             <div style="display: block;">
                 <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
-                    [legend]="lineChartLegend" type="line">
+                    [legend]="lineChartLegend" [type]="lineChartType">
                 </canvas>
             </div>
         </div>

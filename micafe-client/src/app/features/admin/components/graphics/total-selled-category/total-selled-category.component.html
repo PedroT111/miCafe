@@ -1,16 +1,8 @@
-<div class="card p-3">
+<div class="card p-3 h-100">
     <div class="card-body">
         <div class="row py-1 mb-4">
             <div class="col-12 d-flex justify-content-center">
-                <span class="title">Total Vendido por Categoría (ARS)</span>
-            </div>
-        </div>
-        <div class="row mb-4 p-2">
-            <div class="col-3 d-flex align-items-center">
-                <span>Rango de Fechas</span>
-            </div>
-            <div class="col-6 px-0">
-                <app-datepicker [startDateForEdit]="startDate" [endDateForEdit]="endDate" (dateSelection)="onDateSelection($event)"></app-datepicker>
+                <span class="title">Total sold by category (ARS)</span>
             </div>
         </div>
         <div class="row py-3">
@@ -18,6 +10,13 @@
                 <div style="display: block;">
                     <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
                         [legend]="barChartLegend" type="bar">
+                    </canvas>
+                </div>
+            </div>
+            <div class="col-3 offset-1">
+                <div style="display: block;" class="p-2">
+                    <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [legend]="barChartLegend"
+                        type="pie">
                     </canvas>
                 </div>
             </div>

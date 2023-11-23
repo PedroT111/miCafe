@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ProductSold } from 'src/app/shared/models/report';
 import { ReportService } from '../../../services/report.service';
@@ -11,10 +11,10 @@ import { endOfDay, startOfMonth } from 'date-fns';
   templateUrl: './most-sold-products.component.html',
   styleUrls: ['./most-sold-products.component.css']
 })
-export class MostSoldProductsComponent implements OnInit {
+export class MostSoldProductsComponent implements OnInit, OnDestroy, OnChanges {
   sub: Subscription = new Subscription();
-  startDate: Date;
-  endDate: Date;
+  @Input() startDate: Date;
+  @Input() endDate: Date;
   mostSoldProducts: ProductSold[] = [];
   pieChartOptions: ChartOptions = {
     responsive: true
@@ -25,7 +25,7 @@ export class MostSoldProductsComponent implements OnInit {
       x: {
         title: {
           display: true,
-          text: 'Productos',
+          text: 'Products',
           color: 'black',
           font: {
             size: 14
@@ -38,7 +38,7 @@ export class MostSoldProductsComponent implements OnInit {
       y: {
         title: {
           display: true,
-          text: 'Cantidad',
+          text: 'Quantity',
           color: 'black',
           font: {
             size: 14
@@ -53,7 +53,7 @@ export class MostSoldProductsComponent implements OnInit {
   barChartData: ChartDataset[] = [
     {
       data: [],
-      label: 'Cantidad Total Vendida',
+      label: 'Total quantity sold',
       fill: false,
       hoverBackgroundColor: 'rgba(4, 4, 124, 1)'
     }
@@ -83,17 +83,17 @@ export class MostSoldProductsComponent implements OnInit {
     this.sub.unsubscribe();
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes['startDate'].currentValue || changes['endDate'].currentValue){
+      console.log(this.startDate, this.endDate)
+      this.getMostSaleProducts();
+    }
+  }
+
   ngOnInit(): void {
-    console.log('hola');
     this.getMostSaleProducts();
   }
 
-  onDateSelection(dates: { startSale: Date; endSale: Date }) {
-    this.startDate = dates.startSale;
-    this.endDate = dates.endSale;
-    console.log(this.startDate, this.endDate);
-    this.getMostSaleProducts();
-  }
 
   getMostSaleProducts() {
     this.sub.add(
@@ -101,7 +101,6 @@ export class MostSoldProductsComponent implements OnInit {
         .getMostSoldProducts(this.startDate, this.endDate)
         .subscribe({
           next: (res) => {
-            console.log(res);
             this.mostSoldProducts = res.products;
 
             this.barChartLabels = this.mostSoldProducts.map(

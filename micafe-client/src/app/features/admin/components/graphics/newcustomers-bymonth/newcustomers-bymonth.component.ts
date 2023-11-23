@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ChartDataset, ChartOptions, Color } from 'chart.js';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { ChartDataset, ChartOptions, ChartType, Color } from 'chart.js';
 import { Subscription } from 'rxjs';
 import { ReportService } from '../../../services/report.service';
 import { UsersByMonth } from 'src/app/shared/models/report';
@@ -9,55 +9,44 @@ import { UsersByMonth } from 'src/app/shared/models/report';
   templateUrl: './newcustomers-bymonth.component.html',
   styleUrls: ['./newcustomers-bymonth.component.css']
 })
-export class NewcustomersBymonthComponent implements OnInit, OnDestroy {
+export class NewcustomersBymonthComponent implements OnInit, OnDestroy, OnChanges {
   sub: Subscription = new Subscription();
-  year: string;
+  @Input() startDate: Date;
+  @Input() endDate: Date;
+  groupBy: string;
   newCustomers: UsersByMonth[] = [];
 
   lineChartOptions: ChartOptions = {
     responsive: true,
     scales: {
       x: {
-        title: {
-          display: true,
-          text: 'Tiempo (Meses)',
-          color: 'black',
-          font: {
-            size: 14
-          }
-        },
         ticks: {
           stepSize: 1
         }
       },
       y: {
-        title: {
-          display: true,
-          text: 'Cantidad de Nuevos Clientes Registrados',
-          color: 'black',
-          font: {
-            size: 14
-          }
+        min:0,
+        ticks: {
+          stepSize: 1
         }
       }
     }
   };
   lineChartLabels: number[] = [];
-  lineChartType: string = 'line';
+  lineChartType: ChartType = 'line';
   lineChartLegend: boolean = true;
   lineChartData: ChartDataset[] = [
     {
       data: [],
-      label: 'Cantidad de Nuevos Clientes',
+      label: 'Number of new customers',
       fill: false,
       hoverBackgroundColor: 'rgba(4, 4, 124, 1)'
     }
   ];
   lineChartColors: Color[] = ['rgba(255, 99, 132)'];
-  
+
   constructor(private reportService: ReportService) {
-    const currentDate = new Date();
-    this.year = currentDate.getFullYear().toString();
+    this.groupBy = 'day';
   }
 
   ngOnDestroy(): void {
@@ -67,16 +56,20 @@ export class NewcustomersBymonthComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getInformation();
   }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['startDate'].currentValue || changes['endDate'].currentValue) {
+      this.getInformation();
+    }
+  }
 
   getInformation() {
     this.sub.add(
       this.reportService
-        .getNewCustomersByMonth(this.year)
+        .getNewCustomersByPeriod(this.startDate, this.endDate, this.groupBy)
         .subscribe({
           next: (res) => {
-            console.log(res);
             this.newCustomers = res.newCustomers;
-            this.lineChartLabels = this.newCustomers.map((month) => month._id);
+            this.lineChartLabels = this.newCustomers.map((x) => x._id);
             this.lineChartData[0].data = this.newCustomers.map(
               (users) => users.newUsers
             );
@@ -87,6 +80,10 @@ export class NewcustomersBymonthComponent implements OnInit, OnDestroy {
           }
         })
     );
+  }
+
+  public randomize(): void {
+    this.lineChartType = this.lineChartType === 'bar' ? 'line' : 'bar';
   }
 
 }

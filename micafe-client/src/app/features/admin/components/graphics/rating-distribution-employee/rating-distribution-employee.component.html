@@ -1,40 +1,41 @@
-<div class="card p-3">
+<div class="card p-3 h-100">
     <div class="card-body">
         <div class="row py-1 mb-4">
             <div class="col-12 d-flex justify-content-center">
-                <span class="title">Distribución de Calificaciones de Pedidos por Empleado</span>
+                <span class="title">Order Rating Distribution by Employee</span>
             </div>
         </div>
-        <div class="row mb-4 p-2">
+        <div class="row mb-4 p-2 d-flex justify-content-between">
             <div class="col-md-6">
-                <label class="form-label">Seleccionar Empleado</label>
-            <select id="" name="employeeId" class="form-select" [(ngModel)]="employeeId" (change)="getCalifications()">
-                <option *ngFor=" let e of employeeList" [value]="e._id">{{e.name}}
-                {{e.lastName}}</option>
-            </select>
+                <label class="form-label">Select Employee</label>
+                <select id="" name="employeeId" class="form-select" [(ngModel)]="employeeId"
+                    (change)="getCalifications()">
+                    <option *ngFor=" let e of employeeList" [value]="e._id">{{e.name}}
+                        {{e.lastName}}</option>
+                </select>
+            </div>
+            <div class="col-md-3 mt-2">
+                <div class="card">
+                    <div class="row text-center">
+                        <div class="col-12">
+                            <span>Avg</span>
+                        </div>
+                    </div>
+                    <div class="row text-center py-2 mt-1">
+                        <div class="col-12">
+                            <span class="avg">{{avgCalifications}}</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row py-3">
-            <div class="col-9">
+            <div class="col-12">
                 <div style="display: block;">
                     <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
                         [legend]="barChartLegend" type="bar">
                     </canvas>
                 </div>
-            </div>
-            <div class="col-3 mt-5 p-4">
-               <div class="card p-3">
-                <div class="row text-center">
-                    <div class="col-12">
-                        <span>Promedio</span>
-                    </div>
-                </div>
-                <div class="row text-center py-2 mt-1">
-                    <div class="col-12">
-                        <span class="avg">{{avgCalifications}}</span>
-                    </div>
-                </div>
-               </div>
             </div>
         </div>
     </div>

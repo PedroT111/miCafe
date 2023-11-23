@@ -22,7 +22,7 @@ export class AverageRatingVariationComponent implements OnInit, OnDestroy {
       x: {
         title: {
           display: true,
-          text: 'Meses',
+          text: 'Months',
           color: 'black',
           font: {
             size: 14
@@ -35,7 +35,7 @@ export class AverageRatingVariationComponent implements OnInit, OnDestroy {
       y: {
         title: {
           display: true,
-          text: 'Promedio Califiaciones',
+          text: 'Average rating',
           color: 'black',
           font: {
             size: 14
@@ -71,20 +71,19 @@ export class AverageRatingVariationComponent implements OnInit, OnDestroy {
         .getMonthAvgCalificationsEmployeeByYear(this.year)
         .subscribe({
           next: (res) => {
-            console.log(res, 'resssss');
             const months = [
-              'Enero',
-              'Febrero',
-              'Marzo',
-              'Abril',
-              'Mayo',
-              'Junio',
-              'Julio',
-              'Agosto',
-              'Septiembre',
-              'Octubre',
-              'Noviembre',
-              'Diciembre'
+              'January',
+              'February',
+              'March',
+              'April',
+              'May',
+              'June',
+              'July',
+              'August',
+              'September',
+              'October',
+              'November',
+              'December'
             ];
 
             const datasets = res.avg.map((employeeData: any, index: any) => {
@@ -92,7 +91,7 @@ export class AverageRatingVariationComponent implements OnInit, OnDestroy {
               const avgData = new Array(12).fill(0);
 
               employeeData.promediosMensuales.forEach((item: any) => {
-                const monthIndex = item.month - 1; //index starts 0
+                const monthIndex = item.month - 1; 
                 avgData[monthIndex] = item.avg;
               });
 
@@ -103,7 +102,6 @@ export class AverageRatingVariationComponent implements OnInit, OnDestroy {
                 label: `${employee.name} ${employee.lastName}`,
                 data: filterData,
                 fill: false,
-                //borderColor: `rgba(${index * 100}, ${255 - index * 50}, 0, 1)`
               };
             });
 

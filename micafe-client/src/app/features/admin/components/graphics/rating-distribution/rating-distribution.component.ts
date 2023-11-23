@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { ChartDataset, ChartOptions, Color } from 'chart.js';
 import { Subscription } from 'rxjs';
 import { ReportService } from '../../../services/report.service';
-import { endOfDay, startOfYear } from 'date-fns';
 import { Distribution } from 'src/app/shared/models/report';
 import * as ChartLabels from 'chartjs-plugin-datalabels';
 
@@ -12,10 +11,11 @@ import * as ChartLabels from 'chartjs-plugin-datalabels';
   templateUrl: './rating-distribution.component.html',
   styleUrls: ['./rating-distribution.component.css']
 })
-export class RatingDistributionComponent implements OnInit, OnDestroy {
+export class RatingDistributionComponent implements OnInit, OnDestroy, OnChanges {
   sub: Subscription = new Subscription();
-  startDate: Date;
-  endDate: Date;
+  @Input() startDate: Date;
+  @Input() endDate: Date;
+  isBarChart: boolean = true;
   califications: Distribution[] = [];
   pieChartPlugins = [ChartLabels];
   pieChartOptions: ChartOptions = {
@@ -48,7 +48,7 @@ export class RatingDistributionComponent implements OnInit, OnDestroy {
       x: {
         title: {
           display: true,
-          text: 'Cantidad de Pedidos',
+          text: 'Number of orders',
           color: 'black',
           font: {
             size: 14
@@ -61,7 +61,7 @@ export class RatingDistributionComponent implements OnInit, OnDestroy {
       y: {
         title: {
           display: true,
-          text: 'Calificaciones',
+          text: 'Ratings',
           color: 'black',
           font: {
             size: 14
@@ -76,7 +76,7 @@ export class RatingDistributionComponent implements OnInit, OnDestroy {
   barChartData: ChartDataset[] = [
     {
       data: [],
-      label: 'Cantidad de Pedidos',
+      label: 'Number of orders',
       fill: false,
       borderColor: [
         'rgb(255, 99, 132)',
@@ -103,11 +103,7 @@ export class RatingDistributionComponent implements OnInit, OnDestroy {
     'rgba(54, 162, 235, 0.5)'
   ];
   constructor(private reportService: ReportService) {
-    const currentDate = new Date();
-    const firstDayOfMonth = startOfYear(currentDate);
-    this.startDate = new Date(firstDayOfMonth);
-    const today = endOfDay(currentDate);
-    this.endDate = new Date(today);
+
   }
   ngOnDestroy(): void {
     this.sub.unsubscribe();
@@ -117,11 +113,10 @@ export class RatingDistributionComponent implements OnInit, OnDestroy {
     this.getCalifications();
   }
 
-  onDateSelection(dates: { startSale: Date; endSale: Date }) {
-    this.startDate = dates.startSale;
-    this.endDate = dates.endSale;
-    console.log(this.startDate, this.endDate);
-    this.getCalifications();
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['startDate'].currentValue || changes['endDate'].currentValue) {
+      this.getCalifications();
+    }
   }
 
   getCalifications() {
@@ -146,5 +141,9 @@ export class RatingDistributionComponent implements OnInit, OnDestroy {
           }
         })
     );
+  }
+
+  changeChart(){
+    this.isBarChart = !this.isBarChart;
   }
 }

@@ -1,8 +1,13 @@
-<div class="card p-2">
+<div class="card p-3 h-100">
     <div class="card-body">
+        <div class="row py-1 mb-4">
+            <div class="col-12 d-flex justify-content-center">
+                <span class="title">Variation in Average Ratings per Employee</span>
+            </div>
+        </div>
         <div class="row p-2">
             <div class="col-4">
-                <label class="form-label">Seleccione un año</label>
+                <label class="form-label">Select year</label>
                 <select name="year" id="" class="form-select" [(ngModel)]="year" (change)="getInfo()">
                     <option value=2023>2023</option>
                     <option value="2022">2022</option>

@@ -23,7 +23,7 @@ export class RatingDistributionEmployeeComponent implements OnInit, OnDestroy {
       x: {
         title: {
           display: true,
-          text: 'Calificaciones',
+          text: 'Ratings',
           color: 'black',
           font: {
             size: 14
@@ -36,7 +36,7 @@ export class RatingDistributionEmployeeComponent implements OnInit, OnDestroy {
       y: {
         title: {
           display: true,
-          text: 'Cantidad de Pedidos',
+          text: 'Number of orders',
           color: 'black',
           font: {
             size: 14
@@ -51,7 +51,7 @@ export class RatingDistributionEmployeeComponent implements OnInit, OnDestroy {
   barChartData: ChartDataset[] = [
     {
       data: [],
-      label: 'Cantidad de Pedidos',
+      label: 'Number of orders',
       fill: false,
       borderColor: [
         'rgb(255, 99, 132)',
@@ -97,7 +97,7 @@ export class RatingDistributionEmployeeComponent implements OnInit, OnDestroy {
         .subscribe({
           next: (res) => {
             this.califications = res.distribution.ratingDistribution;
-            this.avgCalifications = res.distribution.averageRating;
+            this.avgCalifications = Number(res.distribution.averageRating.toFixed(2));
             this.barChartLabels = this.califications.map((distribution) => {
               const calificacion = distribution._id;
               const iconClass = `*`.repeat(calificacion);
