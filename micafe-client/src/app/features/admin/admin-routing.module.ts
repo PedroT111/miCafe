@@ -23,6 +23,8 @@ import { SaleReportsComponent } from './sale-reports/sale-reports.component';
 import { SupplierListComponent } from './suppliers/supplier-list/supplier-list.component';
 import { CreateSupplierComponent } from './suppliers/create-supplier/create-supplier.component';
 import { EditSupplierComponent } from './suppliers/edit-supplier/edit-supplier.component';
+import { CustomerReportsComponent } from './customer-reports/customer-reports.component';
+import { EmployeeReportsComponent } from './employee-reports/employee-reports.component';
 
 const routes: Routes = [
   {
@@ -47,10 +49,12 @@ const routes: Routes = [
       { path: 'employees/:id', component: EditEmployeeComponent },
       { path: 'orders', component: OrderListComponent },
       { path: 'orders/:id', component: OrderInfoComponent },
+      { path: 'suppliers', component: SupplierListComponent },
+      { path: 'suppliers/new', component: CreateSupplierComponent },
+      { path: 'suppliers/edit/:id', component: EditSupplierComponent },
       { path: 'report/sales', component: SaleReportsComponent },
-      {path: 'suppliers', component: SupplierListComponent},
-      {path: 'suppliers/new', component: CreateSupplierComponent},
-      {path: 'suppliers/edit/:id', component: EditSupplierComponent}
+      { path: 'report/customers', component: CustomerReportsComponent },
+      { path: 'report/employees', component: EmployeeReportsComponent }
     ]
   }
 ];

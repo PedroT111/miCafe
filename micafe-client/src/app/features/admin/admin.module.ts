@@ -13,7 +13,7 @@ import { OrderByComponent } from './components/order-by/order-by.component';
 import { ProductFormComponent } from './components/forms/product-form/product-form.component';
 import { ProductEditComponent } from './product/product-edit/product-edit.component'; 
 import { ProductCreateComponent } from './product/product-create/product-create.component';
-import { NgbPaginationModule, NgbDatepickerModule, NgbTimepickerModule, NgbDropdownModule, NgbDateNativeAdapter, NgbDateAdapter, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbPaginationModule, NgbDatepickerModule, NgbTimepickerModule, NgbDropdownModule, NgbDateNativeAdapter, NgbDateAdapter, NgbTooltipModule, NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { OffersListComponent } from './offers/offers-list/offers-list.component';
 import { OfferFormComponent } from './components/forms/offer-form/offer-form.component';
 import { NewOfferComponent } from './offers/new-offer/new-offer.component';
@@ -59,6 +59,11 @@ import { SupplierListComponent } from './suppliers/supplier-list/supplier-list.c
 import { CreateSupplierComponent } from './suppliers/create-supplier/create-supplier.component';
 import { EditSupplierComponent } from './suppliers/edit-supplier/edit-supplier.component';
 import { SupplierFormComponent } from './components/forms/supplier-form/supplier-form.component';
+import { ReportDataComponent } from './components/report-data/report-data.component';
+import { CustomerReportsComponent } from './customer-reports/customer-reports.component';
+import { EmployeeReportsComponent } from './employee-reports/employee-reports.component';
+import { TopBuyingCustomersComponent } from './components/graphics/top-buying-customers/top-buying-customers.component';
+import { PriceVariationProductComponent } from './components/graphics/price-variation-product/price-variation-product.component';
 
 
 @NgModule({
@@ -115,6 +120,11 @@ import { SupplierFormComponent } from './components/forms/supplier-form/supplier
     CreateSupplierComponent,
     EditSupplierComponent,
     SupplierFormComponent,
+    ReportDataComponent,
+    CustomerReportsComponent,
+    EmployeeReportsComponent,
+    TopBuyingCustomersComponent,
+    PriceVariationProductComponent,
   ],
   imports: [
     CommonModule,
@@ -128,7 +138,8 @@ import { SupplierFormComponent } from './components/forms/supplier-form/supplier
     NgbTimepickerModule,
     NgbDropdownModule,
     NgbTooltipModule,
-    NgChartsModule
+    NgChartsModule,
+    NgbCollapseModule
   ],
   providers: [
     {
