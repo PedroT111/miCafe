@@ -15,14 +15,14 @@
   
   .input-select {
     width: 100%;
-    padding: 5px;
+    padding: 8px 5px;
     border-radius: 5px;
   
   }
   
   .input-label-focused {
-    transform: translate(0.25rem, -40%) scale(0.8);
-    color: black;
-    background-color: white;
+    transform: translate(0.25rem, -58%) scale(0.8);
+    color: #1D3557;
+    background-color: #F1FAEE;
   }
   
