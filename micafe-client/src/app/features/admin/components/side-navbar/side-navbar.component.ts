@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { COMPANY } from 'src/app/shared/constants';
-import { adminNavigationNavbar } from 'src/app/shared/constants/navigation';
+import { ADMIN_NAVIGATION } from 'src/app/shared/constants/navigation';
 
 @Component({
   selector: 'app-side-navbar',
@@ -11,7 +11,12 @@ import { adminNavigationNavbar } from 'src/app/shared/constants/navigation';
 })
 export class SideNavbarComponent implements OnInit {
   readonly companyName = COMPANY.COMPANY_NAME;
-  readonly navigation = adminNavigationNavbar;
+  readonly reportNavs = ADMIN_NAVIGATION.REPORT_NAVS;
+  readonly productNavs = ADMIN_NAVIGATION.PRODUCT_NAVS;
+  readonly mainNavs = ADMIN_NAVIGATION.MAIN_NAVS;
+
+  isCollapsed = true;
+  isCollapsedReports = true;
 
   constructor(private authService: AuthService, private router: Router) { }
 

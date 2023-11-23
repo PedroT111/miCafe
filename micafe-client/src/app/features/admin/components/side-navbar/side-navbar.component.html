@@ -1,9 +1,9 @@
-<nav class="navbar navbar-dark bg-dark">
+<nav class="navbar border-bottom px-0">
   <div class="container"> <a class="navbar-brand" href="#">{{companyName}}</a> <button class="navbar-toggler"
       type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarOffcanvas" aria-controls="navbarOffcanvas"> <span
         class="navbar-toggler-icon"></span> </button> </div>
 </nav>
-<div class="offcanvas offcanvas-start bg-dark text-primary" tabindex="-1" id="navbarOffcanvas"
+<div class="offcanvas offcanvas-start" tabindex="-1" id="navbarOffcanvas"
   aria-labelledby="navbarOffcanvasLabel">
   <div class="offcanvas-header">
     <h5 class="offcanvas-title p-3" id="navbarOffcanvasLabel">{{companyName}}</h5> <button type="button"
@@ -11,8 +11,33 @@
   </div>
   <div class="offcanvas-body">
     <ul class="nav flex-column">
-      <li class="nav-item mt-3 py-3" *ngFor="let n of navigation"> <a class="nav-link d-flex align-items-center gap-2"
-          [routerLink]="[n.href]"> <i [class]="n.icon"></i> {{n.name}} </a> </li>
+      <li class="nav-item mt-2 py-2" >
+          <button type="button" class="nav-link d-flex align-items-center gap-2" (click)="collapse.toggle()"
+          [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+            <i class="bi bi-shop-window"></i>Shop
+          </button>
+          <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+            <li class="nav-item mt-1 py-1 ms-3" *ngFor="let n of productNavs"> <a
+                class="nav-link d-flex align-items-center gap-2" [routerLink]="[n.href]"> <i [class]="n.icon"></i>
+                {{n.name}} </a> 
+            </li>
+          </div>
+      </li>
+      <li class="nav-item mt-2 py-2" *ngFor="let n of mainNavs"> <a class="nav-link d-flex align-items-center gap-2"
+          [routerLink]="[n.href]"> <i [class]="n.icon"></i> {{n.name}} </a> 
+      </li>
+      <li class="nav-item mt-2 py-2">
+        <button type="button" class="nav-link d-flex align-items-center gap-2" (click)="collapseReports.toggle()"
+          [attr.aria-expanded]="!isCollapsedReports" aria-controls="collapseExample">
+            <i class="bi bi-bar-chart-line-fill"></i>Reports
+        </button>
+        <div #collapseReports="ngbCollapse" [(ngbCollapse)]="isCollapsedReports">
+          <li class="nav-item mt-1 py-1 ms-3" *ngFor="let n of reportNavs"> <a
+            class="nav-link d-flex align-items-center gap-2" [routerLink]="'/admin/report/' +[n.href]"> <i [class]="n.icon"></i>
+            {{n.name}} </a> 
+          </li>
+        </div>
+      </li>
       <hr class="my-3 text-primary">
       <li class="nav-item signout"> <a class="nav-link d-flex align-items-center gap-2" (click)="logOut()"> <i
             class="bi bi-box-arrow-in-left"></i> Sign out </a> </li>
