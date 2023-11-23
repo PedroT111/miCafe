@@ -3,6 +3,7 @@ import { RatingDistribution, productTotalQuantitySold } from '../Dto/reportDto';
 import { Order } from '../models/orderModel';
 import { Product } from '../models/productModel';
 import { User } from '../models/userModel';
+import { ChangePriceHistory } from '../models/priceChangeHistory';
 
 export const getMostSelledProducts = async (
   startDate: Date,
@@ -32,9 +33,6 @@ export const getMostSelledProducts = async (
         productId: '$_id',
         totalQuantity: 1
       }
-    },
-    {
-      $limit: 20
     }
   ]);
   const productIds = orders.map((order) => order.productId);
@@ -129,58 +127,7 @@ export const getOrderRatingDistributionByEmployee = async (
   return result;
 };
 
-export const getMonthlySales = async (year: string): Promise<any> => {
-  const salesReport = await Order.aggregate([
-    {
-      $match: {
-        status: 'pickedUp',
-        date: {
-          $gte: new Date(`${year}-01-01T00:00:00.000Z`),
-          $lte: new Date(`${year}-12-31T23:59:59.999Z`)
-        }
-      }
-    },
-    {
-      $group: {
-        _id: { $month: '$date' },
-        totalAmount: { $sum: '$totalAmount' }
-      }
-    },
-    {
-      $sort: {
-        _id: 1
-      }
-    },
-    {
-      $project: {
-        _id: {
-          $switch: {
-            branches: [
-              { case: { $eq: ['$_id', 1] }, then: 'Enero' },
-              { case: { $eq: ['$_id', 2] }, then: 'Febrero' },
-              { case: { $eq: ['$_id', 3] }, then: 'Marzo' },
-              { case: { $eq: ['$_id', 4] }, then: 'Abril' },
-              { case: { $eq: ['$_id', 5] }, then: 'Mayo' },
-              { case: { $eq: ['$_id', 6] }, then: 'Junio' },
-              { case: { $eq: ['$_id', 7] }, then: 'Julio' },
-              { case: { $eq: ['$_id', 8] }, then: 'Agosto' },
-              { case: { $eq: ['$_id', 9] }, then: 'Septiembre' },
-              { case: { $eq: ['$_id', 10] }, then: 'Octubre' },
-              { case: { $eq: ['$_id', 11] }, then: 'Noviembre' },
-              { case: { $eq: ['$_id', 12] }, then: 'Diciembre' }
-            ],
-            default: 'Unknown'
-          }
-        },
-        totalAmount: 1
-      }
-    }
-  ]);
-
-  return salesReport;
-};
-
-export const getDailySalesByMonthReport = async (
+export const getTotalAmountByDate = async (
   year: string,
   month: string
 ): Promise<any> => {
@@ -209,17 +156,53 @@ export const getDailySalesByMonthReport = async (
   return salesReport;
 };
 
+export const getTotalSaleByDay = async (
+  startDate: Date,
+  endDate: Date,
+  groupBy: string
+): Promise<any> => {
+  try {
+    const dateFormat = groupBy === 'day' ? '%Y-%m-%d' : '%Y-%m';
+    const salesReport = await Order.aggregate([
+      {
+        $match: {
+          date: {
+            $gte: startDate,
+            $lte: endDate
+          }
+        }
+      },
+      {
+        $group: {
+          _id: {
+            $dateToString: { format: dateFormat, date: '$date' }
+          },
+          totalAmount: { $sum: '$totalAmount' }
+        }
+      },
+      {
+        $sort: {
+          _id: 1
+        }
+      }
+    ]);
+
+    return salesReport;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 export const getSaleByWeekDayReport = async (
-  year: string,
-  month: string
+  startDate: Date,
+  endDate: Date
 ): Promise<any> => {
   const salesReport = await Order.aggregate([
     {
       $match: {
-        status: 'pickedUp',
         date: {
-          $gte: new Date(`${year}-${month}-01T00:00:00.000Z`),
-          $lte: new Date(`${year}-${month}-31T23:59:59.999Z`)
+          $gte: startDate,
+          $lte: endDate
         }
       }
     },
@@ -239,13 +222,13 @@ export const getSaleByWeekDayReport = async (
         _id: {
           $switch: {
             branches: [
-              { case: { $eq: ['$_id', 1] }, then: 'Domingo' },
-              { case: { $eq: ['$_id', 2] }, then: 'Lunes' },
-              { case: { $eq: ['$_id', 3] }, then: 'Martes' },
-              { case: { $eq: ['$_id', 4] }, then: 'Miércoles' },
-              { case: { $eq: ['$_id', 5] }, then: 'Jueves' },
-              { case: { $eq: ['$_id', 6] }, then: 'Viernes' },
-              { case: { $eq: ['$_id', 7] }, then: 'Sábado' }
+              { case: { $eq: ['$_id', 1] }, then: 'Sunday' },
+              { case: { $eq: ['$_id', 2] }, then: 'Monday' },
+              { case: { $eq: ['$_id', 3] }, then: 'Tuesday' },
+              { case: { $eq: ['$_id', 4] }, then: 'Wednesday' },
+              { case: { $eq: ['$_id', 5] }, then: 'Thursday' },
+              { case: { $eq: ['$_id', 6] }, then: 'Friday' },
+              { case: { $eq: ['$_id', 7] }, then: 'Saturday' }
             ],
             default: 'Unknown'
           }
@@ -356,8 +339,7 @@ export const totalSelledByCategory = async (
   const report = await Order.aggregate([
     {
       $match: {
-        date: { $gte: startDate, $lte: endDate },
-        status: 'pickedUp'
+        date: { $gte: startDate, $lte: endDate }
       }
     },
     {
@@ -397,13 +379,18 @@ export const totalSelledByCategory = async (
   return report;
 };
 
-export const newCustomersByMonth = async (year: string): Promise<any> => {
-  const report = User.aggregate([
+export const newCustomersByPeriod = async (
+  startDate: Date,
+  endDate: Date,
+  groupBy: string
+): Promise<any> => {
+  const dateFormat = groupBy === 'day' ? '%Y-%m-%d' : '%Y-%m';
+  const report = await User.aggregate([
     {
       $match: {
         registrationDate: {
-          $gte: new Date(`${year}-01-01`),
-          $lte: new Date(`${year}-12-31`)
+          $gte: startDate,
+          $lte: endDate
         },
         role: 'user'
       }
@@ -411,17 +398,412 @@ export const newCustomersByMonth = async (year: string): Promise<any> => {
     {
       $group: {
         _id: {
-          $month: '$registrationDate'
+          $dateToString: { format: dateFormat, date: '$registrationDate' }
         },
         newUsers: { $sum: 1 }
       }
     },
     {
       $sort: {
-        '_id': 1
+        _id: 1
       }
     }
   ]);
 
   return report;
+};
+
+export const getSalesStatistics = async (
+  startDate: Date,
+  endDate: Date
+): Promise<any> => {
+  const report = await Order.aggregate([
+    {
+      $match: {
+        date: { $gte: startDate, $lte: endDate }
+      }
+    },
+    {
+      $group: {
+        _id: null,
+        totalSold: { $sum: '$totalAmount' },
+        totalOrders: { $sum: 1 },
+        itemsSold: {
+          $sum: {
+            $add: [
+              {
+                $sum: '$products.quantity'
+              },
+              {
+                $sum: '$combos.quantity'
+              }
+            ]
+          }
+        },
+        avgTotalAmount: { $avg: '$totalAmount' }
+      }
+    },
+    {
+      $project: {
+        _id: 0
+      }
+    }
+  ]);
+
+  return report.length > 0 ? report[0] : {};
+};
+
+const getTotalCustomers = async (
+  startDate: Date,
+  endDate: Date
+): Promise<any> => {
+  const report = await User.aggregate([
+    {
+      $match: {
+        registrationDate: { $lte: endDate },
+        role: 'user'
+      }
+    },
+    {
+      $group: {
+        _id: null,
+        totalClients: { $sum: 1 }
+      }
+    }
+  ]);
+
+  return report;
+};
+
+const getActiveClients = async (
+  startDate: Date,
+  endDate: Date
+): Promise<any> => {
+  const report = await Order.aggregate([
+    {
+      $match: {
+        date: { $gte: startDate, $lte: endDate }
+      }
+    },
+    {
+      $match: {
+        date: { $gte: startDate, $lte: endDate }
+      }
+    },
+    {
+      $group: {
+        _id: '$customer',
+        totalOrders: { $sum: 1 }
+      }
+    },
+    {
+      $group: {
+        _id: null,
+        activeClients: { $sum: 1 }
+      }
+    }
+  ]);
+
+  return report;
+};
+const getCustomerInfo = async (
+  startDate: Date,
+  endDate: Date
+): Promise<any> => {
+  const report = await User.aggregate([
+    {
+      $match: {
+        $or: [
+          { registrationDate: { $gte: startDate, $lte: endDate } },
+          { lastOrderDate: { $gte: startDate, $lte: endDate } }
+        ],
+        role: 'user'
+      }
+    },
+    {
+      $group: {
+        _id: null,
+        totalClients: { $sum: 1 },
+        newClients: {
+          $sum: {
+            $cond: [{ $gte: ['$registrationDate', startDate] }, 1, 0]
+          }
+        }
+      }
+    }
+  ]);
+
+  return report;
+};
+
+const getAvgCustomerSatisfactionasync = async (
+  startDate: Date,
+  endDate: Date
+): Promise<any> => {
+  const report = await Order.aggregate([
+    {
+      $match: {
+        date: { $gte: startDate, $lte: endDate }
+      }
+    },
+    {
+      $group: {
+        _id: null,
+        averageRating: { $avg: '$qualification' }
+      }
+    }
+  ]);
+
+  return report.length > 0 ? report[0] : {};
+};
+
+export const getCustomerStatistics = async (
+  startDate: Date,
+  endDate: Date
+): Promise<any> => {
+  const [clientsInfo, avgRating, totalCustomers, activeClients] =
+    await Promise.all([
+      getCustomerInfo(startDate, endDate),
+      getAvgCustomerSatisfactionasync(startDate, endDate),
+      getTotalCustomers(startDate, endDate),
+      getActiveClients(startDate, endDate)
+    ]);
+
+  const combinedResult = {
+    totalClients: totalCustomers[0] ? totalCustomers[0].totalClients : 0,
+    newClients: clientsInfo[0] ? clientsInfo[0].newClients : 0,
+    activeClients: activeClients[0] ? activeClients[0].activeClients : 0,
+    averageOrderRating: avgRating.averageRating ? avgRating.averageRating : 0
+  };
+
+  return combinedResult;
+};
+
+export const getTopBuyingUsers = async (
+  startDate: Date,
+  endDate: Date
+): Promise<any> => {
+  const topBuyingUsers = await Order.aggregate([
+    {
+      $match: {
+        date: { $gte: startDate, $lte: endDate }
+      }
+    },
+    {
+      $group: {
+        _id: '$customer',
+        totalAmount: { $sum: '$totalAmount' }
+      }
+    },
+    {
+      $sort: { totalAmount: -1 }
+    },
+    {
+      $limit: 10
+    }
+  ]);
+  const populatedUsers = await User.populate(topBuyingUsers, {
+    path: '_id',
+    select: 'name lastName email'
+  });
+
+  return populatedUsers;
+};
+
+export const productPriceVariation = async (
+  year: string,
+  productId: string
+): Promise<any> => {
+  const id = new mongoose.Types.ObjectId(productId);
+  const yearNumber = parseInt(year);
+
+  const startDate = new Date(yearNumber, 0); // Primer día del año
+  const endDate = new Date(yearNumber, 11, 31); // Último día del año
+  /*const report = await ChangePriceHistory.aggregate([
+    {
+      $match: {
+        productId: id,
+        timestamp: { $gte: startDate, $lte: endDate }
+      }
+    },
+    {
+      $group: {
+        _id: {
+          productId: '$productId',
+          month: { $dateToString: { format: '%Y-%m', date: '$timestamp' } },
+          year: { $year: '$timestamp' }
+        },
+        prices: {
+          $push: {
+            price: '$newPrice',
+            timestamp: '$timestamp'
+          }
+        }
+      }
+    },
+    {
+      $project: {
+        _id: 0,
+        productId: '$_id.productId',
+        month: '$_id.month',
+        year: '$_id.year',
+        lastDayOfMonth: {
+          $dateFromParts: {
+            year: '$_id.year',
+            month: { $toInt: { $substr: ['$_id.month', 5, 2] } },
+            day: { $dayOfMonth: { $last: '$prices.timestamp' } }
+          }
+        },
+        prices: '$prices'
+      }
+    },
+    {
+      $unwind: '$prices'
+    },
+    {
+      $match: {
+        'prices.timestamp': '$lastDayOfMonth'
+      }
+    },
+    {
+      $group: {
+        _id: {
+          productId: '$productId',
+          month: '$month',
+          year: '$year'
+        },
+        lastPriceOfMonth: { $last: '$prices.price' },
+        prevMonthPrices: { $push: '$prices.price' }
+      }
+    },
+    {
+      $project: {
+        _id: 0,
+        productId: '$_id.productId',
+        month: '$_id.month',
+        year: '$_id.year',
+        lastPriceOfMonth: 1,
+        prevMonthPrice: { $arrayElemAt: ['$prevMonthPrices', -2] },
+        percentageVariation: {
+          $multiply: [
+            {
+              $divide: [
+                { $subtract: ['$lastPriceOfMonth', '$prevMonthPrice'] },
+                '$prevMonthPrice'
+              ]
+            },
+            100
+          ]
+        }
+      }
+    },
+    {
+      $lookup: {
+        from: 'products',
+        localField: 'productId',
+        foreignField: '_id',
+        as: 'product'
+      }
+    },
+    {
+      $unwind: '$product'
+    },
+    {
+      $sort: {
+        year: 1,
+        month: 1
+      }
+    }
+  ]);*/
+
+  const prices = await ChangePriceHistory.aggregate([
+    {
+      $match: {
+        productId: id
+      }
+    },
+    {
+      $sort: {
+        timestamp: 1
+      }
+    },
+    {
+      $group: {
+        _id: {
+          year: { $year: '$timestamp' },
+          month: { $month: '$timestamp' }
+        },
+        prices: { $push: '$newPrice' }
+      }
+    },
+    {
+      $project: {
+        _id: 0,
+        year: '$_id.year',
+        month: '$_id.month',
+        prices: '$prices'
+      }
+    },
+    {
+      $sort: {
+        year: 1,
+        month: 1
+      }
+    }
+  ]);
+  console.log(prices);
+  /*const variations = prices.map((priceGroup) => {
+    const monthlyPrices = priceGroup.prices;
+    console.log(monthlyPrices)
+    let totalVariation = 0;
+
+    for (let index = 1; index < monthlyPrices.length; index++) {
+        let prevPrice = 0;
+        prevPrice = monthlyPrices[index - 1][monthlyPrices[index-1].length]
+        console.log(prevPrice)
+        let newPrice = monthlyPrices[index][monthlyPrices[index].length]
+        
+        totalVariation = (newPrice - prevPrice) / prevPrice;
+        
+    }
+    
+
+    return {
+      month: priceGroup.month,
+      year: priceGroup.year,
+      totalVariation: totalVariation * 100 // Convert to percentage
+    };
+  });*/
+  try {
+    const variations = [];
+    for (let i = 1; i < prices.length; i++) {
+      const currentMonth = prices[i];
+      const previousMonth = prices[i - 1];
+
+      const currentMonthPrices = currentMonth.prices;
+      const previousMonthPrices = previousMonth.prices;
+
+      if (previousMonthPrices.length > 0) {
+        const previousMonthLastPrice =
+          previousMonthPrices[previousMonthPrices.length - 1];
+        const currentMonthLastPrice =
+          currentMonthPrices[currentMonthPrices.length - 1];
+
+        const percentageVariation =
+          ((currentMonthLastPrice - previousMonthLastPrice) /
+            previousMonthLastPrice) *
+          100;
+
+        variations.push({
+          year: currentMonth.year,
+          month: currentMonth.month,
+          totalVariation: percentageVariation
+        });
+      }
+    }
+
+    return variations;
+  } catch (err) {
+    console.log(err);
+  }
 };

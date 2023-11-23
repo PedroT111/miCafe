@@ -3,14 +3,17 @@ import catchAsync from '../utils/catchAsync';
 import { validationResult } from 'express-validator';
 import {
   getAvgCalificationsEmployeeByYear,
-  getDailySalesByMonthReport,
-  getMonthlySales,
+  getCustomerStatistics,
   getMostSelledProducts,
   getOrderRatingDistribution,
   getOrderRatingDistributionByEmployee,
   getSaleByWeekDayReport,
   getSalesByHourOfDay,
-  newCustomersByMonth,
+  getSalesStatistics,
+  getTopBuyingUsers,
+  getTotalSaleByDay,
+  newCustomersByPeriod,
+  productPriceVariation,
   totalSelledByCategory
 } from '../services/reports';
 import AppError from '../utils/appError';
@@ -23,7 +26,9 @@ export const reportMostSelledProducts = catchAsync(
       return;
     }
     const startDate = new Date(req.query.startDate as string);
+    startDate.setUTCHours(0, 0, 0, 0);
     const endDate = new Date(req.query.endDate as string);
+    endDate.setUTCHours(23, 59, 59, 999);
     const mostSelledProducts = await getMostSelledProducts(startDate, endDate);
     if (mostSelledProducts === null) {
       next(new AppError('Something was wrong!', 400));
@@ -44,7 +49,9 @@ export const QualificationDistribution = catchAsync(
       return;
     }
     const startDate = new Date(req.query.startDate as string);
+    startDate.setUTCHours(0, 0, 0, 0);
     const endDate = new Date(req.query.endDate as string);
+    endDate.setUTCHours(23, 59, 59, 999);
     const qualifications = await getOrderRatingDistribution(startDate, endDate);
     if (qualifications === null) {
       next(new AppError('Something was wrong!', 400));
@@ -77,56 +84,6 @@ export const qualificationDistributionByEmployee = catchAsync(
   }
 );
 
-export const salesReport = catchAsync(
-  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      res.status(400).json({ errors: errors.array() });
-      return;
-    }
-
-    const year = req.query.year as string;
-    const view = req.query.view as string;
-    const month = req.query.month as string;
-
-    if (!year || !view) {
-      next(new AppError('Year and view are required query parameters', 400));
-      return;
-    }
-
-    if (view === 'monthly') {
-      const monthlySales = await getMonthlySales(year);
-
-      if (monthlySales === null) {
-        next(new AppError('Something was wrong!', 400));
-        return;
-      }
-
-      res.status(200).json({
-        ok: true,
-        sales: monthlySales
-      });
-    } else if (view === 'daily') {
-      if (!month) {
-        next(new AppError('Month is required for daily view', 400));
-        return;
-      }
-
-      const dailySales = await getDailySalesByMonthReport(year, month);
-
-      if (dailySales === null) {
-        next(new AppError('Something was wrong!', 400));
-        return;
-      }
-
-      res.status(200).json({
-        ok: true,
-        sales: dailySales
-      });
-    }
-  }
-);
-
 export const salesByDayOfWeek = catchAsync(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const errors = validationResult(req);
@@ -134,10 +91,37 @@ export const salesByDayOfWeek = catchAsync(
       res.status(400).json({ errors: errors.array() });
       return;
     }
-    const year = req.query.year as string;
-    const month = req.query.month as string;
+    const startDate = new Date(req.query.startDate as string);
+    startDate.setUTCHours(0, 0, 0, 0);
+    const endDate = new Date(req.query.endDate as string);
+    endDate.setUTCHours(23, 59, 59, 999);
 
-    const dailySales = await getSaleByWeekDayReport(year, month);
+    const dailySales = await getSaleByWeekDayReport(startDate, endDate);
+    if (dailySales === null) {
+      next(new AppError('Something was wrong!', 400));
+    }
+
+    res.status(200).json({
+      ok: true,
+      sales: dailySales
+    });
+  }
+);
+
+export const reportTotalSales = catchAsync(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json({ errors: errors.array() });
+      return;
+    }
+    const startDate = new Date(req.query.startDate as string);
+    startDate.setUTCHours(0, 0, 0, 0);
+    const endDate = new Date(req.query.endDate as string);
+    endDate.setUTCHours(23, 59, 59, 999);
+    const groupBy = req.query.groupBy as string;
+
+    const dailySales = await getTotalSaleByDay(startDate, endDate, groupBy);
     if (dailySales === null) {
       next(new AppError('Something was wrong!', 400));
     }
@@ -202,7 +186,9 @@ export const reportSelledByCategory = catchAsync(
       return;
     }
     const startDate = new Date(req.query.startDate as string);
+    startDate.setUTCHours(0, 0, 0, 0);
     const endDate = new Date(req.query.endDate as string);
+    endDate.setUTCHours(23, 59, 59, 999);
 
     const categories = await totalSelledByCategory(startDate, endDate);
     if (categories === null) {
@@ -216,16 +202,45 @@ export const reportSelledByCategory = catchAsync(
   }
 );
 
-export const reportNewCustomersByMonth = catchAsync(
+export const reportSalesStatistics = catchAsync(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       res.status(400).json({ errors: errors.array() });
       return;
     }
-    const { year } = req.params;
+    const startDate = new Date(req.query.startDate as string);
+    startDate.setUTCHours(0, 0, 0, 0);
+    const endDate = new Date(req.query.endDate as string);
+    endDate.setUTCHours(23, 59, 59, 999);
 
-    const newCustomers = await newCustomersByMonth(year);
+    const statistics = await getSalesStatistics(startDate, endDate);
+
+    res.status(200).json({
+      ok: true,
+      statistics
+    });
+  }
+);
+
+export const reportNewCustomersByPeriod = catchAsync(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json({ errors: errors.array() });
+      return;
+    }
+    const startDate = new Date(req.query.startDate as string);
+    startDate.setUTCHours(0, 0, 0, 0);
+    const endDate = new Date(req.query.endDate as string);
+    endDate.setUTCHours(23, 59, 59, 999);
+    const groupBy = req.query.groupBy as string;
+
+    const newCustomers = await newCustomersByPeriod(
+      startDate,
+      endDate,
+      groupBy
+    );
     if (newCustomers === null) {
       next(new AppError('Something was wrong!', 400));
     }
@@ -233,6 +248,71 @@ export const reportNewCustomersByMonth = catchAsync(
     res.status(200).json({
       ok: true,
       newCustomers
+    });
+  }
+);
+
+export const reportCustomerStatistics = catchAsync(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json({ errors: errors.array() });
+      return;
+    }
+    const startDate = new Date(req.query.startDate as string);
+    startDate.setUTCHours(0, 0, 0, 0);
+    const endDate = new Date(req.query.endDate as string);
+    endDate.setUTCHours(23, 59, 59, 999);
+
+    const statistics = await getCustomerStatistics(startDate, endDate);
+
+    res.status(200).json({
+      ok: true,
+      statistics
+    });
+  }
+);
+
+export const reportTopUsers = catchAsync(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json({ errors: errors.array() });
+      return;
+    }
+    const startDate = new Date(req.query.startDate as string);
+    startDate.setUTCHours(0, 0, 0, 0);
+    const endDate = new Date(req.query.endDate as string);
+    endDate.setUTCHours(23, 59, 59, 999);
+
+    const customers = await getTopBuyingUsers(startDate, endDate);
+
+    res.status(200).json({
+      ok: true,
+      customers
+    });
+  }
+);
+
+export const reportChangePriceProduct = catchAsync(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json({ errors: errors.array() });
+      return;
+    }
+    /*const startDate = new Date(req.query.startDate as string);
+    startDate.setUTCHours(0, 0, 0, 0);
+    const endDate = new Date(req.query.endDate as string);
+    endDate.setUTCHours(23, 59, 59, 999);*/
+    const year = req.query.year as string;
+    const id = req.query.productId as string;
+    console.log(id)
+    const changePrices = await productPriceVariation( year, id);
+
+    res.status(200).json({
+      ok: true,
+      changePrices
     });
   }
 );
