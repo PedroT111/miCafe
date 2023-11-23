@@ -1,6 +1,15 @@
-span{
-    font-size: 1.1rem;
-}
-.bi{
+span {
     font-size: 1.3rem;
+}
+
+.bi {
+    font-size: 1.3rem;
+}
+
+@media only screen and (max-width: 768px) {
+    span {
+        font-size: 1.1rem;
+    }
+
+
 }
