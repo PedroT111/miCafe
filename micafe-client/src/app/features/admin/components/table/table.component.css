@@ -1,20 +1,11 @@
-/* Estilos para la tabla */
-.custom-table {
-    border-collapse: separate;
-    border-spacing: 0 10px;
-    background-color: rgb(251, 251, 251);
-}
-
-
-
 .table td,
 .table th {
     vertical-align: middle;
-
+    background-color: #4A5D79;
+    color: #F1FAEE;
 }
 
 .table td {
-    text-shadow: 1.5px 1.5px 1.5px rgba(0, 0, 0, 0.2);
     padding: 10px;
     text-align: center;
     transition: all 0.3s ease;
@@ -32,19 +23,19 @@
 }
 
 ngb-pagination ::ng-deep a {
-    color: black
+    color: #4A5D79
 }
 
 ngb-pagination ::ng-deep .page-item.active .page-link {
-    color: white;
-    background-color: black;
+    color: #F1FAEE;
+    background-color: #4A5D79;
 }
 
 ngb-pagination ::ng-deep .page-item.active .page-link:focus,
 .page-link:not(:disabled):not(.disabled):active:focus {
-    box-shadow: 0 0 0 0.1rem dimgrey;
+    box-shadow: 0 0 0 0.1rem #4A5D79;
 }
 
 ngb-pagination ::ng-deep .page-link:not(:disabled):not(.disabled):active:focus {
-    box-shadow: 0 0 0 0.1rem dimgrey;
+    box-shadow: 0 0 0 0.1rem #4A5D79;
 }

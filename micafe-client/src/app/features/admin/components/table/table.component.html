@@ -1,5 +1,5 @@
-<div class="table-responsive">
-  <table class="table m-0 h-100 custom-table">
+<div class="table-responsive p-2">
+  <table class="table m-0 h-100">
     <thead>
       <tr>
         <th scope="col" *ngFor="let h of headers">{{h.header | titlecase}}</th>
@@ -10,7 +10,7 @@
       <tr *ngFor="let item of data | slice: (page-1) * pageSize : page * pageSize"
         [ngClass]="{'table-success' : item.status === 'active'}">
         <ng-container *ngFor="let h of headers; let i = index">
-          <td *ngIf="h.name !== 'urlImage'; else imageTemplate">{{ getProperty(item, h.name) | truncateText: 35 }}</td>
+          <td *ngIf="h.name !== 'urlImage'; else imageTemplate">{{ (h.name === 'price' || h.name === 'salePrice') ? (getProperty(item, h.name) | truncateText: 35 | currency) : (getProperty(item, h.name) | truncateText: 35) }}</td>
           <ng-template #imageTemplate>
             <td>
               <img [src]="'/assets/products/'+ getProperty(item, h.name)" alt="Imagen" class="me-2"
@@ -23,7 +23,7 @@
             <button type="button" class="btn no-arrow" id="dropdownBasic1" ngbDropdownToggle>
               <i class="bi bi-three-dots-vertical"></i>
             </button>
-            <div ngbDropdownMenu  aria-labelledby="dropdownBasic1" class="drop-menu bg-light text-center">
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="drop-menu bg-light text-center">
               <button class="btn btn-light w-75" (click)="onSeeMore(item); myDrop.close()">
                 <i class="bi bi-pencil-square"></i>
                 <span class="mx-2">Editar</span>
