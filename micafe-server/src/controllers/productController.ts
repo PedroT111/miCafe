@@ -38,7 +38,7 @@ export const createProduct = catchAsync(
     await sendDataEmail(
       userList,
       newProduct,
-      'd-e3428e38ce284f9aadde7cea5ea3560e'
+      'd-a189e85da6af47539966278c3b6f9881'
     );
     res.status(201).json({
       ok: true,
