@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 export class TitlePageComponent implements OnInit {
   @Input() title: string;
   @Input() href: string;
+  @Input() isPrimary: boolean = false;
   constructor(private router: Router) { }
 
   ngOnInit(): void {
