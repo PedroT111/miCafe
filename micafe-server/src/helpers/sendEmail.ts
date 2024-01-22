@@ -20,14 +20,13 @@ const sendEmail = async (
   };
   await sgMail.send(msg).then(
     () => {
-      console.log('enviado');
-      console.log(msg);
+
     },
     (error) => {
       console.error(error);
       // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
       if (error.response) {
-        console.error(error.response.body);
+        //console.error(error.response.body);
       }
     }
   );
@@ -48,6 +47,7 @@ export const sendDataEmail = async (
   data: any,
   templateId: string
 ): Promise<void> => {
+  console.log(userList, data)
   const promises = userList.map(async (user) => {
     await sendEmail(user.email, { user, data }, templateId);
   });
