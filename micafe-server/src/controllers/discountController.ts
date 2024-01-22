@@ -10,6 +10,7 @@ import {
   getOneByCode
 } from '../services/discount';
 import { getInactiveUsers, getTopClients } from '../services/user';
+import { sendDataEmail } from '../helpers/sendEmail';
 
 export const getAllDiscounts = catchAsync(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -48,9 +49,17 @@ export const createDiscountForTopUsers = catchAsync(
 
     const newDiscount = await createDiscountsForUsers(topClients, discount);
     if (newDiscount.length === 0) {
-      next(new AppError('No hay usuarios que cumplan con esos parametros!', 400));
+      next(
+        new AppError('No hay usuarios que cumplan con esos parametros!', 400)
+      );
       return;
     }
+    const discountCode = newDiscount[0].code;
+    await sendDataEmail(
+      topClients,
+      discountCode,
+      'd-1274abf8448a4386805e95ef85d9cb09'
+    );
     res.status(200).json({
       ok: true,
       msg: 'Discount created successfully!'
@@ -77,9 +86,17 @@ export const createDiscountForInactiveUsers = catchAsync(
     const inactiveUsers = await getInactiveUsers(inactiveDays);
     const newDiscount = await createDiscountsForUsers(inactiveUsers, discount);
     if (newDiscount.length === 0) {
-      next(new AppError('No hay usuarios que cumplan con esos parametros!', 400));
+      next(
+        new AppError('No hay usuarios que cumplan con esos parametros!', 400)
+      );
       return;
     }
+    const discountCode = newDiscount[0].code;
+    await sendDataEmail(
+      inactiveUsers,
+      discountCode,
+      'd-1274abf8448a4386805e95ef85d9cb09'
+    );
     res.status(200).json({
       ok: true,
       msg: 'Discount created successfully!'
@@ -117,7 +134,7 @@ export const validateDiscount = catchAsync(
       res.status(400).json({ errors: errors.array() });
       return;
     }
-    const code: string = (req.query.code as string) || ''; 
+    const code: string = (req.query.code as string) || '';
     const user: string = (req.query.user as string) || '';
 
     if (!code || !user) {
