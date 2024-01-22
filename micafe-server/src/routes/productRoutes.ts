@@ -19,16 +19,16 @@ import { idValidationRule } from '../validators/commonValidator';
 
 const router = express.Router();
 
-router.post('/new', createProductValidationRules, createProduct);
+router.post('/new', isAdmin, createProductValidationRules, createProduct);
 router.get('/', getAllProducts);
 router.get('/category/:id', getProductsByCategory);
 router.get('/onsale', getProductsOnSale);
 router.get('/no-sale', getProductsNoSale);
-router.post('/update-prices', updatePricesByCategory);
+router.post('/update-prices', isAdmin, updatePricesByCategory);
 router
   .route('/:id')
   .get(getProduct)
-  .put(updateProductValidationRules, updateProduct);
-router.delete('/:id', idValidationRule, deleteProduct);
+  .put(isAdmin, updateProductValidationRules, updateProduct);
+router.delete('/:id', isAdmin, idValidationRule, deleteProduct);
 
 export default router;

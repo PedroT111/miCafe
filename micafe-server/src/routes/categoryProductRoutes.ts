@@ -13,10 +13,10 @@ import { idValidationRule } from '../validators/commonValidator';
 
 const router = express.Router();
 
-router.post('/new', createCategory);
+router.post('/new', isAdmin, createCategory);
 router.get('/categories', getCategories);
 router.get('/categories/products', getCategoriesProducts);
-router.route('/:id').get(getOne).put(updateCategory);
-router.route('/delete/:id').delete(idValidationRule, deleteCategory);
+router.route('/:id').get(getOne).put(isAdmin, updateCategory);
+router.route('/delete/:id').delete(isAdmin, idValidationRule, deleteCategory);
 
 export default router;

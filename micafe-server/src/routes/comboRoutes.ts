@@ -13,10 +13,10 @@ import { idValidationRule } from '../validators/commonValidator';
 const router = express.Router();
 
 router.get('/', getCombos);
-router.post('/new', comboValidationRules, createCombo);
+router.post('/new', isAdmin, comboValidationRules, createCombo);
 router
   .route('/:id')
-  .put(idValidationRule, updateCombo)
+  .put(isAdmin, idValidationRule, updateCombo)
   .get(getComboDetails)
-  .delete(idValidationRule, deleteCombo);
+  .delete(isAdmin, idValidationRule, deleteCombo);
 export default router;
