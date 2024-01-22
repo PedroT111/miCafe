@@ -36,7 +36,7 @@ export const getAll = async (): Promise<IOrder[]> => {
     .populate('products.product')
     .populate('combos.combo')
     .populate('employee')
-    .sort({ date: 1 });
+    .sort({ pickUpDateTime: -1 });
 };
 
 export const getOne = async (id: string): Promise<IOrder | null> => {
@@ -149,7 +149,7 @@ export const getOrdersByUser = async (id: string): Promise<IOrder[]> => {
     .populate('customer')
     .populate('products.product')
     .populate('combos.combo')
-    .sort({ pickUpDateTime: -1 });
+    .sort({ date: -1 });
 };
 
 export const rateOrder = async (
