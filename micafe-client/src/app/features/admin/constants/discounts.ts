@@ -1,38 +1,38 @@
 export const DISCOUNTS = {
     DISCOUNT_TABLE_HEADERS: [
       {
-        header: 'Código',
+        header: 'Code',
         name: 'code'
       },
       {
-        header: 'Descripcion',
+        header: 'Description',
         name: 'description'
       },
       {
-        header: 'Valor',
+        header: 'Value',
         name: 'value'
       },
       {
-        header: 'Cantidad de Descuentos',
+        header: 'Quantity discounts',
         name: 'count'
       },
       {
-        header: 'Descuentos Usados',
+        header: 'Used Discounts',
         name: 'usedDiscounts'
       },
       {
-        header: 'Fecha de expiración',
+        header: 'Expiration date',
         name: 'expirationDate'
       },
       {
-        header: 'Estado',
+        header: 'Status',
         name: 'status'
       },
     ],
     SORTING: [
-        { sort: 'expirationDate', asc: true, name: 'Fecha' },
-        { sort: 'count', asc: false, name: 'Cantidad asc' },
-        { sort: 'count', asc: true, name: 'Cantidad desc' },
+        { sort: 'expirationDate', asc: true, name: 'Date' },
+        { sort: 'count', asc: false, name: 'Quantity asc' },
+        { sort: 'count', asc: true, name: 'Quantity desc' },
       ]
   };
   

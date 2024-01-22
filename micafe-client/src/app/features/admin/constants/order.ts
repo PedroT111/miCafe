@@ -1,28 +1,28 @@
 export const ORDERS = {
     ORDERS_TABLE_HEADERS: [
         {
-            header: 'Orden',
+            header: 'Order',
             name: 'orderNumber'
         },
         {
-            header: 'Fecha',
-            name: 'date'
+            header: 'Pick up date time',
+            name: 'pickUpDateTime'
         },
         {
-            header: 'Cliente',
+            header: 'Customer',
             name: 'customer'
         },
 
         {
-            header: 'Total',
+            header: 'Total Amount',
             name: 'totalAmount'
         },
         {
-            header: 'Empleado',
+            header: 'Employee',
             name: 'employee'
         },
         {
-            header: 'Estado',
+            header: 'Status',
             name: 'status',
         }
     ]

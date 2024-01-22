@@ -1,31 +1,31 @@
 export const OFFERS = {
     OFFERS_TABLE_HEADERS: [
         {
-            header: 'Nombre',
+            header: 'Name',
             name: 'productName'
         },
         {
-            header: 'Precio Actual',
+            header: 'Current price',
             name: 'price'
         },
         {
-            header: 'Precio Oferta',
+            header: 'Offer price',
             name: 'salePrice'
         },
         {
-            header: '% Oferta',
+            header: '% Offer',
             name: 'percentage'
         },
         {
-            header: 'Fecha Inicio',
+            header: 'Start Date',
             name: 'startSale'
         },
         {
-            header: 'Fecha Fin',
+            header: 'End Date',
             name: 'endSale'
         },
         {
-            header: 'Estado',
+            header: 'Status',
             name: 'status',
             statusClass: true
         }

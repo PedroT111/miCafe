@@ -1,11 +1,11 @@
 export const CUSTOMERS = {
   CUSTOMERS_TABLE_HEADERS: [
     {
-      header: 'Nombre',
+      header: 'Name',
       name: 'name'
     },
     {
-      header: 'Apellido',
+      header: 'Last Name',
       name: 'lastName'
     },
     {
@@ -13,20 +13,20 @@ export const CUSTOMERS = {
       name: 'email'
     },
     {
-      header: 'Fecha de Registro',
+      header: 'Registration date',
       name: 'registrationDate'
     },
     {
-      header: 'Última Compra',
+      header: 'Last order',
       name: 'lastOrderDate'
     },
     {
-      header: 'Estado',
+      header: 'Status',
       name: 'isValidated'
     }
   ],
   SORTING: [
-    { sort: 'name', asc: true, name: 'Apellido asc' },
-    { sort: 'name', asc: false, name: 'Apellido desc' },
+    { sort: 'name', asc: true, name: 'Last Name asc' },
+    { sort: 'name', asc: false, name: 'Last Name desc' },
   ]
 };

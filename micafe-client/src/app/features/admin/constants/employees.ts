@@ -1,11 +1,11 @@
 export const EMPLOYEES = {
     EMPLOYEES_TABLE_HEADERS: [
       {
-        header: 'Nombre',
+        header: 'Name',
         name: 'name'
       },
       {
-        header: 'Apellido',
+        header: 'Last Name',
         name: 'lastName'
       },
       {
@@ -13,7 +13,7 @@ export const EMPLOYEES = {
         name: 'email'
       },
       {
-        header: 'Fecha de Registro',
+        header: 'Registration date',
         name: 'registrationDate'
       }
     ]

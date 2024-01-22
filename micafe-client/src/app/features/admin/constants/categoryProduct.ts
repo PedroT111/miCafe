@@ -1,16 +1,16 @@
 export const CATEGORY = {
     CATEGORY_TABLE_HEADERS: [
         {
-            header: 'Nombre',
+            header: 'Name',
             name: 'name'
         },
         {
-            header: 'Tipos de Productos',
+            header: 'Product Types',
             name: 'totalProducts'
         },
     ],
     SORTING:[
-        { sort: 'name', asc: true, name: 'Nombre asc' },
-        { sort: 'name', asc: false, name: 'Nombre desc' },
+        { sort: 'name', asc: true, name: 'Name asc' },
+        { sort: 'name', asc: false, name: 'Name desc' },
       ]
 }

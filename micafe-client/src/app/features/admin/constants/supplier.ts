@@ -1,7 +1,7 @@
 export const SUPPLIER = {
   SUPPLIER_TABLE_HEADERS: [
     {
-      header: 'Nombre',
+      header: 'Name',
       name: 'name'
     },
     {
@@ -9,11 +9,11 @@ export const SUPPLIER = {
       name: 'email'
     },
     {
-      header: 'Teléfono',
+      header: 'Celphone',
       name: 'celphone'
     },
     {
-      header: 'Dirección',
+      header: 'Address',
       name: 'address'
     }
   ]

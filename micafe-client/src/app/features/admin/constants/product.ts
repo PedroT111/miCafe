@@ -1,27 +1,27 @@
 export const PRODUCT = {
     PRODUCT_TABLE_HEADERS: [
         {
-            header: 'Nombre',
+            header: 'Name',
             name: 'name'
         },
         {
-            header: 'Imagen',
+            header: 'Image',
             name: 'urlImage'
         },
         {
-            header: 'Descripción',
+            header: 'Description',
             name: 'description'
         },
         {
-            header: 'Precio',
+            header: 'Price',
             name: 'price'
         },
         {
-            header: 'Puntos',
+            header: 'Points',
             name: 'points'
         },
         {
-            header: 'Estado',
+            header: 'Status',
             name: 'isActive'
         }
     ]
