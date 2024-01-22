@@ -28,22 +28,13 @@ export class OrderHistoryComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.socketService.connect();
     this.user = this.authService.getUserData();
-
-    /*if (this.user) {
-      const roomName = `userId:${this.user._id}`;
-      console.log(roomName)
-      this.socketService.joinRoom(roomName);
-    }*/
     this.listenToOrderEvent();
     this.getOrders();
   }
 
   private listenToOrderEvent(): void {
-    console.log('hola')
     this.socketService.listen('updatedOrder').subscribe({
-      next: (data: { msg: string}) => {
-        console.log(data);
-        //this.toastr.info(`${data.msg}: ${data.order.orderNumber}`);
+      next: () => {
         this.getOrders();
       },
       error: (error) => {
@@ -57,7 +48,6 @@ export class OrderHistoryComponent implements OnInit, OnDestroy {
         this.orderService.getOrdersByUser(this.user).subscribe({
           next: (res) => {
             this.orders = res;
-            console.log(res);
           },
           error: (err) => {
             console.log(err);
