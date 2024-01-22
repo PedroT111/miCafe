@@ -4,6 +4,8 @@ import { IndexComponent } from './index/index.component';
 import { UserInformationComponent } from './user-information/user-information.component';
 import { MyprofileComponent } from './myprofile/myprofile.component';
 import { OrderHistoryComponent } from './order-history/order-history.component';
+import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
+import { FaqComponent } from './faq/faq.component';
 
 const routes: Routes = [
   {
@@ -21,6 +23,14 @@ const routes: Routes = [
       {
         path: 'order-history',
         component: OrderHistoryComponent
+      },
+      {
+        path: 'terms-conditions',
+        component: TermsConditionsComponent
+      },
+      {
+        path: 'faq',
+        component: FaqComponent
       }
     ]
   }
