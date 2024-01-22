@@ -5,18 +5,18 @@
         <input (change)="onRadioChange('all')" class="form-check-input" type="radio" name="flexRadioDefault"
           checked>
         <label class="form-check-label" for="flexRadioDefault1">
-          Todos los clientes
+          All
         </label>
       </div>
       <div class="form-check">
         <input (change)="onRadioChange('segment')" class="form-check-input" type="radio"
           name="flexRadioDefault">
         <label class="form-check-label" for="flexRadioDefault2">
-          Segmento Específico de Clientes
+          Specific customer segments
         </label>
       </div>
       <div *ngIf="segmentClientsSelected" class="mt-3">
-        <div class="form-text">Seleccione el segmento de clientes que pueden utilizar el descuento</div>
+        <div class="form-text text-primary">Select customer segment</div>
       </div>
     </div>
   </div>
@@ -26,39 +26,39 @@
           <input (change)="onRadioSegmentClientsChange('inactive')" class="form-check-input" type="radio"
             name="segment">
           <label class="form-check-label" for="flexRadioDefault1">
-            Clientes Inactivos
+            Inactive Customers
           </label>
         </div>
         <div class="row mt-2 mb-3" *ngIf="inactiveClientsSelected">
           <div class="col-12">
-            <input type="number" class="form-control" placeholder="Cantida de días desde la última compra" formControlName="numberDaysLastOrder">
+            <input type="number" class="form-control" placeholder="Number of days from the last order" formControlName="numberDaysLastOrder">
           </div>
         </div>
         <div class="form-check">
           <input (change)="onRadioSegmentClientsChange('top')" class="form-check-input" type="radio"
             name="segment">
           <label class="form-check-label" for="flexRadioDefault2">
-            Clientes con mayor cantidad de compras
+            Top customers
           </label>
         </div>
         <div class="row mt-2 mb-3" *ngIf="topClientsSelected">
           <div class="col-12">
-            <label class="form-text">Período de Tiempo</label>
+            <label class="form-text text-primary">Time period</label>
             <div class="form-check">
               <input class="form-check-input" type="radio" name="periodTime" value="month" formControlName="periodTime" >
               <label class="form-check-label">
-                Mensual
+                Monthly
               </label>
             </div>
             <div class="form-check">
               <input class="form-check-input" type="radio" name="periodTime" value="week" formControlName="periodTime">
               <label class="form-check-label">
-                Semanal
+                Weekly
               </label>
             </div>
           </div>
           <div class="col-12 mt-3">
-            <input type="number" class="form-control" placeholder="Limite de Usuarios" formControlName="limit">
+            <input type="number" class="form-control" placeholder="Limit numer of users" formControlName="limit">
           </div>
         </div>
       </div>

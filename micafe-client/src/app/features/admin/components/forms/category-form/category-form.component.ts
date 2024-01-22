@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, S
 import { Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CategoryProduct } from 'src/app/shared/models/categoryProduct';
+import { LABEL_BUTTONS } from 'src/app/shared/constants';
 
 @Component({
   selector: 'app-category-form',
@@ -12,6 +13,7 @@ export class CategoryFormComponent implements OnInit, OnDestroy, OnChanges {
   sub: Subscription = new Subscription();
   form: FormGroup;
   editMode: boolean = false;
+  buttons = LABEL_BUTTONS;
   @Input() categoryToEdit: CategoryProduct;
   @Output() onSend = new EventEmitter<CategoryProduct>();
 

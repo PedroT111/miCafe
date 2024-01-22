@@ -3,7 +3,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <div class="card-title">Categoría</div>
+                    <div class="card-title">Category</div>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -19,8 +19,8 @@
     </div>
     <div class="row">
         <div class="col-12 d-flex justify-content-end">
-            <button type="button" class="btn bg-white border border-primary" (click)="reset()">Cancelar</button>
-            <button type="submit" class="btn btn-dark mx-2">{{editMode ? 'Editar': 'Agregar'}}</button>
+            <button type="button" class="btn btn-primary border border-primary" (click)="reset()">{{buttons.cancel}}</button>
+            <button type="submit" class="btn btn-warning mx-2">{{editMode ? buttons.edit : buttons.create}}</button>
         </div>
     </div>
 </form>

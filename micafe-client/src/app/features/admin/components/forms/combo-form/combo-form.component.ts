@@ -5,6 +5,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Product } from 'src/app/shared/models/product';
 import { Combo } from 'src/app/shared/models/combo';
 import { ProductsService } from 'src/app/shared/services/products.service';
+import { LABEL_BUTTONS } from 'src/app/shared/constants';
 
 @Component({
   selector: 'app-combo-form',
@@ -16,7 +17,7 @@ export class ComboFormComponent implements OnInit, OnDestroy, OnChanges {
   sub: Subscription = new Subscription();
   @Output() send = new EventEmitter<Combo>();
   @Input() comboToEdit: Combo;
-
+  buttons = LABEL_BUTTONS;
   form: FormGroup;
   productList: Product[];
   produtcSelected: string;
@@ -114,9 +115,7 @@ export class ComboFormComponent implements OnInit, OnDestroy, OnChanges {
 
   onSubmit(){
     this.form.markAllAsTouched();
-    console.log(this.form.value)
     if (this.form.valid) {
-      console.log(this.form.value, 'form')
       this.send.emit(this.form.value);
     }
   }

@@ -29,7 +29,7 @@ export class CreateComboComponent implements OnInit, OnDestroy {
       this.comboService.newCombo(combo).subscribe({
         next: (res) => {
           if (res.ok) {
-            this.toastr.success('Combo creado correctamente');
+            this.toastr.success('Combo created successfully');
             this.router.navigate(['/admin/combos']);
           }
         },

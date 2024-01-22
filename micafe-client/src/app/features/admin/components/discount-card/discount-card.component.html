@@ -1,32 +1,32 @@
-<div class="card py-1">
+<div class="card py-1 border-primary text-primary">
     <div class="card-header">
-        <div class="card-title">Resumen</div>
+        <div class="card-title">Summary</div>
     </div>
     <div class="card-body">
         <div class="row">
             <div class="col-12">
-                <span>Codigo</span>
+                <span>Code</span>
             </div>
             <div class="col-12">
-                <p>{{discount.code ? discount.code : 'Código no ingresado'}}</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <span>Descripción</span>
-            </div>
-            <div class="col-12">
-                <p>{{discount.description ? discount.description : 'Descripción no ingresada'}}</p>
+                <p class="text-primary">{{discount.code ? discount.code : 'Code not entered'}}</p>
             </div>
         </div>
         <div class="row">
             <div class="col-12">
-                <span>Tipo de descuento y valor:</span>
+                <span>Description</span>
+            </div>
+            <div class="col-12">
+                <p class="text-primary">{{discount.description ? discount.description : '-'}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <span>Discount type and value:</span>
             </div>
             <div class="col-12">
                 <ul>
-                    <li><p>{{discount.discountType ? discount.discountType : 'Tipo de descuento'}}</p></li>
-                    <li> <p>{{discount.discountType === 'fixedAmount' ? '$' : ''}} {{discount.value ? discount.value : 'Valor no ingresado'}}{{discount.discountType === 'percentage' ? '%' : ''}}</p></li>
+                    <li><p class="text-primary">{{discount.discountType ? discount.discountType : 'Discount type'}}</p></li>
+                    <li> <p class="text-primary">{{discount.discountType === 'fixedAmount' ? '$' : ''}} {{discount.value ? discount.value : 'Value'}}{{discount.discountType === 'percentage' ? '%' : ''}}</p></li>
                 </ul>
                
                 
@@ -34,10 +34,10 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <span>Fecha de expiración</span>
+                <span>Expiration date</span>
             </div>
             <div class="col-12">
-                <p>{{discount.expirationDate ? discount.expirationDate : 'Fecha no definida'}}</p>
+                <p class="text-primary">{{discount.expirationDate ? discount.expirationDate : '-'}}</p>
             </div>
         </div>
     </div>

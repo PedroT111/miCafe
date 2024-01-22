@@ -39,6 +39,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
     this.sub.add(
       this.categoryService.getAllCategories().subscribe({
         next: (res) => {
+          console.log(res)
           this.categories = res.categories;
           this.filteredData = this.categories;
         },
@@ -55,7 +56,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
         this.categoryService.createCategory(category).subscribe({
           next: (res) => {
             if (res.ok) {
-              this.toastr.success('Categoria agregada correctamente');
+              this.toastr.success('Category created successfully');
               this.getCategories();
             }
           },
@@ -69,7 +70,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
         this.categoryService.updateCategory(category).subscribe({
           next: (res) => {
             if (res.ok) {
-              this.toastr.success('Categoria editada correctamente');
+              this.toastr.success('Category updated successfully"');
               this.getCategories();
             }
           },
@@ -82,13 +83,12 @@ export class CategoryListComponent implements OnInit, OnDestroy {
   }
 
   updateCategory(category: CategoryProduct){
-    console.log('desde list', category)
     this.selectedCategory = category;
   }
 
   deleteCategory(c: CategoryProduct) {
     this.swal.showConfirmation(
-      'Estás a punto de eliminar una Categoria'
+      'You are about to delete a category'
     ).then((res) => {
       if(res.isConfirmed){
         this.sub.add(

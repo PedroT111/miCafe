@@ -42,14 +42,14 @@ export class EditComboComponent implements OnInit {
 
   updateCombo(c: Combo){
     this.swal.showConfirmation(
-      'Estás a punto de editar el combo'
+      'You are about to edit the combo.'
     ).then((res) => {
       if(res.isConfirmed){
         this.sub.add(
           this.comboService.updateCombo(c).subscribe({
             next: (res) => {
               console.log(res);
-              this.toastr.success('Combo editado correctemente')
+              this.toastr.success('Combo updated successfully')
               this.router.navigate(['/admin/combos'])
             },
             error: (err) => {

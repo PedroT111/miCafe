@@ -66,7 +66,7 @@ export class CombosListComponent implements OnInit, OnDestroy {
   deleteCombo(c: Combo) {
     this.swal
       .showConfirmation(
-        'Estás a punto de eliminar este combo de forma permanente. ¿Deseas continuar?'
+        'You are about to permanently delete this combo. Do you want to continue?'
       )
       .then((res) => {
         if (res.isConfirmed) {
