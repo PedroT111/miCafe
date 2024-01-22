@@ -9,7 +9,6 @@ import { FormErrorDirective } from './directives/form-error.directive';
 import { FilterComponent } from './components/filter/filter.component';
 import { SearchComponent } from './components/search/search.component';
 import { TruncateTextPipe } from './pipes/truncate-text.pipe';
-import { SpinnerComponent } from './components/spinner/spinner.component';
 import { NgbDropdownModule, NgbOffcanvasModule } from '@ng-bootstrap/ng-bootstrap';
 import { SplitWordsPipe } from './pipes/split-words.pipe';
 import { NavbarMobileComponent } from './components/navbar-mobile/navbar-mobile.component';
@@ -26,7 +25,6 @@ import { DateFormatPipe } from './pipes/date-format.pipe';
     FilterComponent,
     SearchComponent,
     TruncateTextPipe,
-    SpinnerComponent,
     SplitWordsPipe,
     NavbarMobileComponent,
     TopNavbarMobileComponent,
