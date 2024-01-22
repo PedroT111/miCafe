@@ -43,6 +43,7 @@ const userSchema = new Schema<IUser>({
   },
   points: {
     type: Number,
+    default: 0
   },
   validationToken: {
     type: String,
