@@ -21,7 +21,7 @@ export const createByCategory = async (
   startSale: Date,
   endSale: Date
 ): Promise<IOffer[] | null> => {
-  const products = await Product.find({ category: idCategory });
+  const products = await Product.find({ category: idCategory, isDeleted:false });
   const createdOffers: IOffer[] = [];
   for (const p of products) {
     const newOffer = await Offer.create({
