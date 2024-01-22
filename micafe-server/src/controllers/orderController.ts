@@ -10,7 +10,6 @@ import {
   getOne,
   getOrdersByStatusAndEmployee,
   getOrdersByUser,
-  paymentOrder,
   rateOrder,
   updateOrderEmployee,
   updatePickUpDateTime
@@ -135,20 +134,20 @@ export const createNewOrder = catchAsync(
     preference
       .create({
         body: {
-          notification_url: '',
+          notification_url: 'https://wet-sloths-dig.loca.lt',
           items: [
             {
               id: '',
               title: 'MiCafeApp',
               quantity: 1,
-              unit_price: 1000
+              unit_price: order.discountedAmount ? order.discountedAmount : order.totalAmount
             }
           ],
-          back_urls: {
-            success: `http://localhost:4200/shopping/payment-success/${order._id}`,
-            failure: 'http://localhost:4200/shopping/payment-failed'
+          /*back_urls: {
+            success: 'https://wet-sloths-dig.loca.lt/shopping/order-history',
+            failure: 'https://wet-sloths-dig.loca.lt/shopping/order-history'
           },
-          auto_return: 'approved'
+          auto_return: 'approved'*/
         }
       })
       .then((result) =>
@@ -192,9 +191,7 @@ export const paidOrderWithPoints = catchAsync(
       next(new AppError('Something was wrong!', 400));
       return;
     }
-    console.log(user.points, 'userp', order.totalPoints ,'orp')
     if (user.points && user.points < order.totalPoints) {
-      console.log('error')
       next(new AppError('insufficient points', 400));
       return;
     }
@@ -305,6 +302,8 @@ export const assignOrderToEmployee = catchAsync(
       ok: true,
       msg: 'Order has beeen assigned.'
     });
+
+    io.emit('updatedOrder', { msg: 'Actualización de estado'});
   }
 );
 
@@ -353,5 +352,6 @@ export const changeOrderPickUpDate = catchAsync(
       ok: true,
       msg: 'Order pick up date time updated!'
     });
+    io.emit('updatedPickupTime', { msg: `La orden ${order.orderNumber} fue actualizada`});
   }
 );
