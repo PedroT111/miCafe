@@ -25,6 +25,19 @@ export const findAll = async (): Promise<CategoryDto[]> => {
         from: 'products',
         localField: '_id',
         foreignField: 'category',
+        let: { categoryId: '$_id' },
+        pipeline: [
+          {
+            $match: {
+              $expr: {
+                $and: [
+                  { $eq: ['$category', '$$categoryId'] },
+                  { $eq: ['$isDeleted', false] }
+                ]
+              }
+            }
+          }
+        ],
         as: 'products'
       }
     },
@@ -39,7 +52,8 @@ export const findAll = async (): Promise<CategoryDto[]> => {
         name: '$name',
         totalProducts: { $size: '$products' }
       }
-    }
+    },
+    { $sort: { name: 1 } }
   ]);
 };
 
@@ -47,11 +61,16 @@ export const detail = async (id: string): Promise<ICategoryProduct | null> => {
   return await CategoryProduct.findById(id);
 };
 
-export const getProductsCategories = async (): Promise<CategoryProductsDTO[]> => {
+export const getProductsCategories = async (): Promise<
+  CategoryProductsDTO[]
+> => {
   return await Product.aggregate([
     {
+      $match: { isDeleted: false, isActive: true, isOnSale: false }
+    },
+    {
       $lookup: {
-        from: 'categoryproducts', 
+        from: 'categoryproducts',
         localField: 'category',
         foreignField: '_id',
         as: 'category'
@@ -64,11 +83,12 @@ export const getProductsCategories = async (): Promise<CategoryProductsDTO[]> =>
       $group: {
         _id: '$category._id',
         name: { $first: '$category.name' },
-        products: { $push: '$$ROOT' } 
+        products: { $push: '$$ROOT' }
       }
-    }
+    },
+    { $sort: { name: 1 } }
   ]);
-}
+};
 
 export const update = async (
   id: string,
