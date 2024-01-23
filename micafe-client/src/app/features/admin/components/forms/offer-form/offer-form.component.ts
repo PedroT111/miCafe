@@ -12,9 +12,14 @@ import { Product } from 'src/app/shared/models/product';
 import { ToastrService } from 'ngx-toastr';
 import { Offer } from 'src/app/shared/models/offer';
 import { ActivatedRoute } from '@angular/router';
-import { NgbCalendar, NgbDate, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbCalendar,
+  NgbDate,
+  NgbTimeStruct
+} from '@ng-bootstrap/ng-bootstrap';
 import { OffersService } from '../../../services/offers.service';
 import { ProductsService } from 'src/app/shared/services/products.service';
+import { LABEL_BUTTONS } from 'src/app/shared/constants';
 
 @Component({
   selector: 'app-offer-form',
@@ -35,6 +40,7 @@ export class OfferFormComponent implements OnInit, OnDestroy {
   _id: string;
   editMode: boolean = false;
   today: NgbDate;
+  buttons = LABEL_BUTTONS;
   constructor(
     private fb: FormBuilder,
     private productService: ProductsService,
@@ -65,7 +71,7 @@ export class OfferFormComponent implements OnInit, OnDestroy {
       this.editMode = true;
       this.offerService.getOffer(this._id).subscribe({
         next: (res) => {
-          const offer= res.offer;
+          const offer = res.offer;
           const productId = offer.productId._id;
           this.form.patchValue({
             _id: this._id,
@@ -78,14 +84,22 @@ export class OfferFormComponent implements OnInit, OnDestroy {
           this.valorActual = offer.productId.price;
           this.startDate = new Date(this.form.get('startSale')?.value);
           this.endDate = new Date(this.form.get('endSale')?.value);
-          this.startTime = {hour: this.startDate.getHours(), minute: this.startDate.getMinutes(), second: 0};
-          this.endTime = {hour: this.endDate.getHours(), minute: this.endDate.getMinutes(), second: 0};
+          this.startTime = {
+            hour: this.startDate.getHours(),
+            minute: this.startDate.getMinutes(),
+            second: 0
+          };
+          this.endTime = {
+            hour: this.endDate.getHours(),
+            minute: this.endDate.getMinutes(),
+            second: 0
+          };
         },
         error: (err) => {
           this.toastr.error(err.error.error);
         }
       });
-    } 
+    }
 
     this.form.get('productId')?.valueChanges.subscribe((x) => {
       const product = this.products.find((p) => p._id === x);
@@ -93,12 +107,11 @@ export class OfferFormComponent implements OnInit, OnDestroy {
         this.valorActual = product.price;
       }
     });
-
   }
 
   onSubmit() {
     this.form.markAllAsTouched();
-    console.log(this.startDate, this.endDate, this.startTime, this.endTime)
+    console.log(this.startDate, this.endDate, this.startTime, this.endTime);
     if (!this.startTime || !this.endTime || !this.startDate || !this.endDate) {
       this.validateDate = true;
       return;
@@ -117,7 +130,7 @@ export class OfferFormComponent implements OnInit, OnDestroy {
     this.sub.add(
       productsObservable.subscribe({
         next: (res) => {
-          this.products = res.products;          
+          this.products = res.products;
         },
         error: (err) => {
           this.toastr.error(err.error.error);

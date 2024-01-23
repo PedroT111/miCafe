@@ -3,14 +3,14 @@
         <div class="col-12">
             <div class="card p-2">
                 <div class="card-header">
-                    <div class="card-title">Producto</div>
+                    <div class="card-title">Product</div>
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12">
                             <select name="" id="_id" class="form-select" formControlName="productId" appFormValidation
                                 [form]="form" [fieldName]="'productId'">
-                                <option value="" disabled selected>Seleccionar un producto</option>
+                                <option value="" disabled selected>Select...</option>
                                 <option *ngFor="let p of products" [value]="p._id">{{p.name}}</option>
                             </select>
                             <div class="invalid-feedback" appFormError [control]="form.get('productId')"></div>
@@ -24,21 +24,22 @@
     <div class="row mb-3">
         <div class="col-12">
             <div class="card p-2">
-                <div class="card-header">
-                    <div class="card-title">Oferta</div>
+                <div class="card-header d-flex justify-content-between">
+                    <div class="card-title">Offer</div>
+                    <span class="input-group-text">ARS</span>
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="input-group">
-                                <span class="input-group-text">Precio Actual</span>
+                                <span class="input-group-text">Current Price</span>
                                 <span class="input-group-text">$</span>
                                 <span class="form-control custom-styled-input">{{ valorActual }}</span>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="input-group">
-                                <span class="input-group-text">Precio Oferta</span>
+                                <span class="input-group-text">Offer Price</span>
                                 <span class="input-group-text">$</span>
                                 <input type="text" class="form-control" formControlName="value" appFormValidation
                                     [form]="form" [fieldName]="'value'">
@@ -55,7 +56,7 @@
         <div class="col-12">
             <div class="card p-2">
                 <div class="card-header">
-                    <div class="card-title">Fecha</div>
+                    <div class="card-title">Date</div>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -73,25 +74,28 @@
         <div class="col-12">
             <div class="card p-2">
                 <div class="card-header">
-                    <div class="card-title">Hora</div>
+                    <div class="card-title">Time</div>
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-6">
-                            <label class="form-label">Hora de Inicio</label>
-                            <app-timepicker [date]="startDate" (selectedTime)="onTimeSelection($event, 'start')"
-                                required></app-timepicker>
+                        <div class="col-12 d-flex">
+                            <div>
+                                <label class="form-label text-primary">Start Time</label>
+                                <app-timepicker [date]="startDate" (selectedTime)="onTimeSelection($event, 'start')"
+                                    required></app-timepicker>
+                            </div>
+                            <div class="ms-3">
+                                <label for="" class="form-label text-primary">End Time</label>
+                                <app-timepicker [date]="endDate" (selectedTime)="onTimeSelection($event, 'end')"
+                                    required></app-timepicker>
+                            </div>
                         </div>
-                        <div class="col-6">
-                            <label for="" class="form-label">Hora de Fin</label>
-                            <app-timepicker [date]="endDate" (selectedTime)="onTimeSelection($event, 'end')"
-                                required></app-timepicker>
-                        </div>
+
                     </div>
                     <div class="row mt-2">
                         <div class="col-12">
                             <div *ngIf="validateDate" class="alert alert-danger mt-2">
-                                <span>Ingrese correctamente fecha y hora</span>
+                                <span>Please enter the date and time correctly.</span>
                             </div>
                         </div>
                     </div>
@@ -102,8 +106,8 @@
 
     <div class="row">
         <div class="col-12 d-flex justify-content-end">
-            <button class="btn bg-white border border-primary">Cancelar</button>
-            <button class="btn btn-dark mx-2">{{editMode ? 'Editar' : 'Registrar'}}</button>
+            <button class="btn btn-primary">{{buttons.cancel}}</button>
+            <button class="btn btn-warning mx-2">{{editMode ? buttons.edit : buttons.create}}</button>
         </div>
     </div>
 </form>

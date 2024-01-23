@@ -7,6 +7,7 @@ import { CategoryProduct } from 'src/app/shared/models/categoryProduct';
 import { ToastrService } from 'ngx-toastr';
 import { SwalService } from 'src/app/shared/utils/swal.service';
 import { OffersService } from '../../../services/offers.service';
+import { LABEL_BUTTONS } from 'src/app/shared/constants';
 
 @Component({
   selector: 'app-offer-category-form',
@@ -22,6 +23,7 @@ export class OfferCategoryFormComponent implements OnInit, OnDestroy {
   startTime: NgbTimeStruct;
   endTime: NgbTimeStruct;
   validateDate: boolean = false;
+  buttons = LABEL_BUTTONS;
   constructor(
     private categoryService: CategoryProductService,
     private offerService: OffersService,

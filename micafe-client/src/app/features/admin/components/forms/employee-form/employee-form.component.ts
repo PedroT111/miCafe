@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output, Input, OnChanges, SimpleChange
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { passwordMatchingValidator } from '../../../validators/passwordMatch';
 import { EmployeeForm } from 'src/app/shared/models/employee';
+import { LABEL_BUTTONS } from 'src/app/shared/constants';
 
 @Component({
   selector: 'app-employee-form',
@@ -14,6 +15,7 @@ export class EmployeeFormComponent implements OnInit, OnChanges {
   @Input() employeeToEdit: EmployeeForm;
   @Input() editMode: boolean;
   isEditMode: boolean;
+  buttons = LABEL_BUTTONS;
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
       id: [''],
