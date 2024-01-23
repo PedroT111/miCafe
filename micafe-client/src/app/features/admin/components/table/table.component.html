@@ -1,4 +1,4 @@
-<div class="table-responsive p-2">
+<div class="table-responsive">
   <table class="table m-0 h-100">
     <thead>
       <tr>
@@ -23,14 +23,14 @@
             <button type="button" class="btn no-arrow" id="dropdownBasic1" ngbDropdownToggle>
               <i class="bi bi-three-dots-vertical"></i>
             </button>
-            <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="drop-menu bg-light text-center">
-              <button class="btn btn-light w-75" (click)="onSeeMore(item); myDrop.close()">
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="drop-menu text-center">
+              <button class="btn btn-warning text-primary w-100 mb-1" (click)="onSeeMore(item); myDrop.close()">
                 <i class="bi bi-pencil-square"></i>
-                <span class="mx-2">Editar</span>
+                <span class="mx-2">Update</span>
               </button>
-              <button class="btn btn-light w-75" (click)="onDelete(item); myDrop.close()">
+              <button class="btn btn-danger w-100 text-primary" (click)="onDelete(item); myDrop.close()">
                 <i class="bi bi-backspace"></i>
-                <span class="mx-2">Eliminar</span>
+                <span class="mx-2">Delete</span>
               </button>
             </div>
           </div>

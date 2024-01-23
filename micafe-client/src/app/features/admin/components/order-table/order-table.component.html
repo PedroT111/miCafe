@@ -11,7 +11,7 @@
                     {{order.orderNumber}}
                 </td>
                 <td>
-                    {{order.date}}
+                    {{order.pickUpDateTime}}
                 </td>
                 <td>
                     {{order.customer.name}} {{order.customer.lastName}}
@@ -24,7 +24,7 @@
                     </div>
                 </td>
                 <td>
-                    {{order.employee ? order.employee.name + ' ' + order.employee.lastName : 'Sin asignar'}}
+                    {{order.employee ? order.employee.name + ' ' + order.employee.lastName : 'Unassigned'}}
                 </td>
                 <td>
                     {{order.status}}
