@@ -1,5 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges
+} from '@angular/core';
 import { ChartDataset, ChartOptions, Color } from 'chart.js';
 import { Subscription } from 'rxjs';
 import { ReportService } from '../../../services/report.service';
@@ -9,9 +16,14 @@ import * as ChartLabels from 'chartjs-plugin-datalabels';
 @Component({
   selector: 'app-rating-distribution',
   templateUrl: './rating-distribution.component.html',
-  styleUrls: ['./rating-distribution.component.css']
+  styleUrls: [
+    './rating-distribution.component.css',
+    '../../../styles/admin-style.css'
+  ]
 })
-export class RatingDistributionComponent implements OnInit, OnDestroy, OnChanges {
+export class RatingDistributionComponent
+  implements OnInit, OnDestroy, OnChanges
+{
   sub: Subscription = new Subscription();
   @Input() startDate: Date;
   @Input() endDate: Date;
@@ -49,12 +61,16 @@ export class RatingDistributionComponent implements OnInit, OnDestroy, OnChanges
         title: {
           display: true,
           text: 'Number of orders',
-          color: 'black',
+          color: 'rgba(241, 250, 238)',
           font: {
             size: 14
           }
         },
+        grid: {
+          color: 'rgba(241, 250, 238)'
+        },
         ticks: {
+          color: 'rgba(241, 250, 238)',
           stepSize: 1
         }
       },
@@ -62,10 +78,24 @@ export class RatingDistributionComponent implements OnInit, OnDestroy, OnChanges
         title: {
           display: true,
           text: 'Ratings',
-          color: 'black',
+          color: 'rgba(241, 250, 238)',
           font: {
             size: 14
           }
+        },
+        grid: {
+          color: 'rgba(241, 250, 238)'
+        },
+        ticks: {
+          color: 'rgba(241, 250, 238)'
+        }
+      }
+    },
+    plugins: {
+      legend: {
+        display: true,
+        labels: {
+          color: 'rgba(241, 250, 238)'
         }
       }
     }
@@ -87,24 +117,22 @@ export class RatingDistributionComponent implements OnInit, OnDestroy, OnChanges
       ],
       borderWidth: 1,
       hoverBackgroundColor: [
-        'rgb(255, 99, 132)',
-        'rgb(255, 159, 64)',
-        'rgb(255, 205, 86)',
-        'rgb(75, 192, 192)',
-        'rgb(54, 162, 235)'
+        'rgba(42, 157, 143)',
+        'rgba(233, 196, 106)',
+        'rgba(168, 218, 220)',
+        'rgba(241, 250, 238)',
+        'rgba(230, 57, 70)'
       ]
     }
   ];
   barChartColors: Color[] = [
-    'rgba(255, 99, 132, 0.5)',
-    'rgba(255, 159, 64, 0.5)',
-    'rgba(255, 205, 86, 0.5)',
-    'rgba(75, 192, 192, 0.5)',
-    'rgba(54, 162, 235, 0.5)'
+    'rgba(42, 157, 143)',
+    'rgba(233, 196, 106)',
+    'rgba(168, 218, 220)',
+    'rgba(241, 250, 238)',
+    'rgba(230, 57, 70)'
   ];
-  constructor(private reportService: ReportService) {
-
-  }
+  constructor(private reportService: ReportService) {}
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
@@ -143,7 +171,7 @@ export class RatingDistributionComponent implements OnInit, OnDestroy, OnChanges
     );
   }
 
-  changeChart(){
+  changeChart() {
     this.isBarChart = !this.isBarChart;
   }
 }

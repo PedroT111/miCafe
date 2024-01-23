@@ -14,7 +14,7 @@ import { CategorySale } from 'src/app/shared/models/report';
 @Component({
   selector: 'app-total-selled-category',
   templateUrl: './total-selled-category.component.html',
-  styleUrls: ['./total-selled-category.component.css']
+  styleUrls: ['./total-selled-category.component.css', '../../../styles/admin-style.css']
 })
 export class TotalSelledCategoryComponent
   implements OnInit, OnDestroy, OnChanges
@@ -26,9 +26,38 @@ export class TotalSelledCategoryComponent
   barChartOptions: ChartOptions = {
     responsive: true,
     scales: {
+      x: {
+        grid: {
+          color: 'rgba(241, 250, 238)', 
+        },
+        ticks: {
+          color: 'rgba(241, 250, 238)',
+        }  
+      },
       y: {
-      }
+        grid: {
+          color: 'rgba(241, 250, 238)',
+        },
+        ticks: {
+          color: 'rgba(241, 250, 238)',
+        }
+      },
+    },
+    plugins: {
+      legend: { display: true, labels: {
+        color: 'rgba(241, 250, 238)'
+      } }
     }
+    
+  };
+  pieChartOptions: ChartOptions = {
+    responsive: true,
+    plugins: {
+      legend: { display: true, labels: {
+        color: 'rgba(241, 250, 238)'
+      } }
+    }
+    
   };
   barChartLabels: string[] = [];
   barChartType: string = 'bar';
@@ -42,12 +71,10 @@ export class TotalSelledCategoryComponent
     }
   ];
   barChartColors: Color[] = [
-    'rgba(255, 99, 132)',
-    'rgba(54, 162, 235)',
-    'rgba(255, 206, 86)',
-    'rgba(75, 192, 192)',
-    'rgba(153, 102, 255)',
-    'rgba(50, 205, 50)'
+    'rgba(42, 157, 143)',
+    'rgba(233, 196, 106)',
+    'rgba(244, 162, 97)',
+    'rgba(57, 0, 153)'
   ];
   constructor(private reportService: ReportService) {}
 

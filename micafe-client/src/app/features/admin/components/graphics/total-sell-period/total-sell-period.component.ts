@@ -15,7 +15,10 @@ import { ReportService } from '../../../services/report.service';
 @Component({
   selector: 'app-total-sell-period',
   templateUrl: './total-sell-period.component.html',
-  styleUrls: ['./total-sell-period.component.css']
+  styleUrls: [
+    './total-sell-period.component.css',
+    '../../../styles/admin-style.css'
+  ]
 })
 export class TotalSellPeriodComponent implements OnInit, OnDestroy, OnChanges {
   sub: Subscription = new Subscription();
@@ -32,16 +35,26 @@ export class TotalSellPeriodComponent implements OnInit, OnDestroy, OnChanges {
     },
     scales: {
       x: {
+        grid: {
+          color: 'rgba(241, 250, 238)'
+        },
         ticks: {
-          stepSize: 1
+          color: 'rgba(241, 250, 238)'
         }
       },
       y: {
-        min: 0
+        grid: {
+          color: 'rgba(241, 250, 238)'
+        },
+        ticks: {
+          color: 'rgba(241, 250, 238)'
+        }
       }
     },
     plugins: {
-      legend: { display: true }
+      legend: { display: true, labels: {
+        color: 'rgba(241, 250, 238)'
+      } }
     }
   };
   barChartLabels: any[] = [];
@@ -52,10 +65,13 @@ export class TotalSellPeriodComponent implements OnInit, OnDestroy, OnChanges {
       data: [],
       label: 'Total sales amount ARS',
       fill: false,
-      hoverBackgroundColor: 'rgba(4, 4, 124, 1)'
+      borderWidth: 5,
+      borderColor:'rgba(244, 162, 97,0.9)',
+      hoverBorderColor: 'rgba(244, 162, 97,0.9)',
+      hoverBackgroundColor: 'rgba(244, 162, 97)'
     }
   ];
-  barChartColors: Color[] = ['rgba(54, 162, 235, 0.7)'];
+  barChartColors: Color[] = ['rgba(244, 162, 97, 0.9)'];
   constructor(private reportService: ReportService) {
     this.groupBy = 'day';
   }
@@ -74,29 +90,27 @@ export class TotalSellPeriodComponent implements OnInit, OnDestroy, OnChanges {
     this.getSales();
   }
 
-  getSales(){
+  getSales() {
     this.sub.add(
       this.sub.add(
-        this.reportService.getTotalSales(this.startDate, this.endDate, this.groupBy).subscribe({
-          next: (res) => {
-            this.sales = res.sales;
-            this.barChartLabels = this.sales.map(
-              (sale) => sale._id
-            );
-            this.barChartData[0].data = this.sales.map(
-              (sale) => sale.totalAmount
-            );
-            this.barChartData[0].backgroundColor = this.barChartColors;
-          },
-          error: (err) => {
-            console.log(err);
-          }
-        })
+        this.reportService
+          .getTotalSales(this.startDate, this.endDate, this.groupBy)
+          .subscribe({
+            next: (res) => {
+              this.sales = res.sales;
+              this.barChartLabels = this.sales.map((sale) => sale._id);
+              this.barChartData[0].data = this.sales.map(
+                (sale) => sale.totalAmount
+              );
+              this.barChartData[0].backgroundColor = this.barChartColors;
+            },
+            error: (err) => {
+              console.log(err);
+            }
+          })
       )
-    )
+    );
   }
-
-  
 
   onGroupBySelect() {
     this.getSales();

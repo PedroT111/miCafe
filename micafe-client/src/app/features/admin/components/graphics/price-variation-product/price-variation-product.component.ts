@@ -1,5 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges
+} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ReportService } from '../../../services/report.service';
 import { ChartDataset, ChartOptions, Color } from 'chart.js';
@@ -9,28 +15,50 @@ import { ProductsService } from 'src/app/shared/services/products.service';
 @Component({
   selector: 'app-price-variation-product',
   templateUrl: './price-variation-product.component.html',
-  styleUrls: ['./price-variation-product.component.css']
+  styleUrls: [
+    './price-variation-product.component.css',
+    '../../../styles/admin-style.css'
+  ]
 })
-export class PriceVariationProductComponent implements OnInit, OnDestroy, OnChanges {
+export class PriceVariationProductComponent
+  implements OnInit, OnDestroy, OnChanges
+{
   sub: Subscription = new Subscription();
-  year: string = '2023'
+  year: string = '2023';
   products: Product[];
   productId: string;
   inflationIndices = [
     { year: 2023, month: 8, value: 12.4 },
     { year: 2023, month: 9, value: 12.7 },
     { year: 2023, month: 10, value: 8.3 },
-    { year: 2023, month: 11, value: 10 },
-];
+    { year: 2023, month: 11, value: 10 }
+  ];
   lineChartOptions: ChartOptions = {
     responsive: true,
     scales: {
       y: {
-        beginAtZero: true
+        beginAtZero: true,
+        grid: {
+          color: 'rgba(241, 250, 238)'
+        },
+        ticks: {
+          color: 'rgba(241, 250, 238)'
+        }
       },
       x: {
-        beginAtZero: true
-      },
+        beginAtZero: true,
+        grid: {
+          color: 'rgba(241, 250, 238)'
+        },
+        ticks: {
+          color: 'rgba(241, 250, 238)'
+        }
+      }
+    },
+    plugins: {
+      legend: { display: true, labels: {
+        color: 'rgba(241, 250, 238)'
+      } }
     }
   };
   lineChartLabels: number[] = [];
@@ -44,7 +72,10 @@ export class PriceVariationProductComponent implements OnInit, OnDestroy, OnChan
     }
   ];
   lineChartColors: Color[] = ['rgba(255, 99, 132)'];
-  constructor(private reportService: ReportService, private productService: ProductsService) { }
+  constructor(
+    private reportService: ReportService,
+    private productService: ProductsService
+  ) {}
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
@@ -59,7 +90,7 @@ export class PriceVariationProductComponent implements OnInit, OnDestroy, OnChan
     }
   }
 
-  getProducts(){
+  getProducts() {
     this.sub.add(
       this.productService.getAllProducts().subscribe({
         next: (res) => {
@@ -72,7 +103,7 @@ export class PriceVariationProductComponent implements OnInit, OnDestroy, OnChan
           console.log(err);
         }
       })
-    )
+    );
   }
 
   getInformation() {
@@ -81,12 +112,25 @@ export class PriceVariationProductComponent implements OnInit, OnDestroy, OnChan
         .getProductVariation(this.year, this.productId)
         .subscribe({
           next: (res: any) => {
-
             this.lineChartData = [
-              { data: res.changePrices.map((item: any) => item.totalVariation), label: 'Price Variation' },
-              { data: this.inflationIndices.map(item => item.value), label: 'Inflation index' }
+              {
+                data: res.changePrices.map((item: any) => item.totalVariation),
+                label: 'Price Variation',
+                borderWidth: 5,
+                borderColor: 'rgba(42, 157, 143)',
+                backgroundColor: 'rgba(42, 157, 143)'
+              },
+              {
+                data: this.inflationIndices.map((item) => item.value),
+                label: 'Inflation index',
+                borderWidth: 5,
+                borderColor: 'rgba(214, 40, 40)',
+                backgroundColor: 'rgba(214, 40, 40)'
+              }
             ];
-            this.lineChartLabels = res.changePrices.map((item: any) => `${item.year}-${item.month}`);
+            this.lineChartLabels = res.changePrices.map(
+              (item: any) => `${item.year}-${item.month}`
+            );
           },
           error: (err) => {
             console.log(err);
@@ -94,5 +138,4 @@ export class PriceVariationProductComponent implements OnInit, OnDestroy, OnChan
         })
     );
   }
-
 }

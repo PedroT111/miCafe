@@ -4,7 +4,6 @@ import {
   OnChanges,
   OnDestroy,
   OnInit,
-  Output,
   SimpleChanges
 } from '@angular/core';
 import { ChartDataset, ChartOptions, Color } from 'chart.js';
@@ -15,7 +14,7 @@ import { ReportService } from '../../../services/report.service';
 @Component({
   selector: 'app-sales-by-hourday',
   templateUrl: './sales-by-hourday.component.html',
-  styleUrls: ['./sales-by-hourday.component.css']
+  styleUrls: ['./sales-by-hourday.component.css', '../../../styles/admin-style.css']
 })
 export class SalesByHourdayComponent implements OnInit, OnDestroy, OnChanges {
   sub: Subscription = new Subscription();
@@ -30,17 +29,32 @@ export class SalesByHourdayComponent implements OnInit, OnDestroy, OnChanges {
         title: {
           display: true,
           text: 'Time of day',
-          color: 'black',
+          color: 'rgba(241, 250, 238)',
           font: {
             size: 14
           }
         },
+        grid: {
+          color: 'rgba(241, 250, 238)', 
+        },
         ticks: {
+          color: 'rgba(241, 250, 238)',
           stepSize: 1
         }
       },
       y: {
+        grid: {
+          color: 'rgba(241, 250, 238)', 
+        },
+        ticks: {
+          color: 'rgba(241, 250, 238)',
+        }
       }
+    },
+    plugins: {
+      legend: { display: true, labels: {
+        color: 'rgba(241, 250, 238)'
+      } }
     }
   };
   lineChartLabels: number[] = [];
@@ -51,10 +65,13 @@ export class SalesByHourdayComponent implements OnInit, OnDestroy, OnChanges {
       data: [],
       label: 'Total sales amount ARS',
       fill: false,
-      hoverBackgroundColor: 'rgba(4, 4, 124, 1)'
+      borderWidth: 5,
+      borderColor: 'rgba(214, 40, 40)',
+      hoverBorderColor: 'rgba(214, 40, 40)',
+      hoverBackgroundColor: 'rgba(214, 40, 40)'
     }
   ];
-  lineChartColors: Color[] = ['rgba(255, 99, 132)'];
+  lineChartColors: Color[] = ['rgba(214, 40, 40)'];
   constructor(private reportService: ReportService) {}
 
   ngOnChanges(changes: SimpleChanges): void {

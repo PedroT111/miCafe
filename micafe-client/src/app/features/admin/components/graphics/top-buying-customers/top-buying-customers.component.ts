@@ -6,7 +6,7 @@ import { CustomerInfo } from 'src/app/shared/models/report';
 @Component({
   selector: 'app-top-buying-customers',
   templateUrl: './top-buying-customers.component.html',
-  styleUrls: ['./top-buying-customers.component.css']
+  styleUrls: ['./top-buying-customers.component.css', '../../../styles/admin-style.css']
 })
 export class TopBuyingCustomersComponent implements OnInit, OnDestroy, OnChanges {
   sub: Subscription = new Subscription();

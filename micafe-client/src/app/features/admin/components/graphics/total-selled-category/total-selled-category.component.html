@@ -2,7 +2,7 @@
     <div class="card-body">
         <div class="row py-1 mb-4">
             <div class="col-12 d-flex justify-content-center">
-                <span class="title">Total sold by category (ARS)</span>
+                <span class="title-graphic">Total sold by category (ARS)</span>
             </div>
         </div>
         <div class="row py-3">
@@ -16,7 +16,7 @@
             <div class="col-3 offset-1">
                 <div style="display: block;" class="p-2">
                     <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [legend]="barChartLegend"
-                        type="pie">
+                        type="pie" [options]="pieChartOptions">
                     </canvas>
                 </div>
             </div>

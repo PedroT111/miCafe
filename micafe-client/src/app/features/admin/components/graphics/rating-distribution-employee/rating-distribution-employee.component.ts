@@ -9,7 +9,10 @@ import { EmployeeService } from '../../../services/employee.service';
 @Component({
   selector: 'app-rating-distribution-employee',
   templateUrl: './rating-distribution-employee.component.html',
-  styleUrls: ['./rating-distribution-employee.component.css']
+  styleUrls: [
+    './rating-distribution-employee.component.css',
+    '../../../styles/admin-style.css'
+  ]
 })
 export class RatingDistributionEmployeeComponent implements OnInit, OnDestroy {
   sub: Subscription = new Subscription();
@@ -24,12 +27,16 @@ export class RatingDistributionEmployeeComponent implements OnInit, OnDestroy {
         title: {
           display: true,
           text: 'Ratings',
-          color: 'black',
+          color: 'rgba(241, 250, 238)',
           font: {
             size: 14
           }
         },
+        grid: {
+          color: 'rgba(241, 250, 238)'
+        },
         ticks: {
+          color: 'rgba(241, 250, 238)',
           stepSize: 1
         }
       },
@@ -37,10 +44,24 @@ export class RatingDistributionEmployeeComponent implements OnInit, OnDestroy {
         title: {
           display: true,
           text: 'Number of orders',
-          color: 'black',
+          color: 'rgba(241, 250, 238)',
           font: {
             size: 14
           }
+        },
+        grid: {
+          color: 'rgba(241, 250, 238)'
+        },
+        ticks: {
+          color: 'rgba(241, 250, 238)'
+        }
+      }
+    },
+    plugins: {
+      legend: {
+        display: true,
+        labels: {
+          color: 'rgba(241, 250, 238)'
         }
       }
     }
@@ -53,29 +74,21 @@ export class RatingDistributionEmployeeComponent implements OnInit, OnDestroy {
       data: [],
       label: 'Number of orders',
       fill: false,
-      borderColor: [
-        'rgb(255, 99, 132)',
-        'rgb(255, 159, 64)',
-        'rgb(255, 205, 86)',
-        'rgb(75, 192, 192)',
-        'rgb(54, 162, 235)'
-      ],
-      borderWidth: 1,
       hoverBackgroundColor: [
-        'rgb(255, 99, 132)',
-        'rgb(255, 159, 64)',
-        'rgb(255, 205, 86)',
-        'rgb(75, 192, 192)',
-        'rgb(54, 162, 235)'
+        'rgba(42, 157, 143)',
+        'rgba(233, 196, 106)',
+        'rgba(168, 218, 220)',
+        'rgba(241, 250, 238)',
+        'rgba(230, 57, 70)'
       ]
     }
   ];
   barChartColors: Color[] = [
-    'rgba(255, 99, 132, 0.5)',
-    'rgba(255, 159, 64, 0.5)',
-    'rgba(255, 205, 86, 0.5)',
-    'rgba(75, 192, 192, 0.5)',
-    'rgba(54, 162, 235, 0.5)'
+    'rgba(42, 157, 143)',
+    'rgba(233, 196, 106)',
+    'rgba(168, 218, 220)',
+    'rgba(241, 250, 238)',
+    'rgba(230, 57, 70)'
   ];
   constructor(
     private reportService: ReportService,
@@ -97,7 +110,9 @@ export class RatingDistributionEmployeeComponent implements OnInit, OnDestroy {
         .subscribe({
           next: (res) => {
             this.califications = res.distribution.ratingDistribution;
-            this.avgCalifications = Number(res.distribution.averageRating.toFixed(2));
+            this.avgCalifications = Number(
+              res.distribution.averageRating.toFixed(2)
+            );
             this.barChartLabels = this.califications.map((distribution) => {
               const calificacion = distribution._id;
               const iconClass = `*`.repeat(calificacion);
@@ -120,7 +135,7 @@ export class RatingDistributionEmployeeComponent implements OnInit, OnDestroy {
       this.employeeService.getAllEmployees().subscribe({
         next: (res) => {
           this.employeeList = res;
-          this.employeeId = this.employeeList[0]._id
+          this.employeeId = this.employeeList[0]._id;
 
           this.getCalifications();
         },
