@@ -4,7 +4,11 @@
     background-color: #4A5D79;
     color: #F1FAEE;
 }
-
+.drop-menu{
+    background-color: #4A5D79;
+    padding: 0;
+    border: 1px solid #F1FAEE;
+}
 .table td {
     padding: 10px;
     text-align: center;
