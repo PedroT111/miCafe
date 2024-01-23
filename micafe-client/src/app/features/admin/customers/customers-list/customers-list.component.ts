@@ -67,7 +67,7 @@ export class CustomersListComponent implements OnInit, OnDestroy {
     console.log(user);
     this.swal
       .showConfirmation(
-        'Estás a punto de eliminar este usuario de forma permanente. ¿Deseas continuar?'
+        'You are about to permanently delete this user. Do you want to continue?'
       )
       .then((res) => {
         if (res.isConfirmed) {
