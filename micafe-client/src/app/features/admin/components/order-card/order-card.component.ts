@@ -11,7 +11,6 @@ import {
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Order } from 'src/app/shared/models/order';
 import { OrderFormComponent } from '../forms/order-form/order-form.component';
-import { OrdersService } from 'src/app/shared/services/orders.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { OrderEmployeeFormComponent } from '../forms/order-employee-form/order-employee-form.component';
@@ -27,7 +26,6 @@ export class OrderCardComponent implements OnInit, OnDestroy {
   sub: Subscription = new Subscription();
   constructor(
     private ngbModal: NgbModal,
-    private orderService: OrdersService,
     private router: Router
   ) {}
 
