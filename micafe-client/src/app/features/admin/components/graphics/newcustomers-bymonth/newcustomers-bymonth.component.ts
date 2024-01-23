@@ -7,7 +7,7 @@ import { UsersByMonth } from 'src/app/shared/models/report';
 @Component({
   selector: 'app-newcustomers-bymonth',
   templateUrl: './newcustomers-bymonth.component.html',
-  styleUrls: ['./newcustomers-bymonth.component.css']
+  styleUrls: ['./newcustomers-bymonth.component.css', '../../../styles/admin-style.css']
 })
 export class NewcustomersBymonthComponent implements OnInit, OnDestroy, OnChanges {
   sub: Subscription = new Subscription();
@@ -20,16 +20,29 @@ export class NewcustomersBymonthComponent implements OnInit, OnDestroy, OnChange
     responsive: true,
     scales: {
       x: {
+        grid: {
+          color: 'rgba(241, 250, 238)', 
+        },
         ticks: {
+          color: 'rgba(241, 250, 238)',
           stepSize: 1
         }
       },
       y: {
         min:0,
+        grid: {
+          color: 'rgba(241, 250, 238)', 
+        },
         ticks: {
+          color: 'rgba(241, 250, 238)',
           stepSize: 1
         }
       }
+    },
+    plugins: {
+      legend: { display: true, labels: {
+        color: 'rgba(241, 250, 238)'
+      } }
     }
   };
   lineChartLabels: number[] = [];
@@ -40,10 +53,14 @@ export class NewcustomersBymonthComponent implements OnInit, OnDestroy, OnChange
       data: [],
       label: 'Number of new customers',
       fill: false,
-      hoverBackgroundColor: 'rgba(4, 4, 124, 1)'
+      backgroundColor: 'rgb(255, 205, 86)',
+      borderColor: 'rgb(255, 205, 86)',
+      borderWidth: 5,
+      hoverBorderColor: 'rgb(255, 205, 86)',
+      hoverBackgroundColor: 'rgb(255, 205, 86)'
     }
   ];
-  lineChartColors: Color[] = ['rgba(255, 99, 132)'];
+  lineChartColors: Color[] = ['rgb(255, 205, 86)'];
 
   constructor(private reportService: ReportService) {
     this.groupBy = 'day';
