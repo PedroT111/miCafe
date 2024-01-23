@@ -1,13 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ChartConfiguration, ChartDataset, ChartType} from 'chart.js';
+import { ChartConfiguration, ChartDataset, ChartType } from 'chart.js';
 import { Subscription } from 'rxjs';
 import { ReportService } from '../../../services/report.service';
 
 @Component({
   selector: 'app-average-rating-variation',
   templateUrl: './average-rating-variation.component.html',
-  styleUrls: ['./average-rating-variation.component.css']
+  styleUrls: [
+    './average-rating-variation.component.css',
+    '../../../styles/admin-style.css'
+  ]
 })
 export class AverageRatingVariationComponent implements OnInit, OnDestroy {
   sub: Subscription = new Subscription();
@@ -23,12 +26,16 @@ export class AverageRatingVariationComponent implements OnInit, OnDestroy {
         title: {
           display: true,
           text: 'Months',
-          color: 'black',
+          color: 'rgba(241, 250, 238)',
           font: {
             size: 14
           }
         },
+        grid: {
+          color: 'rgba(241, 250, 238)'
+        },
         ticks: {
+          color: 'rgba(241, 250, 238)',
           stepSize: 1
         }
       },
@@ -36,16 +43,27 @@ export class AverageRatingVariationComponent implements OnInit, OnDestroy {
         title: {
           display: true,
           text: 'Average rating',
-          color: 'black',
+          color: 'rgba(241, 250, 238)',
           font: {
             size: 14
           }
         },
-        min: 0
+        min: 0,
+        grid: {
+          color: 'rgba(241, 250, 238)'
+        },
+        ticks: {
+          color: 'rgba(241, 250, 238)'
+        }
       }
     },
     plugins: {
-      legend: { display: true }
+      legend: {
+        display: true,
+        labels: {
+          color: 'rgba(241, 250, 238)'
+        }
+      }
     }
   };
   lineChartLabels: string[] = [];
@@ -91,7 +109,7 @@ export class AverageRatingVariationComponent implements OnInit, OnDestroy {
               const avgData = new Array(12).fill(0);
 
               employeeData.promediosMensuales.forEach((item: any) => {
-                const monthIndex = item.month - 1; 
+                const monthIndex = item.month - 1;
                 avgData[monthIndex] = item.avg;
               });
 
@@ -101,7 +119,7 @@ export class AverageRatingVariationComponent implements OnInit, OnDestroy {
               return {
                 label: `${employee.name} ${employee.lastName}`,
                 data: filterData,
-                fill: false,
+                fill: false
               };
             });
 
