@@ -1,5 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges
+} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ProductSold } from 'src/app/shared/models/report';
 import { ReportService } from '../../../services/report.service';
@@ -9,7 +16,10 @@ import { endOfDay, startOfMonth } from 'date-fns';
 @Component({
   selector: 'app-most-sold-products',
   templateUrl: './most-sold-products.component.html',
-  styleUrls: ['./most-sold-products.component.css']
+  styleUrls: [
+    './most-sold-products.component.css',
+    '../../../styles/admin-style.css'
+  ]
 })
 export class MostSoldProductsComponent implements OnInit, OnDestroy, OnChanges {
   sub: Subscription = new Subscription();
@@ -18,7 +28,7 @@ export class MostSoldProductsComponent implements OnInit, OnDestroy, OnChanges {
   mostSoldProducts: ProductSold[] = [];
   pieChartOptions: ChartOptions = {
     responsive: true
-  }
+  };
   barChartOptions: ChartOptions = {
     responsive: true,
     scales: {
@@ -26,12 +36,16 @@ export class MostSoldProductsComponent implements OnInit, OnDestroy, OnChanges {
         title: {
           display: true,
           text: 'Products',
-          color: 'black',
+          color: 'rgba(241, 250, 238)',
           font: {
             size: 14
           }
         },
+        grid: {
+          color: 'rgba(241, 250, 238)'
+        },
         ticks: {
+          color: 'rgba(241, 250, 238)',
           stepSize: 1
         }
       },
@@ -39,12 +53,23 @@ export class MostSoldProductsComponent implements OnInit, OnDestroy, OnChanges {
         title: {
           display: true,
           text: 'Quantity',
-          color: 'black',
+          color: 'rgba(241, 250, 238)',
           font: {
             size: 14
           }
+        },
+        grid: {
+          color: 'rgba(241, 250, 238)'
+        },
+        ticks: {
+          color: 'rgba(241, 250, 238)'
         }
       }
+    },
+    plugins: {
+      legend: { display: true, labels: {
+        color: 'rgba(241, 250, 238)'
+      } }
     }
   };
   barChartLabels: any[] = [];
@@ -59,15 +84,15 @@ export class MostSoldProductsComponent implements OnInit, OnDestroy, OnChanges {
     }
   ];
   barChartColors: Color[] = [
-    'rgba(255, 99, 132)',
-    'rgba(54, 162, 235)',
-    'rgba(255, 206, 86)',
-    'rgba(75, 192, 192)',
-    'rgba(153, 102, 255)',
-    'rgba(50, 205, 50)',
-    'rgba(139, 69, 19)',
-    'rgba(128, 128, 128)',
-    'rgba(0, 139, 139)',
+    'rgba(42, 157, 143)',
+    'rgba(233, 196, 106)',
+    'rgba(244, 162, 97)',
+    'rgba(214, 40, 40)',
+    'rgba(231, 111, 81)',
+    'rgba(180, 67, 108)',
+    'rgba(255, 116, 151)',
+    'rgba(255, 209, 102)',
+    'rgba(58, 134, 255)',
     'rgba(255, 159, 64)',
     'rgba(192, 192, 192)',
     'rgba(0, 0, 139)'
@@ -84,8 +109,8 @@ export class MostSoldProductsComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes['startDate'].currentValue || changes['endDate'].currentValue){
-      console.log(this.startDate, this.endDate)
+    if (changes['startDate'].currentValue || changes['endDate'].currentValue) {
+      console.log(this.startDate, this.endDate);
       this.getMostSaleProducts();
     }
   }
@@ -93,7 +118,6 @@ export class MostSoldProductsComponent implements OnInit, OnDestroy, OnChanges {
   ngOnInit(): void {
     this.getMostSaleProducts();
   }
-
 
   getMostSaleProducts() {
     this.sub.add(
