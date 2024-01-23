@@ -6,6 +6,7 @@ import { DiscountService } from '../../../../../shared/services/discount.service
 import { DiscountForm } from 'src/app/shared/models/discount';
 import { Subscription } from 'rxjs';
 import { SwalService } from 'src/app/shared/utils/swal.service';
+import { LABEL_BUTTONS } from 'src/app/shared/constants';
 
 @Component({
   selector: 'app-discount-form',
@@ -27,6 +28,7 @@ export class DiscountFormComponent implements OnInit {
   minDate: NgbDate;
   form: FormGroup;
   filtersForm: FormGroup;
+  buttons = LABEL_BUTTONS;
   sub: Subscription = new Subscription();
   constructor(
     private calendar: NgbCalendar,
