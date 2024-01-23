@@ -35,6 +35,9 @@ export class AuthService {
       email
     );
   }
+  changePassword(password: string, token: string): Observable<ApiResponse>{
+    return this.httpClient.post<ApiResponse>(`/authenticate/forgot-password/${token}`, {password});
+  }
   saveToken(token: string): void {
     localStorage.setItem('token', token);
   }
