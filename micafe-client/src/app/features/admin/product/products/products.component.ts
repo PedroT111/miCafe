@@ -23,7 +23,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   categorias: Options[];
   filteredData: ProductSummary[];
   filterOptions: CategoryProduct[];
-  filterStatusOptions = [{_id: 'Activo', name: 'Activo'}, {_id: 'No Activo', name: 'No Activo'}];
+  filterStatusOptions = [{_id: 'Active', name: 'Active'}, {_id: 'Inactive', name: 'Inactive'}];
   selectedCategoryFilter: CategoryProduct | null;
   selectedStatusFilter: string;
   searchTerm: string = '';
@@ -121,14 +121,14 @@ export class ProductsComponent implements OnInit, OnDestroy {
   deleteProduct(p: Product) {
     this.swalService
       .showConfirmation(
-        'Estás a punto de eliminar este producto de forma permanente. ¿Deseas continuar?'
+        'You are about to permanently delete this product. Do you want to continue?'
       )
       .then((result) => {
         if (result.isConfirmed) {
           this.sub.add(
             this.productService.deleteProduct(p._id).subscribe({
               next: () => {
-                this.toastr.success('Producto eliminado correctamente');
+                this.toastr.success('Product has been removed successfully');
                 this.getProducts();
               },
               error: (err) => {

@@ -22,7 +22,7 @@ export class OffersListComponent implements OnInit, OnDestroy {
   selectedStatusFilter: any;
   filterStartDate: Date;
   filterEndDate:Date;
-  options = [{_id: 'active', name: 'Activo'}, {_id: 'scheduled', name: 'Programado'}];
+  options = [{_id: 'active', name: 'Active'}, {_id: 'scheduled', name: 'Scheduled'}];
   searchTerm: string;
   tableHeader = OFFERS.OFFERS_TABLE_HEADERS;
 
@@ -96,14 +96,14 @@ export class OffersListComponent implements OnInit, OnDestroy {
   deleteOffer(o: OfferProduct) {
     this.swal
       .showConfirmation(
-        'Estás a punto de eliminar esta oferta de forma permanente. ¿Deseas continuar?'
+       'You are about to permanently delete this offer. Do you want to continue?'
       )
       .then((result) => {
         if (result.isConfirmed) {
           this.sub.add(
             this.offerService.deleteOffer(o).subscribe({
               next: () => {
-                this.toastr.success('Oferta eliminada correctamente');
+                this.toastr.success('Offer deleted successfully');
                 this.getOfferProducts();
               },
               error: (err) => {

@@ -30,7 +30,7 @@ export class NewOfferComponent implements OnInit, OnDestroy {
       this.offerService.createNewOffer(offer).subscribe({
         next: (res) => {
           if(res.ok){
-            this.toastr.success('Oferta creada correctamente');
+            this.toastr.success('Offer created successfully');
             this.router.navigate(['/admin/offers'])
           }
         },

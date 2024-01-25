@@ -30,7 +30,7 @@ export class ProductCreateComponent implements OnInit, OnDestroy {
       this.productService.createProduct(p).subscribe({
         next: () => {
           this.router.navigate([`/admin/${PAGES.ADMIN_PRODUCTS}`]);
-          this.toastr.info('Producto creado correctamente');
+          this.toastr.info('Product created successfully');
         },
         error: (err) => {
           this.toastr.error(err.error.error);
