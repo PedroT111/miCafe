@@ -45,10 +45,18 @@ export class LoginComponent implements OnDestroy, OnInit {
       this.sub.add(
         this.authService.login(this.loginForm.value).subscribe({
           next: (res) => {
+            console.log(res)
             this.authService.saveToken(res.token);
             this.authService.saveUserData(res.user);
             //redirigir al inicio
-            this.router.navigate(['/']);
+            if(res.user.role === 'user'){
+              this.router.navigate(['/']);
+            } else if(res.user.role === 'employee'){
+              this.router.navigate(['/employee/orders'])
+            } else {
+              this.router.navigate(['/admin/report/sales'])
+            }
+            
           },
           error: (err) => {
             this.toastr.error(err.error.message, 'Error');
