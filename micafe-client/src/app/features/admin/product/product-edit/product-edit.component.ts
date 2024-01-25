@@ -31,7 +31,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
   updateProduct(p: Product) {
     this.swalService
       .showConfirmation(
-        '"Estás a punto de guardar los cambios en este producto. ¿Deseas continuar?"'
+        '"You are about to save changes to this product. Do you wish to continue?"'
       )
       .then((res) => {
         if (res.isConfirmed) {
@@ -40,7 +40,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
               next: (res) => {
                 if (res.ok == true) {
                   this.router.navigate([`/admin/${PAGES.ADMIN_PRODUCTS}`]);
-                  this.toastr.success('Producto actualizado correctamente!');
+                  this.toastr.success('Product updated successfully');
                 }
               },
               error: (err) => {

@@ -27,13 +27,13 @@ export class EditOfferComponent implements OnInit, OnDestroy {
   ngOnInit(): void {}
 
   editOffer(offer: Offer) {
-    this.swal.showConfirmation('Estás a punto de guardar los cambios en este producto. ¿Deseas continuar?')
+    this.swal.showConfirmation('You are about to save changes to this offer. Do you want to continue?')
     .then((res) => {
       if(res.isConfirmed){
         this.sub.add(
           this.offerService.updateOffer(offer).subscribe({
             next: () => {
-              this.toastr.success('Oferta editada correctemente');
+              this.toastr.success('Offer updated successfully');
               this.router.navigate(['/admin/offers']);
               
             },
