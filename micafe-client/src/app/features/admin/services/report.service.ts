@@ -8,7 +8,10 @@ import {
   ListCalifications,
   ListDistributionAvgCalifications,
   ListCategorySales,
-  ListNewCustomersByMonth
+  ListNewCustomersByMonth,
+  SaleStatistics,
+  CustomerStatistics,
+  TopBuyingCustomers
 } from 'src/app/shared/models/report';
 
 @Injectable({
@@ -38,9 +41,12 @@ export class ReportService {
     return this.http.get<ListSales>(url);
   }
 
-  getTotalSalesByDayOfWeek(year: string, month: string): Observable<ListSales> {
+  getTotalSalesByDayOfWeek(
+    startDate: Date,
+    endDate: Date
+  ): Observable<ListSales> {
     return this.http.get<ListSales>(
-      `/report/sales-by-day-of-week?year=${year}&month=${month}`
+      `/report/sales-by-day-of-week?startDate=${startDate}&endDate=${endDate}`
     );
   }
 
@@ -80,9 +86,59 @@ export class ReportService {
     );
   }
 
-  getNewCustomersByMonth(year: string): Observable<ListNewCustomersByMonth> {
+  getNewCustomersByPeriod(
+    startDate: Date,
+    endDate: Date,
+    groupBy: string
+  ): Observable<ListNewCustomersByMonth> {
     return this.http.get<ListNewCustomersByMonth>(
-      `/report/new-users-by-month/${year}`
+      `/report/new-users-by-period/?startDate=${startDate}&endDate=${endDate}&groupBy=${groupBy}`
+    );
+  }
+
+  getTotalSales(
+    startDate: Date,
+    endDate: Date,
+    groupBy: string
+  ): Observable<ListSales> {
+    return this.http.get<ListSales>(
+      `/report/total-sales?startDate=${startDate}&endDate=${endDate}&groupBy=${groupBy}`
+    );
+  }
+
+  getSalesStatistics(
+    startDate: Date,
+    endDate: Date
+  ): Observable<SaleStatistics> {
+    return this.http.get<SaleStatistics>(
+      `/report/sales-statistics?startDate=${startDate}&endDate=${endDate}`
+    );
+  }
+
+  getCustomerStatistics(
+    startDate: Date,
+    endDate: Date
+  ): Observable<CustomerStatistics> {
+    return this.http.get<CustomerStatistics>(
+      `/report/customers-statistics?startDate=${startDate}&endDate=${endDate}`
+    );
+  }
+
+  getTopBuyingCustomers(
+    startDate: Date,
+    endDate: Date
+  ): Observable<TopBuyingCustomers> {
+    return this.http.get<TopBuyingCustomers>(
+      `/report/top-buying-customers?startDate=${startDate}&endDate=${endDate}`
+    );
+  }
+
+  getProductVariation(
+    year:string,
+    productId: string
+  ): Observable<any> {
+    return this.http.get<any>(
+      `/report/change-price-product?year=${year}&productId=${productId}`
     );
   }
 }
