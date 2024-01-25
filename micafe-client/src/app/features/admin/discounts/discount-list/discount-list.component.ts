@@ -22,8 +22,8 @@ export class DiscountListComponent implements OnInit, OnDestroy {
   selectedStatusFilter: string;
   searchTerm: string;
   filterStatusOptions = [
-    { _id: 'active', name: 'Activo' },
-    { _id: 'expired', name: 'Expirado' }
+    { _id: 'active', name: 'Active' },
+    { _id: 'expired', name: 'Expired' }
   ];
   constructor(
     private discountService: DiscountService,
@@ -95,7 +95,7 @@ export class DiscountListComponent implements OnInit, OnDestroy {
 
   onDelete(discount: Discount) {
     this.swal
-      .showConfirmation('Estas a punto de eliminar un descuento')
+      .showConfirmation('You are about to delete a discount')
       .then((res) => {
         if (res.isConfirmed) {
           this.sub.add(
