@@ -18,7 +18,7 @@ const routes: Routes = [
       { path: PAGES.AUTH_SIGNUP, component: SignupComponent },
       { path: PAGES.AUTH_FORGOT_PASSWORD, component: PasswordForgotComponent },
       {path: 'validate-account/:token', component: ValidateAccountComponent},
-      {path: 'reset-password', component: ResetPasswordComponent}
+      {path: 'reset-password/:token', component: ResetPasswordComponent}
       
     ]
   }
