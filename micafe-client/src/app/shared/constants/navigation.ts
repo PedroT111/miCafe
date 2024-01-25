@@ -32,8 +32,8 @@ export const mobileNavigation = [
     name: 'Mi Perfil',
     href: PAGES.PROFILE,
     icon: 'bi bi-person-fill'
-  },
-]
+  }
+];
 
 export const profileNavigation = [
   {
@@ -46,7 +46,7 @@ export const profileNavigation = [
     href: PAGES.HISTORIAL,
     icon: 'bi bi-calendar3'
   }
-]
+];
 
 export const loggedNavigationNavbar = [
   {
@@ -59,50 +59,68 @@ export const loggedNavigationNavbar = [
   }
 ];
 
-export const adminNavigationNavbar = [
-  {
-    name: 'Dashboard',
-    href: PAGES.ADMIN_DASHBOARD,
-    icon: 'bi bi-house-fill'
-  },
-  {
-    name: 'Products',
-    href: PAGES.ADMIN_PRODUCTS,
-    icon: 'bi bi-cup-hot-fill'
-  },
-  {
-    name: 'Categorias de Productos',
-    href: '/admin/categories',
-    icon: 'bi bi-house-fill'
-  },
-  {
-    name: 'Customers',
-    href: '/admin/customers',
-    icon: 'bi bi-house-fill'
-  },
-  {
-    name: 'Employees',
-    href: '/admin/employees',
-    icon: 'bi bi-house-fill'
-  },
-  {
-    name: 'Combos',
-    href: '/admin/combos',
-    icon: 'bi bi-house-fill'
-  },
-  {
-    name: 'Offers',
-    href: '/admin/offers',
-    icon: 'bi bi-house-fill'
-  },
-  {
-    name: 'Discounts',
-    href: '/admin/discounts',
-    icon: 'bi bi-house-fill'
-  },
-  {
-    name: 'Reports',
-    href: PAGES.ADMIN_REPORTS,
-    icon: 'bi bi-bar-chart-fill'
-  },
-]
+
+
+export const ADMIN_NAVIGATION = {
+  REPORT_NAVS: [
+    {
+      name: 'Sale Reports',
+      href: PAGES.ADMIN_SALES_REPORTS,
+      icon: 'bi bi-graph-up'
+    },
+    {
+      name: 'Customer Reports',
+      href: PAGES.ADMIN_CUSTOMER_REPORTS,
+      icon: 'bi bi-people-fill'
+    },
+    {
+      name: 'Employee Reports',
+      href: PAGES.ADMIN_EMPLOYEE_REPORTS,
+      icon: 'bi bi-person-badge-fill'
+    }
+  ],
+  PRODUCT_NAVS: [
+    {
+      name: 'Products',
+      href: PAGES.ADMIN_PRODUCTS,
+      icon: 'bi bi-cup-hot-fill'
+    },
+    {
+      name: 'Category Products',
+      href: '/admin/categories',
+      icon: 'bi bi-grid-1x2-fill'
+    },
+    {
+      name: 'Combos',
+      href: '/admin/combos',
+      icon: 'bi bi-collection-fill'
+    },
+  ],
+  MAIN_NAVS: [
+    {
+      name: 'Orders',
+      href: '/admin/orders',
+      icon: 'bi bi-clipboard-check-fill'
+    },
+    {
+      name: 'Customers',
+      href: '/admin/customers',
+      icon: 'bi bi-person-check-fill'
+    },
+    {
+      name: 'Employees',
+      href: '/admin/employees',
+      icon: 'bi bi-file-earmark-person-fill'
+    },
+    {
+      name: 'Offers',
+      href: '/admin/offers',
+      icon: 'bi bi-megaphone-fill'
+    },
+    {
+      name: 'Discounts',
+      href: '/admin/discounts',
+      icon: 'bi bi-tag-fill'
+    }
+  ]
+};
