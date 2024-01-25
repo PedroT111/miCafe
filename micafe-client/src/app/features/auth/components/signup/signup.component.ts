@@ -9,7 +9,7 @@ import { SIGN_UP_FORM_FIELDS, SIGN_UP_PAGE } from '../../constants/index';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
-  styleUrls: ['../../styles/shared-styles.css']
+  styleUrls: ['./signup.component.css','../../styles/shared-styles.css']
 })
 export class SignupComponent implements OnInit, OnDestroy {
   readonly SIGN_UP_PAGE = SIGN_UP_PAGE;
