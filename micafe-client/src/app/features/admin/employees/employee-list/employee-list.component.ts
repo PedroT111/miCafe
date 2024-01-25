@@ -66,7 +66,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   }
   onDelete(employee: Employee) {
     this.swal.showConfirmation(
-      'Estás a punto de eliminar un empleado'
+      'You are about to delete an employee.'
     ).then((res) => {
       if(res.isConfirmed){
         this.sub.add(
@@ -82,11 +82,9 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
         )
       }
     })
-    console.log(employee);
    }
 
    updateEmployee(employee: Employee){
-    console.log(employee)
     this.route.navigate([`/admin/employees/${employee._id}`])
    }
 }
