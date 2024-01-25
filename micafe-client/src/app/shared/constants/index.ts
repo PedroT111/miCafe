@@ -13,7 +13,9 @@ export const PAGES = {
   ADMIN_DASHBOARD: 'dashboard',
   ADMIN_PRODUCTS: 'products',
   ADMIN_CUSTOMERS: 'customers',
-  ADMIN_REPORTS: 'reports'
+  ADMIN_SALES_REPORTS: 'sales',
+  ADMIN_CUSTOMER_REPORTS: 'customers',
+  ADMIN_EMPLOYEE_REPORTS: 'employees'
 };
 
 export const ADMIN_PAGES = {
@@ -27,8 +29,8 @@ export const COMPANY = {
 }
 
 export const LABEL_BUTTONS = {
-  edit: 'Editar',
-  cancel: 'Cancelar',
-  create: 'Registrar',
-  delete: 'Eliminar'
+  edit: 'Accept',
+  cancel: 'Cancel',
+  create: 'Create',
+  delete: 'Delete'
 }
