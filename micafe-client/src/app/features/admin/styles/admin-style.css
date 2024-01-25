@@ -3,13 +3,29 @@
     color: #929292;
 }
 
-.title {
-    font-size: 1.4rem;
+.table {
+    background-color: #4A5D79;
+    color: #F7FAF9;
+}
+
+.card {
+    background-color: #4A5D79;
+    color: #F7FAF9;
 }
 
 .card-header {
-    background-color: white;
+    background-color: #4A5D79;
+    color: #F7FAF9;
     border-bottom: 0;
+}
+
+.title {
+    font-size: 1.4rem;
+    color: #F1FAEE;
+}
+
+.text {
+    color: #F1FAEE;
 }
 
 .card-title {
@@ -29,7 +45,12 @@
 
 label {
     font-size: 0.95rem;
-    color: rgb(86, 86, 87);
+    color: #F1FAEE;
+}
+
+.form-check-label {
+    font-size: 0.95rem;
+    color: #F1FAEE;
 }
 
 input[type="number"] {
