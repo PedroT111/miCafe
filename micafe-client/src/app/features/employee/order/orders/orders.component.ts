@@ -34,6 +34,8 @@ export class OrdersComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.socketService.connect();
     this.listenToNewOrderEvent();  
+    this.listenToUpdatedOrder();
+    this.listenToUpdatedStatusOrder();
     this.getOrders();
 
   }
@@ -48,6 +50,31 @@ export class OrdersComponent implements OnInit, OnDestroy {
         console.error('Error al escuchar el evento newOrder:', error);
       }
     });
+  }
+
+  private listenToUpdatedOrder(): void {
+    this.socketService.listen('updatedPickupTime').subscribe({
+      next: (data) => {
+        this.toastr.info(data.msg);
+        this.getOrders();
+      },
+      error: (error) => {
+        console.error('Error al escuchar el evento updatedPickupTime:', error);
+      }
+    });
+    
+  }
+
+  private listenToUpdatedStatusOrder(): void {
+    this.socketService.listen('updatedOrder').subscribe({
+      next: () => {
+        this.getOrders();
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
+    
   }
 
   getOrders(){
