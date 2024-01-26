@@ -1,12 +1,15 @@
-<nav class="navbar pt-1 border-bottom">
+<nav class="navbar pt-1 border-bottom" data-spy="scroll" data-target=".navbar" data-offset="50">
   <div class="container-fluid">
     <div class="navbar-nav-scroll">
       <div class="d-flex flex-nowrap overflow-auto p-3">
-        <a class="nav-link"><i class="bi bi-grid"></i><span class="mx-2">Menu</span></a>
+        <a class="nav-link"><i class="bi bi-grid"></i></a>
+        <a class="nav-link px-2" (click)="scroll('combo')" [spyOn]="'combo'"
+        activeClass="nav-link-active">Combos</a>
         <a  *ngFor="let category of categories" class="nav-link px-2" (click)="scroll(category.name)" [spyOn]="category.name"
            activeClass="nav-link-active">{{
           category.name
           }}</a>
+          <div id="last-section"></div>
       </div>
     </div>
   </div>
