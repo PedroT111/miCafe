@@ -17,8 +17,8 @@
                         <span class="price" *ngIf="!product.isOnSale; else productSale">{{product.price |
                             currency}}</span>
                         <ng-template #productSale>
-                            <span class="price">{{product.salePrice | currency}}</span>
-                            <del class="mx-2 text-danger">{{product.price | currency}}</del>
+                            <span class="price">{{product.salePrice | currency}}</span> <br>
+                            <del class="text-danger">{{product.price | currency}}</del>
                         </ng-template>
                     </div>
                 </div>
