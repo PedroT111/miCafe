@@ -11,13 +11,13 @@ export class FormErrorDirective /*implements DoCheck*/{
   constructor(private element: ElementRef) { }
 
   private controlErrors: { [key: string]: string } = {
-    required: 'Campo obligatorio',
-    email: 'Ingrese un email válido',
-    minlength: 'Mínimo 8 caracteres',
-    emailExisting: 'El email ingresado ya está registrado',
-    min: 'Ingrese un valor mayor',
-    maxlength: 'El texto ingresado excede la longitud máxima permitida',
-    mismatch: 'Las contraseñas deben coincidir'
+    required: 'This field is required',
+    email: 'Please enter a valid email address',
+    minlength: 'The password must contain at least 8 characters.',
+    emailExisting: 'The entered email is already registered.',
+    min: 'Please enter a higher value.',
+    maxlength: 'The entered text exceeds the maximum allowed length',
+    mismatch: 'The passwords must match.'
   }
 
 
