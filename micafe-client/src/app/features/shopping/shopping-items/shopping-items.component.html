@@ -13,19 +13,20 @@
             <app-menu-categories [categories]="categories"></app-menu-categories>
         </div>
     </div>
-    <div class="row">
+    <div class="row" *ngIf="offers && offers.length > 0">
         <div class="col-12 p-lg-5">
             <app-category-products-section [products]="offers"></app-category-products-section>
         </div>
     </div>
     <div class="row">
         <div class="col-12 p-lg-5">
-            <app-combos-section [combos]="combos"></app-combos-section>
+            <app-combos-section [spyTarget]="'combo'" [combos]="combos"></app-combos-section>
         </div>
     </div>
-    <div class="row last-row" *ngFor="let section of productSections">
-        <div class="col-12 p-lg-5" [spyTarget]="section.name">
+    <div class="row" *ngFor="let section of productSections; let last = last">
+        <div class="col-12 px-lg-5" [spyTarget]="section.name" [ngClass]="{'last-row-margin': last}">
             <app-category-products-section [section]="section"></app-category-products-section>
         </div>
     </div>
+
 </div>
