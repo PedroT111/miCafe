@@ -29,7 +29,7 @@ export class OrderSummaryComponent implements OnInit, OnDestroy {
   payWithPoints: boolean = false;
   total: number = 0;
   totalPoints: number = 0;
-  availablePayPoints: boolean = true;
+  availablePayPoints: boolean = false;
 
   mp: any;
   bricksBuilder: any;
@@ -79,7 +79,8 @@ export class OrderSummaryComponent implements OnInit, OnDestroy {
       products: this.products,
       combos: this.combos,
       discountCode: this.discount?.code,
-      pickUpDateTime: this.pickUpDateTime
+      pickUpDateTime: this.pickUpDateTime,
+      notes: this.notes
     };
     if (!this.payWithPoints) {
       console.log(this.order, 'order');
@@ -139,10 +140,14 @@ export class OrderSummaryComponent implements OnInit, OnDestroy {
     this.discount = discount;
   }
 
+  addNote(note: string){
+    this.notes = note;
+  }
+
   isAvailablePaidWithPoints(){
     console.log(this.customer, this.totalPoints)
-    if(this.customer && this.customer?.points < this.totalPoints){
-      this.availablePayPoints = false;
+    if(this.customer && this.customer?.points > this.totalPoints){
+      this.availablePayPoints = true;
     }
   }
 
