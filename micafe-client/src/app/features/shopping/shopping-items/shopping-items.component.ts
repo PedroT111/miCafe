@@ -11,6 +11,7 @@ import { CategoryProductService } from 'src/app/shared/services/category-product
 import { CombosService } from 'src/app/shared/services/combos.service';
 import { ProductsService } from 'src/app/shared/services/products.service';
 
+
 @Component({
   selector: 'app-shopping-items',
   templateUrl: './shopping-items.component.html',
@@ -22,11 +23,12 @@ export class ShoppingItemsComponent implements OnInit, OnDestroy {
   productSections: CategoryWithProducts[];
   combos: ComboSummary[];
   offers: Product[];
+  
   constructor(
     private categoryService: CategoryProductService,
     private spyService: ScrollSpyService,
     private comboService: CombosService,
-    private productService: ProductsService
+    private productService: ProductsService,
   ) {}
 
   ngOnDestroy(): void {
