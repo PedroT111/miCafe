@@ -25,7 +25,7 @@ export class ProductsService {
         const products = res.products.map((product) => {
           return {
             ...product,
-            isActive: product.isActive ? 'Activo': 'No Activo'
+            isActive: product.isActive ? 'Active': 'Inactive'
           }
         });
         return products;
