@@ -59,3 +59,38 @@ export interface UsersByMonth{
     _id: number;
     newUsers: number;
 }
+
+export interface SaleStatistics{
+    ok: boolean;
+    statistics: {
+        totalSold: number,
+        totalOrders: number,
+        itemsSold: number,
+        avgTotalAmount: number
+    }
+}
+
+export interface CustomerStatistics{
+    ok: boolean;
+    statistics: {
+        totalClients: number,
+        newClients: number,
+        activeClients: number,
+        averageOrderRating: number
+    }
+}
+
+export interface TopBuyingCustomers{
+    ok: boolean;
+    customers: CustomerInfo[];
+}
+
+export interface CustomerInfo{
+    _id: {
+        _id: string;
+        name: string;
+        lastName: string;
+        email: string
+    },
+    totalAmount: number
+}
