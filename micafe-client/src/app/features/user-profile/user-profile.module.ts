@@ -14,6 +14,8 @@ import { NgbCollapseModule, NgbDatepickerModule, NgbRatingModule, NgbTimepickerM
 import { AccountMobileComponent } from './account-mobile/account-mobile.component';
 import { OrderQualificationComponent } from './components/order-qualification/order-qualification.component';
 import { DatepickerComponent } from './components/datepicker/datepicker.component';
+import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
+import { FaqComponent } from './faq/faq.component';
 
 
 
@@ -28,7 +30,9 @@ import { DatepickerComponent } from './components/datepicker/datepicker.componen
     OrderHistoryComponent,
     OrderComponent,
     OrderQualificationComponent,
-    DatepickerComponent
+    DatepickerComponent,
+    TermsConditionsComponent,
+    FaqComponent
   ],
   imports: [
     CommonModule,
