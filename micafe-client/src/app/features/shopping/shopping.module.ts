@@ -27,6 +27,7 @@ import { CombosSectionComponent } from './components/combos-section/combos-secti
 import { ComboDetailComponent } from './components/combo-detail/combo-detail.component';
 import { ComboItemComponent } from './components/combo-item/combo-item.component';
 import { PointsComponentComponent } from './components/points-component/points-component.component';
+import { NotesComponent } from './components/notes/notes.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { PointsComponentComponent } from './components/points-component/points-c
     ComboDetailComponent,
     ComboItemComponent,
     PointsComponentComponent,
+    NotesComponent,
   ],
   imports: [
     CommonModule,
