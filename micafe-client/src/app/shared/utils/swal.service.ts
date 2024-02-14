@@ -7,11 +7,11 @@ import Swal from "sweetalert2";
 export class SwalService{
     showConfirmation(msg: string){
         return Swal.fire({
-            title: '¿Estás seguro?',
+            title: 'Are you sure?',
             text: msg,
             icon: 'warning',
             showCancelButton: true,
-            cancelButtonText: 'Cancelar',
+            cancelButtonText: 'Cancel',
         })
     }
     showSuccessAlert(message: string) {
