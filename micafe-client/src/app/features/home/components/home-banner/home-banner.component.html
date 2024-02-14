@@ -1,9 +1,8 @@
 <div class="bg-container row m-0 align-items-center">
     <div class="col-md-6 offset-md-3 col-lg-4 offset-lg-2 text-center">
-        <h1 class="title text-primary mb-3" data-aos="fade-down">
-            Tu café hecho a medida, sin esperas
+        <h1 class="title mb-1" data-aos="fade-down">
+            {{title}}
         </h1>
-        <p data-aos="fade-right" class="txt-banner text-primary">¡Compra tu café favorito en línea y avísanos a qué hora vendrás a retirarlo! Evita filas y aprovecha al máximo tu tiempo.</p>
-        <button data-aos="fade-up" class="btn btn-info mx-auto mt-3">Ver más</button>
+        <button data-aos="fade-up" class="btn btn-info mx-auto mt-3" (click)="goSignUp()">{{button}}</button>
     </div>
 </div>

@@ -1,5 +1,5 @@
 .bg-container {
-    background-image: url('../../../../../assets/cafe/cafeceleste.jpg');
+    background-image: url('../../../../../assets/fondos/cafeceleste.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -10,12 +10,25 @@
     font-size: 2.2rem;
     font-weight: bolder;
     text-transform: uppercase;
-    text-shadow: 2px 2px 1px #BEBEBE;
+    color: white;
 }
-.txt-banner{
+
+.txt-banner {
     font-weight: bold;
     font-size: 1.1rem;
+    color: white;
 }
-.btn{
+
+.btn {
     width: 35%;
+}
+
+@media only screen and (max-width: 768px) {
+    .bg-container {
+        background-image: url('../../../../../assets/fondos/coffeFondo.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 650px;
+    }
 }
