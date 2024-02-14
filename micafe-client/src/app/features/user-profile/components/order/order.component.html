@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-body">
-        <div class="row mt-2">
+        <div class="row py-2">
             <div class="col-6 d-flex justify-content-start align-items-center">
                 <span class="med-text order-number">{{ order.orderNumber }}</span>
             </div>
@@ -22,20 +22,20 @@
             <div class="row mt-4 mb-3">
                 <div class="col-12 d-flex justify-content-between">
                     <span>Fecha</span>
-                    <span>{{order.date}}</span>
+                    <span>{{order.date | date}}</span>
                 </div>
             </div>
             <div class="row mt-3 mb-3">
-                <div class="col-12 d-flex justify-content-between" >
+                <div class="col-12 d-flex justify-content-between">
                     <span>Retiro:</span>
-                    <span>{{order.pickUpDateTime}}</span>
+                    <span>{{order.pickUpDateTime | date:'d MMM h:mm a'}}</span>
                 </div>
             </div>
             <div class="row mt-3 mb-3" *ngFor="let order of order.products">
-                <div class="col-4 d-flex justify-content-center align-items-center">
+                <div class="col-3 p-3 d-flex justify-content-start align-items-center">
                     <img [src]="['/assets/products/' + order.product.urlImage]" alt="" class="img img-fluid">
                 </div>
-                <div class="col-5 p-3 d-flex flex-column justify-content-start">
+                <div class="col-5 py-3 d-flex flex-column justify-content-start">
                     <div class="row">
                         <div class="col-12">
                             <span>{{order.product.name}}</span>
@@ -69,10 +69,32 @@
                     </div>
                 </div>
             </div>
-            <div class="row mt-2">
+            <div class="row mt-4 mb-3 p-2" *ngIf="order.status === 'pending' ">
                 <div class="col-12">
-                    <button class="btn btn-info" *ngIf="order.status === 'pending'" (click)="updateDateTime()">Modificar Horario de Retiro</button>
-                    <button class="btn btn-success" *ngIf="order.status === 'pickedUp' && !order.qualification" (click)="qualificationOrder()">Calificar Pedido</button>
+                    <button class="btn p-0 w-100 d-flex justify-content-between align-items-center"
+                         (click)="updateDateTime()">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-clock-fill"></i>
+                            <span class="ms-3 link-name">Modificar Horario de Retiro</span>
+                        </div>
+                        <div>
+                            <i class="bi bi-chevron-right icon-arrow"></i>
+                        </div>
+                    </button>
+                </div>
+            </div>
+            <div class="row mt-4 mb-3 p-2" *ngIf="order.status === 'pickedUp' && !order.qualification">
+                <div class="col-12">
+                    <button class="btn p-0 w-100 d-flex justify-content-between align-items-center"
+                     (click)="qualificationOrder()">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-star-fill"></i>
+                            <span class="ms-3 link-name">Califica tu experiencia con el pedido</span>
+                        </div>
+                        <div>
+                            <i class="bi bi-chevron-right icon-arrow"></i>
+                        </div>
+                    </button>
                 </div>
             </div>
             <div class="card-footer text-muted d-flex justify-content-end">
