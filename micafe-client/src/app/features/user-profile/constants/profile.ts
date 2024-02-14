@@ -14,17 +14,12 @@ export const PROFILE_LINKS = [
 export const HELP_LINKS = [
     {
         name: 'Terminos y Condiciones',
-        href: '',
+        href: 'terms-conditions',
         icon: 'bi bi-info-circle'
     },
     {
-        name: 'Politicas de Privacidad',
-        href: '',
-        icon: 'bi bi-shield-lock'
+        name: 'Preguntas Frecuentes',
+        href: 'faq',
+        icon: 'bi bi-question-octagon'
     },
-    {
-        name: 'Contactanos',
-        href: '',
-        icon: 'bi bi-telephone-forward'
-    }
 ]
