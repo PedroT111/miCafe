@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import config from './config';
-import {app} from './app';
+import {app, server} from './app';
 
 process.on('uncaughtException', (err: Error) => {
   console.log('UNCAUGHT EXCEPTION! Shutting down...');
@@ -9,9 +9,10 @@ process.on('uncaughtException', (err: Error) => {
   process.exit(1);
 });
 
-dotenv.config();
 const DB = config.DATABASE;
+const port = config.PORT;
 
+dotenv.config();
 mongoose
   .connect(DB)
   .then(() => {
@@ -20,12 +21,11 @@ mongoose
   .catch((error: Error) => {
     console.error('Failed to connect to MongoDB:', error);
   });
-
-const port = config.PORT;
-const server = app.listen(port, () => {
-  console.log(`API is running on port ${port}...`);
-});
-
+  
+  server.listen(port, () => {
+    console.log(`Socket.io is running on port ${port}...`);
+    console.log(`API is running on port ${port}...`);
+  });
 process.on('unhandledRejection', (err: Error) => {
   console.log('UNHANDLED REJECTION! Shutting down...');
   console.log(err.name, err.message);
@@ -33,3 +33,4 @@ process.on('unhandledRejection', (err: Error) => {
     process.exit(1);
   });
 });
+
