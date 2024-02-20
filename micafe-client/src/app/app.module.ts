@@ -13,6 +13,7 @@ import { HomeBannerComponent } from './features/home/components/home-banner/home
 import { HomeUsComponent } from './features/home/components/home-us/home-us.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AuthInterceptorService } from './core/interceptors/auth-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NgbModule,
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: BaseURLInterceptorService, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: BaseURLInterceptorService, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true},
+
   ],
   bootstrap: [AppComponent]
 })
