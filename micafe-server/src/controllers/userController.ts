@@ -8,15 +8,17 @@ export const updateUser = catchAsync(
     const { _id } = req.params;
     const userToEdit = { ...req.body };
 
-    if (_id !== req.headers.user) {
+   /* if (_id !== req.headers.user) {
       next(new AppError('Something was wrong!', 400));
       return;
-    }
+    }*/
     if (req.body.email != null) {
       next(new AppError('Cannot modify email or password', 400));
       return;
     }
+    console.log(_id, userToEdit);
     const query = await update(_id, userToEdit);
+
     if (query == null) {
       next(new AppError('Something was wrong!', 400));
       return;
@@ -24,7 +26,7 @@ export const updateUser = catchAsync(
 
     res.status(200).json({
       ok: true,
-      query
+      user: query
     });
   }
 );
