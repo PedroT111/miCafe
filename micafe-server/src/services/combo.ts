@@ -37,5 +37,11 @@ export const update = async (
 };
 
 export const deleteOne = async (id: string): Promise<ICombo | null> => {
-  return await Combo.findOneAndDelete({ _id: id });
+  return await Combo.findByIdAndUpdate(
+    id,
+    {
+      isDeleted: true
+    },
+    { new: true }
+  );
 };
