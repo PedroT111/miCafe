@@ -5,7 +5,6 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { CategoryProduct } from 'src/app/shared/models/categoryProduct';
-import { ScrollStateService } from '../../services/scroll-state.service';
 
 @Component({
   selector: 'app-menu-categories-mobile',
@@ -17,7 +16,6 @@ export class MenuCategoriesMobileComponent implements OnInit {
   activeCategory: string;
   constructor(
     private router: Router,
-    private scrollService: ScrollStateService
   ) {}
 
   ngOnInit(): void {
