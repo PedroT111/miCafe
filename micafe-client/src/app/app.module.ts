@@ -10,7 +10,6 @@ import { ToastrModule } from 'ngx-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
 import { HomeComponent } from './features/home/index/home.component';
 import { HomeBannerComponent } from './features/home/components/home-banner/home-banner.component';
-import { HomeUsComponent } from './features/home/components/home-us/home-us.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthInterceptorService } from './core/interceptors/auth-interceptor.service';
@@ -20,7 +19,6 @@ import { AuthInterceptorService } from './core/interceptors/auth-interceptor.ser
     AppComponent,
     HomeComponent,
     HomeBannerComponent,
-    HomeUsComponent,
     NotFoundComponent,
   ],
   imports: [
