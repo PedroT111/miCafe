@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import * as Aos from 'aos';
 import { HOME } from '../../constants/index';
 import { Router } from '@angular/router';
 
@@ -15,10 +14,6 @@ export class HomeBannerComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit(): void {
-    Aos.init({
-      duration: 1000,
-      easing: 'ease-in-out'
-    });
   }
 
   goSignUp(){
