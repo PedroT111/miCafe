@@ -19,7 +19,7 @@ import discountScheduler from './tasks/discountScheduler';
 import {initializeSocket} from './sockets';
 
 const app = express();
-app.use(cors({ origin: 'http://localhost:4200' }));
+app.use(cors({ origin: 'https://micafe.onrender.com/' }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
