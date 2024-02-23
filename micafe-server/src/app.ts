@@ -19,7 +19,10 @@ import discountScheduler from './tasks/discountScheduler';
 import {initializeSocket} from './sockets';
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: 'https://65d8c370c4acfb20fe856c1a--comforting-nougat-4223c6.netlify.app',
+  credentials: true // Habilitar credenciales si tu aplicación las necesita (por ejemplo, cookies)
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
