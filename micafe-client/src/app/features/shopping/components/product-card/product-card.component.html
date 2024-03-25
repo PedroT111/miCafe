@@ -24,7 +24,7 @@
                 </div>
             </div>
             <div class="col-5 p-0  d-flex justify-content-end">
-                <img [src]="['/assets/products/' + product.urlImage]" alt="" class="img">
+                <img [lazyLoad]="'/assets/products/' + product.urlImage" alt="" class="img">
                 <div class="card p-2 position-absolute top-0 end-0" *ngIf="product.isOnSale">
                     <span class="text-danger">-{{(1 - product.salePrice / product.price) |
                         percent}}</span>

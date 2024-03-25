@@ -16,7 +16,6 @@ export class ComboItemComponent implements OnInit {
 
 
   deleteItem(item: CartComboItem){
-    console.log(item);
     this.onRemove.emit(item);
   }
 

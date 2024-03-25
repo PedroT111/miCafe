@@ -28,6 +28,7 @@ import { ComboDetailComponent } from './components/combo-detail/combo-detail.com
 import { ComboItemComponent } from './components/combo-item/combo-item.component';
 import { PointsComponentComponent } from './components/points-component/points-component.component';
 import { NotesComponent } from './components/notes/notes.component';
+import { LazyLoadImageModule } from 'ng-lazyload-image';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { NotesComponent } from './components/notes/notes.component';
     NgbDatepickerModule,
     NgbTimepickerModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    LazyLoadImageModule
   ]
 })
 export class ShoppingModule { }
