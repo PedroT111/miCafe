@@ -47,8 +47,7 @@ export class EditComboComponent implements OnInit {
       if(res.isConfirmed){
         this.sub.add(
           this.comboService.updateCombo(c).subscribe({
-            next: (res) => {
-              console.log(res);
+            next: () => {
               this.toastr.success('Combo updated successfully')
               this.router.navigate(['/admin/combos'])
             },

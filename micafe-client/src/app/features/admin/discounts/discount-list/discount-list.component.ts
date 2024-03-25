@@ -45,7 +45,6 @@ export class DiscountListComponent implements OnInit, OnDestroy {
         next: (res) => {
           this.discounts = res;
           this.filteredDiscounts = this.discounts;
-          console.log(this.filteredDiscounts);
         },
         error: (err) => {
           console.log(err);

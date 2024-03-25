@@ -25,7 +25,6 @@ export class OrderQualificationComponent implements OnInit, OnDestroy {
   ngOnInit(): void {}
 
   qualify() {
-    console.log(this.orderId);
     this.sub.add(
       this.orderService.orderRate(this.orderId, this.currentRate).subscribe({
         next: (res) => {

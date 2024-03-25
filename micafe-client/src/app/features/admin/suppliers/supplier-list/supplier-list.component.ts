@@ -57,8 +57,7 @@ export class SupplierListComponent implements OnInit, OnDestroy {
     ).then((res) => {
       if(res.isConfirmed){
         this.supplierService.delete(s._id).subscribe({
-          next: (res) => {
-            console.log(res);
+          next: () => {
             this.getSuppliers();
           },
           error: (err) => {

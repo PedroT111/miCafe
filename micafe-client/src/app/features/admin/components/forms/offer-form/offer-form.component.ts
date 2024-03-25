@@ -111,7 +111,6 @@ export class OfferFormComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.form.markAllAsTouched();
-    console.log(this.startDate, this.endDate, this.startTime, this.endTime);
     if (!this.startTime || !this.endTime || !this.startDate || !this.endDate) {
       this.validateDate = true;
       return;

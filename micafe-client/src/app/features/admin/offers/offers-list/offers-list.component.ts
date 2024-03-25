@@ -86,10 +86,8 @@ export class OffersListComponent implements OnInit, OnDestroy {
   }
 
   onDateFilterSelected(dates: { startSale: Date; endSale: Date }){
-    console.log(this.filteredOffers)
     this.filterStartDate = dates.startSale;
     this.filterEndDate = dates.endSale;
-    console.log(this.filterEndDate, this.filterStartDate)
     this.applyFilters();
   }
 

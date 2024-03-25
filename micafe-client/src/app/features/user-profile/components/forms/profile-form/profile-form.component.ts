@@ -34,7 +34,6 @@ export class ProfileFormComponent implements OnInit {
   }
 
   onSubmit(){
-    console.log('hola')
     this.form.markAllAsTouched();
     if(this.form.valid){
       const userData = {

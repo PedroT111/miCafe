@@ -83,11 +83,9 @@ export class OrderSummaryComponent implements OnInit, OnDestroy {
       notes: this.notes
     };
     if (!this.payWithPoints) {
-      console.log(this.order, 'order');
       this.sub.add(
         this.orderService.createOrder(this.order).subscribe({
           next: async (res) => {
-            console.log(res);
             this.mp.bricks().create('wallet', 'wallet_container', {
               initialization: {
                 preferenceId: res.reference,
@@ -108,7 +106,6 @@ export class OrderSummaryComponent implements OnInit, OnDestroy {
           },
           error: (err) => {
             console.log(err);
-            console.log(this.order, 'order points');
           }
         })
       );
@@ -145,7 +142,6 @@ export class OrderSummaryComponent implements OnInit, OnDestroy {
   }
 
   isAvailablePaidWithPoints(){
-    console.log(this.customer, this.totalPoints)
     if(this.customer && this.customer?.points > this.totalPoints){
       this.availablePayPoints = true;
     }

@@ -64,7 +64,6 @@ export class CustomersListComponent implements OnInit, OnDestroy {
   }
 
   deleteUser(user: UserSummary) {
-    console.log(user);
     this.swal
       .showConfirmation(
         'You are about to permanently delete this user. Do you want to continue?'

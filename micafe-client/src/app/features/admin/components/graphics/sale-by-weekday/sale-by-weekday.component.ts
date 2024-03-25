@@ -75,7 +75,6 @@ export class SaleByWeekdayComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['startDate'].currentValue || changes['endDate'].currentValue) {
-      console.log(this.startDate, this.endDate);
       this.getInfo();
     }
   }

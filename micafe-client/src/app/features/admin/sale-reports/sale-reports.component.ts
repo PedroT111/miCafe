@@ -35,15 +35,12 @@ export class SaleReportsComponent implements OnInit, OnDestroy {
     this.sub.add(
       this.reportService.getSalesStatistics(this.startDate, this.endDate).subscribe({
         next: (res) => {
-          console.log(res, 'abcd')
           const statistics = res.statistics;
           
           this.totalSold = statistics.totalSold.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' });
           this.totalOrders = statistics.totalOrders.toString();
           this.avgTotalAmount = statistics.avgTotalAmount.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' });
           this.totalItems = statistics.itemsSold.toString();
-
-          console.log(this.totalSold, this.totalOrders,this.avgTotalAmount, this.totalItems)
         }
       })
     )

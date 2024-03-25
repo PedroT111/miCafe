@@ -29,7 +29,6 @@ export class UserInformationComponent implements OnInit, OnDestroy {
   }
 
   updateProfile(userUpdated: any) {
-    console.log(userUpdated);
     this.sub.add(
       this.userService.updateUserInformation(userUpdated).subscribe({
         next: (res) => {

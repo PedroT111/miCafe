@@ -39,7 +39,6 @@ export class CategoryListComponent implements OnInit, OnDestroy {
     this.sub.add(
       this.categoryService.getAllCategories().subscribe({
         next: (res) => {
-          console.log(res)
           this.categories = res.categories;
           this.filteredData = this.categories;
         },
@@ -121,7 +120,6 @@ export class CategoryListComponent implements OnInit, OnDestroy {
   } 
 
   orderBy(sort: SortBy){
-    console.log(sort)
     this.selectedSort = sort;
     this.filteredData = this.filteredData.sort((a,b) => {
       let comparison = 0;

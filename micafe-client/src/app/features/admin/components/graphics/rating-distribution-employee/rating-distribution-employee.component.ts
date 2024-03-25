@@ -103,7 +103,6 @@ export class RatingDistributionEmployeeComponent implements OnInit, OnDestroy {
   }
 
   getCalifications() {
-    console.log(this.employeeId);
     this.sub.add(
       this.reportService
         .getRatingDistributionByEmployee(this.employeeId)

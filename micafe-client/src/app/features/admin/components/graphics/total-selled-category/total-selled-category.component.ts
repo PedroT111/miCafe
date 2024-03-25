@@ -80,7 +80,6 @@ export class TotalSelledCategoryComponent
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['startDate'].currentValue || changes['endDate'].currentValue) {
-      console.log(this.startDate, this.endDate);
       this.getCategorySales();
     }
   }
@@ -98,7 +97,6 @@ export class TotalSelledCategoryComponent
         .getCategorySales(this.startDate, this.endDate)
         .subscribe({
           next: (res) => {
-            console.log(res, 'res cat')
             this.categorySales = res.categories;
 
             this.barChartLabels = this.categorySales.map((c) => c.categoryName);
