@@ -1,0 +1,171 @@
+<form [formGroup]="form">
+  <div class="row">
+    <div class="col-md-8 col-12">
+      <div class="row mb-4">
+        <div class="col-12">
+          <div class="card p-2">
+            <div class="card-header">
+              <p class="card-title">Information</p>
+            </div>
+            <div class="card-body">
+              <div class="row mb-4">
+                <div class="col-12">
+                  <input type="text" class="form-control" id="name" formControlName="name" appFormValidation
+                    [form]="form" [fieldName]="'name'" placeholder="Name">
+                  <div class="invalid-feedback" appFormError [control]="form.get('name')"></div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <textarea class="custom-txtarea form-control" name="description" id="txtDescription"
+                    formControlName="description" appFormValidation [form]="form" [fieldName]="'description'"
+                    placeholder="Description"></textarea>
+                  <div class="invalid-feedback" appFormError [control]="form.get('description')"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-4">
+        <div class="col-12">
+          <div class="card p-2">
+            <div class="card-header">
+              <p class="card-title">Product Category</p>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-12">
+                  <select class="form-select" formControlName="category" appFormValidation [form]="form"
+                    [fieldName]="'category'">
+                    <option value="" disabled selected>Select...</option>
+                    <option *ngFor="let c of categorias" [value]="c._id">{{c.name}}</option>
+                  </select>
+                  <div class="invalid-feedback" appFormError [control]="form.get('category')"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-4">
+        <div class="col-12">
+          <div class="card p-2">
+            <div class="card-header">
+              <p class="card-title">Image</p>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-12">
+                  <div (click)="openImageInput()" style="cursor: pointer;"
+                    class="current-image d-flex justify-content-center align-items-center">
+                    <div>
+                      <img class="img-fluid" [src]="getImageSource()" alt="Imagen actual">
+                    </div>
+                    <div>
+                      <input type="file" #fileInput style="display: none;" accept="image/*"
+                        (change)="handleImageChange($event)" />
+                    </div>
+                    <div class="select-image-overlay">
+                      Select Image
+                    </div>
+                  </div>
+                  <input type="hidden" formControlName="urlImage" appFormValidation [form]="form"
+                    [fieldName]="'urlImage'">
+                  <div class="invalid-feedback" appFormError [control]="form.get('urlImage')"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-4">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Value</div>
+            </div>
+            <div class="card-body">
+              <div class="row mb-4">
+                <div class="col-md-6">
+                  <div class="input-group flex-nowrap">
+                    <span class="input-group-text" id="addon-wrapping">$</span>
+                    <span class="input-group-text">ARS</span>
+                    <input type="number" class="form-control" formControlName="price" appFormValidation [form]="form"
+                      [fieldName]="'price'" placeholder="Price">
+                  </div>
+                  <div class="invalid-feedback mt-5" appFormError [control]="form.get('price')"></div>
+                </div>
+                <div class="col-md-6">
+                  <input type="number" class="form-control" formControlName="points" appFormValidation [form]="form"
+                    [fieldName]="'points'" placeholder="Points">
+                  <div class="invalid-feedback" appFormError [control]="form.get('points')"></div>
+                  <div class="form-text mx-2">Cantidad de puntos para comprar este producto</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Additional information</div>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-12">
+                  <div class="row">
+                    <div class="row mt-1">
+                      <div class="col-12">
+                        <div class="form-check">
+                          <input type="checkbox" class="form-check-input" id="hasMilk" formControlName="hasMilk"
+                            appFormValidation [form]="form" [fieldName]="'hasMilk'">
+                          <label class="form-check-label" for="hasMilk">Has milk</label>
+                          <div class="form-text mt-1">
+                            Check the box if the product contains milk
+                          </div>
+                        </div>
+                        <div class="invalid-feedback" appFormError [control]="form.get('hasMilk')"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-12">
+          <div class="card px-2 py-3">
+            <div class="card-header">
+              <div class="card-title">Status</div>
+            </div>
+            <div class="card-body">
+              <select class="form-select" formControlName="isActive" appFormValidation [form]="form"
+                [fieldName]="'isActive'">
+                <option selected value=true> Active </option>
+                <option value=false> Inactive</option>
+              </select>
+              <div class="invalid-feedback" appFormError [control]="form.get('isActive')"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-12 d-flex justify-content-end">
+      <button class="btn bg-white border border-primary">Cancel</button>
+      <button type="submit" class="btn btn-dark mx-2" (click)="onSend()">{{editMode ? buttons.edit :
+        buttons.create }}</button>
+    </div>
+  </div>
+</form>

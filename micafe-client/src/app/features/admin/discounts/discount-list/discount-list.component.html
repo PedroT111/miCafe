@@ -1,0 +1,24 @@
+<div class="row mt-2">
+    <div class="col-lg-4">
+        <span class="title mb-md-0 mb-4">Discounts</span>
+    </div>
+    <div class="col-lg-8 d-flex justify-content-start justify-content-md-end">
+        <button class="btn btn-secondary" [routerLink]="'/admin/discounts/new'">+ Add Discount</button>
+    </div>
+</div>
+<div class="row mt-5 d-flex align-items-center">
+    <div class="col-sm-8 col-md-4 mb-3">
+        <app-search (searchTextChanged)="onSearchTextChange($event)"></app-search>
+    </div>
+    <div class="col-sm-4 col-md-4 mb-3">
+        <app-order-by [sorting]="sorting" (onSortBySelected)="sortList($event)"></app-order-by>
+    </div>
+    <div class=" col-md-2 offset-md-2">
+        <app-filter [filterOptions]="filterStatusOptions" [title]="'Status'" (filterSelected)="onStatusFilterSelected($event)"></app-filter>
+    </div>
+</div>
+<div class="row mt-3">
+    <div class="col-12">
+        <app-table [data]="filteredDiscounts" [headers]="headers" [pageSize]="5" (delete)="onDelete($event)"></app-table>
+    </div>
+</div>

@@ -1,0 +1,10 @@
+<div ngbDropdown #myDrop="ngbDropdown" class="d-inline-block">
+    <button type="button" class="btn p-2 text-primary" ngbDropdownToggle>
+        <small class="text-light">Sort by </small>
+        <small class="text-white mx-1">{{ selectedOption?.name }}</small>
+    </button>
+    <div ngbDropdownMenu class="ngb">
+        <button class="text-primary btn w-100" *ngFor="let s of sorting" (click)="onSort(s); myDrop.close()">{{ s.name
+            }}</button>
+    </div>
+</div>

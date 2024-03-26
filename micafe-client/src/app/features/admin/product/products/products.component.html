@@ -1,0 +1,29 @@
+<div class="row">
+    <div class="col-lg-4">
+        <span class="title mb-md-0 mb-4">Products</span>
+    </div>
+    <div class="col-lg-8 col-md-12 d-flex justify-content-start justify-content-md-end">
+        <button class="btn btn-danger text-primary" (click)="openFormPriceAjustem()"><span>Adjust Prices</span></button>
+        <button class="btn btn-secondary mx-2" (click)="create()"><span>+ Add Producto</span></button>
+    </div>
+</div>
+<div class="row mt-5">
+    <div class="col-md-4 mb-md-0 mb-3">
+        <app-search (searchTextChanged)="onSearchTextChange($event)"></app-search>
+    </div>
+    <div class="col-lg-2 col-md-4 offset-lg-4 mb-md-0 mb-3">
+        <app-filter [title]="'Categories'" [filterOptions]="filterOptions" [selectedFilter]="selectedCategoryFilter"
+            (filterSelected)="onCategoryFilterSelected($event)"></app-filter>
+    </div>
+    <div class="col-lg-2 col-md-4">
+        <app-filter [title]="'Status'" [filterOptions]="filterStatusOptions" [selectedFilter]="selectedStatusFilter"
+            (filterSelected)="onStatusFilterSelected($event)"></app-filter>
+
+    </div>
+</div>
+<div class="row mt-4">
+    <div class="col-12">
+        <app-table [data]="filteredData" [headers]="tableHeaders" [pageSize]="5" (seeMore)="edit($event)"
+            (delete)="deleteProduct($event)"></app-table>
+    </div>
+</div>

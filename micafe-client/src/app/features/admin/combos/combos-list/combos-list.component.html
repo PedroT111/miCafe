@@ -1,0 +1,18 @@
+<div class="row">
+    <div class="col-lg-4">
+        <span class="title mb-md-0 mb-4">Combos</span>
+    </div>
+    <div class="col-lg-8 col-md-12 d-flex justify-content-start justify-content-md-end">
+        <button class="btn btn-secondary mx-2" [routerLink]="'/admin/combos/new'" ><span>+ Add Combo</span></button>
+    </div>
+</div>
+<div class="row mt-5">
+    <div class="col-md-4">
+       <app-search (searchTextChanged)="onSearchTextChange($event)" [searchTerm]="searchTerm"></app-search>
+    </div>
+</div>
+<div class="row mt-2">
+    <div class="col-12">
+       <app-table (delete)="deleteCombo($event)" (seeMore)="updateCombo($event)" [data]="filteredData" [headers]="tableHeaders" [pageSize]="5"></app-table>
+    </div>
+</div>

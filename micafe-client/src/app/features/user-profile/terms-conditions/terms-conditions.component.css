@@ -1,0 +1,21 @@
+p{
+    text-align: justify;
+}
+ol{
+    margin: 0;
+}
+li{
+    margin: 0;
+}
+
+.sm-title{
+    font-size: 1.1rem;
+}
+
+.mid-title{
+    font-size: 1.3rem;
+}
+
+.title{
+    font-size: 1.4rem;
+}

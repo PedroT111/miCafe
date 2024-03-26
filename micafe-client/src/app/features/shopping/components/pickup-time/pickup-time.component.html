@@ -1,0 +1,50 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Fecha y Hora</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="row mb-3">
+            <div class="col-6 col-md-12">
+                <form class="row row-cols-sm-auto">
+                    <div class="col-12">
+                        <div class="input-group">
+                            <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="date"
+                                ngbDatepicker #d="ngbDatepicker" [minDate]="minDate" />
+                            <button class="btn btn-warning bi bi-calendar3" (click)="d.toggle()"
+                                type="button"></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-6 col-md-12">
+                <ngb-timepicker [(ngModel)]="time" [spinners]="false"></ngb-timepicker>
+            </div>
+        </div>
+        <div class="row mt-3 p-2" *ngIf="invalidTime">
+            <div class="col-12">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <span>El horario seleccionado debe ser como mínimo <strong>10 minutos</strong> después del
+                        horario actual.</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 d-flex justify-content-end">
+                <button type="button" class="btn btn-warning"
+                    (click)="setDateTime()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<div class="card border-0 border-bottom p-2">
+    <button class="btn border-none w-100 d-flex justify-content-between align-items-center" (click)="open(content)">
+        <span *ngIf="pickUpDateTime === undefined; else isSetDate">Seleccionar fecha y hora de retiro</span>
+        <ng-template #isSetDate>
+            <span class="date-time">{{pickUpDateTime | dateFormat}}</span>
+        </ng-template>
+        <i class="bi bi-chevron-right icon-arrow"></i>
+    </button>
+</div>

@@ -1,0 +1,35 @@
+<div class="card p-0 mb-3" (click)="openProductDetil()">
+    <div class="card-body p-0">
+        <div class="row m-0">
+            <div class="col-7 p-3">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card-title"><span>{{product.name}}</span></div>
+                    </div>
+                </div>
+                <div class="row description-row">
+                    <div class="col-12">
+                        <p class="description">{{product.description | truncateText:40}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <span class="price" *ngIf="!product.isOnSale; else productSale">{{product.price |
+                            currency}}</span>
+                        <ng-template #productSale>
+                            <span class="price">{{product.salePrice | currency}}</span> <br>
+                            <del class="text-danger">{{product.price | currency}}</del>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+            <div class="col-5 p-0  d-flex justify-content-end">
+                <img [lazyLoad]="'/assets/products/' + product.urlImage" alt="" class="img">
+                <div class="card p-2 position-absolute top-0 end-0" *ngIf="product.isOnSale">
+                    <span class="text-danger">-{{(1 - product.salePrice / product.price) |
+                        percent}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

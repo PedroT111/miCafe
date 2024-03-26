@@ -1,0 +1,21 @@
+<div class="card p-3 border-0">
+    <div class="row mb-3">
+        <div class="col-12">
+            <span class="title">Descuento</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-around">
+                <div class="form w-100 d-flex justify-content-between">
+                    <div class="input-group w-75">
+                        <span class="input-group-text"> <i class="bi bi-ticket-perforated"></i></span>
+                        <input type="text" class="form-control" placeholder="Ingresá tu código" [(ngModel)]="code" [disabled]="enabled">
+                    </div>
+                    <button class="btn btn-warning rounded" (click)="validate()">Validar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>

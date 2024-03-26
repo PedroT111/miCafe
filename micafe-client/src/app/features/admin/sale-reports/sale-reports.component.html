@@ -1,0 +1,64 @@
+<div class="row mb-2 py-1">
+    <div class="col-lg-6">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <span class="title">Report Sales</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <app-datepicker [startDateForEdit]="startDate" [endDateForEdit]="endDate" (dateSelection)="onDateSelection($event)"></app-datepicker>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col-lg-3">
+        <app-report-data [title]="'Total Sold'" [data]="totalSold" [icon]="'bi bi-cash-coin'"></app-report-data>
+    </div>
+    <div class="col-lg-3">
+        <app-report-data [title]="'Total Orders'" [data]="totalOrders" [icon]="'bi bi-clipboard-check-fill'"></app-report-data>
+    </div>
+    <div class="col-lg-3">
+        <app-report-data [title]="'Total Items Sold'" [data]="totalItems" [icon]="'bi bi-cup-hot'"></app-report-data>
+    </div>
+    <div class="col-lg-3">
+        <app-report-data [title]="'Avg Amount per Order'" [data]="avgTotalAmount" [icon]="'bi bi-cash-coin'"></app-report-data>
+    </div>
+</div>
+<div class="row mb-3">
+    <div class="col-lg-6 ">
+        <app-total-sell-period [startDate]="startDate" [endDate]="endDate"></app-total-sell-period>
+    </div>
+    <div class="col-lg-6">
+        <app-most-sold-products [startDate]="startDate" [endDate]="endDate"></app-most-sold-products>
+    </div>
+</div>
+<div class="row mb-3">
+    <div class="col-lg-6">
+        <app-sale-by-weekday [startDate]="startDate" [endDate]="endDate"></app-sale-by-weekday>
+    </div>
+    <div class="col-lg-6">
+        <app-sales-by-hourday [startDate]="startDate" [endDate]="endDate"></app-sales-by-hourday>
+    </div>
+</div>
+<div class="row mb-3">
+    <div class="col-12">
+        <app-total-selled-category [startDate]="startDate" [endDate]="endDate"></app-total-selled-category>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        <app-price-variation-product ></app-price-variation-product>
+    </div>
+</div>

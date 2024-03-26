@@ -1,0 +1,37 @@
+<div class="custom row m-0 d-flex justify-content-center align-items-center">
+    <div class="col-12 col-12 col-md-6 col-lg-4 p-md-3 p-0">
+      <div class="card p-3 p-md-5">
+        <div class="px-md-1 text-center">
+          <img src="/assets/logos/logo.png" class="card-img-top mb-md-2 mb-3 custom-logo" alt="logo">
+        </div>
+        <hr class="mb-3 border border-primary">
+        <form [formGroup]="signUpForm" *ngIf="!showMessageSuccess">
+            <div class="mb-3 text-primary" *ngFor="let field of formFields">
+                <label class="form-label">{{field.label}}</label>
+                <input
+                [formControlName]="field.name"
+                  [name]="field.name"
+                  [type]="field.type"
+                  class="form-control"
+                  [id]="field.id"
+                  appFormValidation [form]="signUpForm" [fieldName]="field.name" 
+                />
+                <div class="invalid-feedback" appFormError [control]="signUpForm.get(field.name)">
+                </div>
+              </div>
+          <div class="mb-4 mt-4">
+            <button type="button" class="btn btn-warning text-light w-100" (click)="onSignUp()">{{SIGN_UP_PAGE.btn_sign_up}}</button>
+          </div>
+        </form>
+        <div *ngIf="showMessageSuccess" class="alert alert-info mt-3">
+          {{SIGN_UP_PAGE.msg_success}}
+        </div>
+        <div class="mb-2">
+          <span class="custom-text d-block text-primary">{{SIGN_UP_PAGE.text_login}}</span>
+        </div>
+        <div>
+          <button type="button" class="btn btn-dark w-100" [routerLink]="['/auth/login']">{{SIGN_UP_PAGE.btn_login}}</button>
+        </div>
+      </div>
+    </div>
+  </div>

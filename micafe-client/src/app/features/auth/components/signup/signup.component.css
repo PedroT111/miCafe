@@ -1,0 +1,12 @@
+.card{
+    background-color: #1D3557;
+    border: none;
+}
+hr{
+    border-width: 2px;
+}
+@media only screen and (max-width: 768px) {
+    .custom{
+        height: 100vh;
+    }
+}

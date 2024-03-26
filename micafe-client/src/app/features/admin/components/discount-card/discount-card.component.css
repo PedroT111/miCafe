@@ -1,0 +1,20 @@
+.card-header {
+    border-bottom: 0;
+    padding-bottom: 0;
+}
+
+.card-title {
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+span{
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+p{
+    color: gray;
+    font-size: 0.8rem;
+}

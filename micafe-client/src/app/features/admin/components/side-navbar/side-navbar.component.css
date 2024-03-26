@@ -1,0 +1,42 @@
+.bi {
+  display: inline-block;
+  font-size: 1.1rem;
+}
+
+
+.offcanvas{
+  width: 300px;
+  background-color: #4A5D79;
+  color: #F7FAF9;
+}
+
+.nav-link{
+  font-size: 0.95rem;
+}
+.navbar-toggler {
+  background-color: white;
+  border-color: white;
+}
+
+/* Eliminar el borde al hacer clic o al estar en foco */
+.navbar-toggler:focus,
+.navbar-toggler:active {
+  outline: none;
+}
+.signout{
+  bottom: 0;
+  margin-bottom: 20px;
+}
+.navbar {
+  padding: 0.8rem;
+  background-color: #4A5D79;
+  color: #F7FAF9;
+}
+.navbar-brand{
+  color: white;
+  font-size: 1.3rem;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}

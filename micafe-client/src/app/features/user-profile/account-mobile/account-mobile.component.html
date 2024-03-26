@@ -1,0 +1,68 @@
+<div class="row p-4">
+    <div class="col-12">
+        <div class="row py-3">
+            <div class="col-12 pe-0">
+                <span class="user-name">{{user?.name}} {{user?.lastName}}</span>
+            </div>
+        </div>
+        <div class="row mb-3 py-2">
+            <div class="col-12 pe-0">
+                <span class="points">Puntos acumulados: {{user?.points}}</span>
+            </div>
+        </div>
+        <div class="row border-bottom py-2" *ngFor="let link of profileLinks">
+            <div class="col-12 pe-0">
+                <a class="btn p-0 d-flex justify-content-between align-items-center" [routerLink]="link.href">
+                    <div class="d-flex align-items-center">
+                        <i [class]="link.icon" class="icon-item"></i>
+                        <span class="ms-3 link-name">{{link.name}}</span>
+                    </div>
+                    <div>
+                        <i class="bi bi-chevron-right icon-arrow"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-12">
+                <span class="title">Soporte</span>
+            </div>
+        </div>
+        <div class="row mt-2 border-bottom py-2" *ngFor="let link of helpLinks">
+            <div class="col-12 pe-0">
+                <a class="btn p-0 d-flex justify-content-between align-items-center" [routerLink]="link.href">
+                    <div class="d-flex align-items-center">
+                        <i [class]="link.icon" class="icon-item"></i>
+                        <span class="ms-3 link-name">{{link.name}}</span>
+                    </div>
+                    <div>
+                        <i class="bi bi-chevron-right icon-arrow"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="row mt-2 border-bottom py-2">
+            <div class="col-12 pe-0">
+                <a class="btn p-0 d-flex justify-content-between align-items-center" href="https://wa.me/543513305151?text=Hola!%20Te%20contactaste%20con%20MiCafeApp.%20Env%C3%ADanos%20tu%20n%C3%BAmero%20de%20orden%20si%20tienes%20algun%20inconveniente." target="_blank">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-telephone-forward icon-item"></i>
+                        <span class="ms-3 link-name">Contactanos</span>
+                    </div>
+                    <div>
+                        <i class="bi bi-chevron-right icon-arrow"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="row mt-3 py-4">
+            <div class="col-12 pe-0">
+                <a class="btn p-0" [routerLink]="'/'">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-box-arrow-in-right icon-item"></i>
+                        <span class="ms-3 link-name" (click)="logOut()">Cerrar Sesión</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

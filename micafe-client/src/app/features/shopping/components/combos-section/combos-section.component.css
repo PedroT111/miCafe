@@ -1,0 +1,8 @@
+.scroll{
+    overflow-x: hidden;
+    white-space: nowrap;
+}
+.card-title{
+    font-size: 1.1rem;
+    font-weight: bold;
+}

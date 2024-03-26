@@ -1,0 +1,29 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Agregar una instrucción</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="row mb-3">
+            <div class="col-12">
+              <textarea class="form-control" name="note" [(ngModel)]="note"></textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 d-flex justify-content-end">
+                <button class="btn btn-warning" (click)="addNote();modal.close('Save click')">Guardar</button>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<div class="card border-0 border-bottom p-2">
+    <button class="btn border-none w-100 d-flex justify-content-between align-items-center" (click)="open(content)">
+        <span *ngIf="!note; else notes">Notas</span>
+        
+        <ng-template #notes>
+            <span>{{note | truncateText: 15}}</span>
+        </ng-template>
+        <i class="bi bi-pen icon-arrow"></i>
+    </button>
+</div>

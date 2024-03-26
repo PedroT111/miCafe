@@ -1,0 +1,5 @@
+@media (max-width: 767px) {
+    .last-row:last-child{
+        min-height: 90vh;
+    }
+}

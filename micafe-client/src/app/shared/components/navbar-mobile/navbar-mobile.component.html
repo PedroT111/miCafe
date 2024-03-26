@@ -1,0 +1,18 @@
+<div class="navbar nav-bottom fixed-bottom bg-light p-0" *ngIf="isLoggedIn">
+    <div class="container-fluid p-0">
+        <div class="row w-100 m-0">
+            <div class="col-3" *ngFor="let nav of navigationMobile">
+                <a class="navbar-brand" [routerLink]="'/'+nav.href">
+                    <i [class]="nav.icon"></i>
+                    <span class="link-text">{{nav.name}}</span>
+                </a>
+            </div>
+            <div class="col-3">
+                <button class="btn boder-0 navbar-brand" (click)="openCart()">
+                    <i class="bi bi-cart-fill"></i>
+                    <span class="link-text">Carrito</span>
+                  </button>
+            </div>
+        </div>
+    </div>
+</div>
