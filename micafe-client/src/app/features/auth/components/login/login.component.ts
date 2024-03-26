@@ -50,7 +50,7 @@ export class LoginComponent implements OnDestroy, OnInit {
             this.authService.saveUserData(res.user);
             //redirigir al inicio
             if(res.user.role === 'user'){
-              this.router.navigate(['/']);
+              this.router.navigate(['/shopping']);
             } else if(res.user.role === 'employee'){
               this.router.navigate(['/employee/orders'])
             } else {
@@ -59,6 +59,7 @@ export class LoginComponent implements OnDestroy, OnInit {
             
           },
           error: (err) => {
+            console.log(err)
             this.toastr.error(err.error.message, 'Error');
           }
         })

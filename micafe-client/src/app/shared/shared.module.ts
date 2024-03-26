@@ -36,7 +36,7 @@ import { DateFormatPipe } from './pipes/date-format.pipe';
     RouterModule,
     FormsModule,
     NgbDropdownModule,
-    NgbOffcanvasModule
+    NgbOffcanvasModule,
   ],
   exports: [
     NavbarComponent,

@@ -1,18 +1,4 @@
-/*.bg-container {
-    background-image: url('../../../../assets/fondos/1332.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    height: 100vh;
-    overflow: auto;
-}*/
 .bg-container {
     background-color: #1D3557;
-    height: 100vh;
-    overflow: auto;
+    min-height: 100vh;
 }
-@media only screen and (max-width: 768px) {
-    .bg-container{
-
-    }
-  }

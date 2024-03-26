@@ -20,7 +20,7 @@ import {initializeSocket} from './sockets';
 
 const app = express();
 app.use(cors({
-  origin: 'https://comforting-nougat-4223c6.netlify.app',
+  origin:['http://localhost:4200'],
   credentials: true // Habilitar credenciales si tu aplicación las necesita (por ejemplo, cookies)
 }));
 app.use(express.json());

@@ -17,7 +17,6 @@ export class AuthComponent implements OnInit {
   ngOnInit(): void {
     if (this.authService.isLoggedIn()) {
       this.toastr.info('Ya iniciaste sesión!');
-      this.router.navigate(['/']);
     }
   }
 }

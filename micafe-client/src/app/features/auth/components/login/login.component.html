@@ -1,11 +1,11 @@
 <div class="login-container row m-0 d-flex justify-content-center align-items-center">
-  <div class="col-12 col-md-6 col-lg-4 p-md-3 p-0">
+  <div class="col-12 col-md-6 col-lg-4 px-md-2 py-md-3 p-0">
     <div class="card p-3 p-md-5">
-      <div class="mb-4 p-md-2 text-center">
-        <img src="/assets/logos/logo.png" class="card-img-top mb-3 custom-logo" alt="logo">
-        <h3 class="txt-title text-primary">{{LOGIN_PAGE.title}}</h3>
+      <div class="mb-2 p-md-2 text-center">
+        <img src="/assets/logos/logo.png" class="card-img-top mb-md-2 mb-4  custom-logo" alt="logo">
+        <h5 class="txt-title text-primary">{{LOGIN_PAGE.title}}</h5>
       </div>
-      <button class="btn px-2 py-2 mb-2 btn-google btn-light">
+      <button class="btn px-2 py-2 btn-google btn-light">
         <img src="/assets/logos/google.png" alt="Google Logo" class="google-logo">
         <span>Google</span>
       </button>
@@ -24,10 +24,10 @@
             [fieldName]="f.name" />
           <div class="invalid-feedback" appFormError [control]="loginForm.get(f.name)"></div>
         </div>
-        <div class="mb-3">
+        <div class="mb-2">
           <a class="custom-text btn border-0 w-100 text-primary" [routerLink]="['/auth/password-forgot']">{{LOGIN_PAGE.txt_forget_pass}}</a>
         </div>
-        <div class="mb-4">
+        <div class="mb-3">
           <button type="submit" class="btn btn-warning text-light w-100">{{LOGIN_PAGE.btn_login}}</button>
         </div>
       </form>

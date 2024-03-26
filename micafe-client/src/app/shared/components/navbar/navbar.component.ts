@@ -4,6 +4,7 @@ import { User } from '../../models/user';
 import { navigationNavbar, loggedNavigationNavbar, profileNavigation } from '../../constants/navigation';
 import { CartComponent } from 'src/app/features/shopping/components/cart/cart.component';
 import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -16,7 +17,7 @@ export class NavbarComponent implements OnInit {
   loggedNavigationNavbar = loggedNavigationNavbar;
   isLoggedIn: boolean = false;
   user: User | null;
-  constructor(private authService: AuthService, private offCanvasService: NgbOffcanvas) { }
+  constructor(private authService: AuthService, private offCanvasService: NgbOffcanvas, private router: Router) { }
 
   ngOnInit(): void {
     this.isLoggedIn = this.authService.isLoggedIn();
@@ -27,6 +28,7 @@ export class NavbarComponent implements OnInit {
     this.authService.logOut();
     setTimeout(() => {
       this.isLoggedIn = this.authService.isLoggedIn();
+      this.router.navigate(['/'])
     }, 2000);
   }
 

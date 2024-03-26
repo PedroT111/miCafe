@@ -40,6 +40,7 @@ export class SignupComponent implements OnInit, OnDestroy {
     });
   }
   onSignUp() {
+    console.log('holala')
     this.signUpForm.markAllAsTouched();
     if (this.signUpForm.valid) {
       this.sub.add(
