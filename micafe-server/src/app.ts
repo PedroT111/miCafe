@@ -17,11 +17,12 @@ import AppError from './utils/appError';
 import offerScheduler from './tasks/offerScheduler';
 import discountScheduler from './tasks/discountScheduler';
 import {initializeSocket} from './sockets';
+import config from './config'
 
 const app = express();
 app.use(cors({
-  origin:['http://localhost:4200'],
-  credentials: true // Habilitar credenciales si tu aplicación las necesita (por ejemplo, cookies)
+  origin:['https://micafeapp.netlify.app/'],
+  credentials: true 
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

@@ -1,9 +1,0 @@
-<div class="input-container">
-  <label class="input-label" [class.input-label-focused]="selectedFilter">
-    {{ title }}
-  </label>
-  <select class="input-select form-select bg-primary" [(ngModel)]="selectedFilter" (change)="onFilterSelected(selectedFilter)">
-    <option [value]="''"></option>
-    <option *ngFor="let option of filterOptions" [value]="option._id">{{ option.name }}</option>
-  </select>
-</div>
