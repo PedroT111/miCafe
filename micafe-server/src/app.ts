@@ -21,7 +21,7 @@ import config from './config'
 
 const app = express();
 app.use(cors({
-  origin:['https://micafeapp.netlify.app/'],
+  origin: config.URL,
   credentials: true 
 }));
 app.use(express.json());
