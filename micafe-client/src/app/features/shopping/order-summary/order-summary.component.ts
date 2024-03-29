@@ -7,7 +7,7 @@ import { OrdersService } from 'src/app/shared/services/orders.service';
 import { User } from 'src/app/shared/models/user';
 import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.common';
 import { Discount } from 'src/app/shared/models/discount';
 declare let MercadoPago: any;
 @Component({
